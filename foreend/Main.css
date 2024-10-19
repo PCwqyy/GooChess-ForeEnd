@@ -1,0 +1,64 @@
+*{
+	transition: 1s;
+	font-family: "Arial";
+}
+html{
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+}
+
+#Grood{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+	transition: 2s;
+	/* background-color: #eee; */
+}
+#Grood.Scaled{
+	transform: scale(2)
+			   rotate(180deg)
+			   matrix3d(1, 0, 0, 0,
+						0, 1, 0, 0.0015,
+						0.00003, 0, 1, 0,
+						1, 1, 1, 1)
+			   translate(0, 30%);
+}
+.row{
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+.row.odd{
+	height: 0vh;
+}
+.cell{
+	width: 9vmin;
+	height: calc(4.5vmin * sqrt(3));
+	margin: 0;
+	position: relative;
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    background-color: #946f51;
+	transition: 0.5s;
+}
+.cell.light{
+	background-color: #f0d9b5;
+}
+.cell:hover{
+	background-color: #3689ce;
+}
+.cell.shooter{
+	background: #029a41;
+}
+
+#butt{
+	position: absolute;
+	top: 10vh;
+	left: 5vw;
+	background: #3689ce;
+	color: white;
+	padding: 1vh;
+	border-radius: 3px;
+}
