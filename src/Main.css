@@ -19,13 +19,14 @@ html{
 	/* background-color: #eee; */
 }
 #Grood.Scaled{
-	transform: scale(2)
-			   rotate(180deg)
-			   matrix3d(1, 0, 0, 0,
-						0, 1, 0, 0.0015,
-						0.00003, 0, 1, 0,
-						1, 1, 1, 1)
-			   translate(0, 30%);
+	transform:
+		scale(2)
+		rotate(160deg)
+		matrix3d(1, 0, 0, -0.0015,
+				0, 1, 0, 0.0015,
+				0, 0, 1, 0,
+				1, 1, 1, 1)
+		translate(6%, 35%)
 }
 .row{
 	display: flex;
@@ -53,9 +54,9 @@ html{
 }
 .cell.shooter{
 	background-image:
-		linear-gradient(240deg, #d8ff74 38%, #00000000 41%),
-		linear-gradient(120deg, #d8ff74 38%, #00000000 41%),
-		linear-gradient(0deg, #d8ff74 7%, #00000000 10%);
+		linear-gradient(240deg, #d8ff74 35%, #00000000 41%),
+		linear-gradient(120deg, #d8ff74 35%, #00000000 41%),
+		linear-gradient(0deg, #d8ff74 4%, #00000000 10%)
 }
 .cell.shooter:hover{
 	background-color: #d8ff74;
@@ -63,31 +64,14 @@ html{
 .cell.red{
 	background-image: linear-gradient(#f6463230, #f6463230);
 }
-.cell.red.shooter{
-	background-image:
-		linear-gradient(240deg, #f6463280 38%, #00000000 41%),
-		linear-gradient(120deg, #f6463280 38%, #00000000 41%),
-		linear-gradient(0deg, #f6463280 7%, #00000000 10%);
-}
 .cell.blue{
 	background-image: linear-gradient(#10a3ff30, #10a3ff30);
-}
-.cell.blue.shooter{
-	background-image:
-		linear-gradient(240deg, #10a3ff80 38%, #00000000 41%),
-		linear-gradient(120deg, #10a3ff80 38%, #00000000 41%),
-		linear-gradient(0deg, #10a3ff80 7%, #00000000 10%);
 }
 .cell.yellow{
 	background-image: linear-gradient(#f4fc0a30, #f4fc0a30);
 }
-.cell.yellow.shooter{
-	background-image:
-		linear-gradient(240deg, #f4fc0a80 38%, #00000000 41%),
-		linear-gradient(120deg, #f4fc0a80 38%, #00000000 41%),
-		linear-gradient(0deg, #f4fc0a80 7%, #00000000 10%);
-}
 
+/* test */
 a#butt{
 	position: absolute;
 	top: 10vh;
@@ -96,4 +80,15 @@ a#butt{
 	color: white;
 	padding: 1vh;
 	border-radius: 3px;
+}
+span#testchoos{
+	position: absolute;
+	height: 2.5vmin;
+	width: 2.5vmin;
+	left: 10vw;
+	top: 20vh;
+	background-color: white;
+	border-radius: 50%;
+	border: 0.75vmin black solid;
+	z-index: 2;
 }
