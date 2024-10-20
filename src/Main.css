@@ -8,6 +8,7 @@ html{
 	overflow: hidden;
 }
 
+/* Grood */
 #Grood{
 	display: flex;
 	flex-direction: column;
@@ -31,7 +32,7 @@ html{
 	justify-content: center;
 	width: 100%;
 }
-.row.odd{
+.row.black{
 	height: 0vh;
 }
 .cell{
@@ -40,20 +41,54 @@ html{
 	margin: 0;
 	position: relative;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    background-color: #946f51;
+	background-color: #f0d9b5;
 	transition: 0.5s;
 }
-.cell.light{
-	background-color: #f0d9b5;
+.row.black .cell{
+	background-color: #946f51;
+	transform: rotate(180deg);
 }
-.cell:hover{
-	background-color: #3689ce;
+.cell:hover,.row.black .cell:hover{
+	background-color: #ffd34f;
 }
 .cell.shooter{
-	background: #029a41;
+	background-image:
+		linear-gradient(240deg, #d8ff74 38%, #00000000 41%),
+		linear-gradient(120deg, #d8ff74 38%, #00000000 41%),
+		linear-gradient(0deg, #d8ff74 7%, #00000000 10%);
+}
+.cell.shooter:hover{
+	background-color: #d8ff74;
+}
+.cell.red{
+	background-image: linear-gradient(#f6463230, #f6463230);
+}
+.cell.red.shooter{
+	background-image:
+		linear-gradient(240deg, #f6463280 38%, #00000000 41%),
+		linear-gradient(120deg, #f6463280 38%, #00000000 41%),
+		linear-gradient(0deg, #f6463280 7%, #00000000 10%);
+}
+.cell.blue{
+	background-image: linear-gradient(#10a3ff30, #10a3ff30);
+}
+.cell.blue.shooter{
+	background-image:
+		linear-gradient(240deg, #10a3ff80 38%, #00000000 41%),
+		linear-gradient(120deg, #10a3ff80 38%, #00000000 41%),
+		linear-gradient(0deg, #10a3ff80 7%, #00000000 10%);
+}
+.cell.yellow{
+	background-image: linear-gradient(#f4fc0a30, #f4fc0a30);
+}
+.cell.yellow.shooter{
+	background-image:
+		linear-gradient(240deg, #f4fc0a80 38%, #00000000 41%),
+		linear-gradient(120deg, #f4fc0a80 38%, #00000000 41%),
+		linear-gradient(0deg, #f4fc0a80 7%, #00000000 10%);
 }
 
-#butt{
+a#butt{
 	position: absolute;
 	top: 10vh;
 	left: 5vw;
