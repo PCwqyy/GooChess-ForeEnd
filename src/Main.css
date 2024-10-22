@@ -1,6 +1,8 @@
 *{
 	transition: 1s;
 	font-family: "Arial";
+	margin: 0;
+	padding: 0;
 }
 html{
 	height: 100vh;
@@ -9,16 +11,27 @@ html{
 }
 
 /* Grood */
-#Grood{
+Grood{
+	position: absolute;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	/* align-items: center; */
 	justify-content: flex-start;
-	width: 100%;
+	width: 96vmin;
+	height: calc(48vmin * sqrt(3));
+	top: 0;
+	left: 0;
+	/* clip-path: polygon(50% 0%, 0% 100%, 100% 100%); */
 	transition: 2s;
-	/* background-color: #eee; */
+	background-color: #eee;
 }
-#Grood.Scaled{
+Grood#main{
+	z-index: 1;
+}
+Grood#measurer{
+	opacity: 0.3;
+}
+Grood.Scaled{
 	transform:
 		scale(2)
 		rotate(160deg)
@@ -26,7 +39,7 @@ html{
 				0, 1, 0, 0.0015,
 				0, 0, 1, 0,
 				1, 1, 1, 1)
-		translate(6%, 35%)
+		translate(0, 35%)
 }
 .row{
 	display: flex;
@@ -36,39 +49,45 @@ html{
 .row.black{
 	height: 0vh;
 }
-.cell{
-	width: 9vmin;
-	height: calc(4.5vmin * sqrt(3));
+cell{
+	width: 8vmin;
+	height: calc(4vmin * sqrt(3));
 	margin: 0;
 	position: relative;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	background-color: #f0d9b5;
 	transition: 0.5s;
 }
-.row.black .cell{
+.row.black cell{
 	background-color: #946f51;
 	transform: rotate(180deg);
 }
-.cell:hover,.row.black .cell:hover{
+cell:hover,.row.black cell:hover{
 	background-color: #ffd34f;
 }
-.cell.shooter{
+cell.shooter{
 	background-image:
 		linear-gradient(240deg, #d8ff74 35%, #00000000 41%),
 		linear-gradient(120deg, #d8ff74 35%, #00000000 41%),
 		linear-gradient(0deg, #d8ff74 4%, #00000000 10%)
 }
-.cell.shooter:hover{
+cell.shooter:hover{
 	background-color: #d8ff74;
 }
-.cell.red{
+cell.red{
 	background-image: linear-gradient(#f6463230, #f6463230);
 }
-.cell.blue{
+cell.blue{
 	background-image: linear-gradient(#10a3ff30, #10a3ff30);
 }
-.cell.yellow{
+cell.yellow{
 	background-image: linear-gradient(#f4fc0a30, #f4fc0a30);
+}
+
+/* choos */
+choos{
+	display: flex;
+	transition: 0.1s;
 }
 
 /* test */
@@ -80,13 +99,13 @@ a#butt{
 	color: white;
 	padding: 1vh;
 	border-radius: 3px;
+	z-index: 114514;
 }
-span#testchoos{
+choos#testchoos,choos#measurerChoos{
 	position: absolute;
+	display: flex;
 	height: 2.5vmin;
 	width: 2.5vmin;
-	left: 10vw;
-	top: 20vh;
 	background-color: white;
 	border-radius: 50%;
 	border: 0.75vmin black solid;
