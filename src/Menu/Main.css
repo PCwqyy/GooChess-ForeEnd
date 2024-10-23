@@ -1,0 +1,32 @@
+html{
+	height: 100vh;
+	width: 100vh;
+	overflow: hidden;
+}
+body{
+	align-items: center;
+}
+div#MainContainer{
+	display: flex;
+	height: 80vh;
+	width: 100vw;
+}
+div#MainTriangle{
+	position: absolute;
+	display: flex;
+	align-self: center;
+	width: 130vmin;
+	height: calc(65vmin * sqrt(3));
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+	transition: 0.3s;
+	transform-origin: 50% 66%;
+	background-color: black;
+}
+
+p#title{
+	font-size: 20vh;
+	align-self: center;
+	color: white;
+	z-index: 2;
+	font-family: Consolas;
+}
