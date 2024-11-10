@@ -7,8 +7,8 @@ setInterval(()=>{
 	console.log(size);
 	t.style.width=`${size*1}vh`;
 	t.style.height=`${size/2*Math.sqrt(3)}vh`;
-	t.style.backgroundColor=`hsl(${Math.random()*360} 80% 50% / 0.8)`;
-	var speed=Math.random()*5+3;
+	t.style.backgroundColor=`hsl(${Math.random()*360} 80% 50%`;
+	var speed=Math.random()*5+5;
 	Body.appendChild(t);
 	t.style.transition=`${speed}s`;
 	setTimeout(() => {

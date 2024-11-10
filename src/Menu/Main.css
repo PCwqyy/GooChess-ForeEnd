@@ -12,14 +12,16 @@ body{
 	align-items: center;
 	justify-content: center;
 }
-div#MainTriangle{
+span#MainTriangle{
 	display: flex;
+	position: relative;
 	width: 150vmin;
 	height: calc(75vmin * sqrt(3));
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	transition: 0.3s;
 	transform-origin: 50% 66%;
 	background-color: black;
+	z-index: 2;
 	animation: RotateF 8s infinite,
 			   FlashF 3s infinite;
 } 
@@ -60,7 +62,7 @@ p#title{
 	text-align: center;
 	position: absolute;
 	font-size: 15vh;
-	z-index: 2;
+	z-index: 3;
 	font-family: Consolas;
 }
 @keyframes RotateB{
@@ -72,6 +74,7 @@ p#title{
 
 span.SmallT{
 	position: absolute;
+	transform-origin: 50% 66%;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	left: -20vh;
 }
