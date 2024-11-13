@@ -4,7 +4,6 @@ setInterval(()=>{
 	t.classList.add('SmallT');
 	t.style.top=`${Math.random()*100}vh`;
 	var size=Math.random()*6+5;
-	console.log(size);
 	t.style.width=`${size*1}vh`;
 	t.style.height=`${size/2*Math.sqrt(3)}vh`;
 	t.style.backgroundColor=`hsl(${Math.random()*360} 80% 50%`;
@@ -17,5 +16,5 @@ setInterval(()=>{
 	},10);
 	setTimeout(() => {
 		Body.removeChild(t);
-	},speed*1000+200);
-},300)
+	},speed*1000);
+},200)

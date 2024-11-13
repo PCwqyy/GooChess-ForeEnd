@@ -4,6 +4,7 @@
 }
 html{
 	overflow: hidden;
+	font-family: Consolas;
 }
 body{
 	height: 100vh;
@@ -51,25 +52,40 @@ span#MainTriangle{
 }
 
 p#title{
-	width: 60vw;
+	width: 100vw;
 	color: white;
-	text-shadow:
-		0px 0px 1em gray,
-		0px 0px 1em gray,
-		0px 0px 1em gray,
-		0px 0px 1em gray,
-		3px 3px 0px gray;
+	text-shadow: 3px 3px 0px gray;
 	text-align: center;
 	position: absolute;
 	font-size: 15vh;
 	z-index: 3;
 	font-family: Consolas;
+	animation: RotateB 0.75s infinite;
 }
 @keyframes RotateB{
-	0%{rotate: 0deg;}
-	0%{rotate: 0deg;}
-	0%{rotate: 0deg;}
-	0%{rotate: 0deg;}
+	0%{rotate: -5deg;}
+	50%{rotate: 5deg;}
+	100%{rotate: -5deg;}
+}
+p#sign{
+	position: absolute;
+	color: white;
+	font-size: 4vh;
+	z-index: 3;
+	opacity: 0;
+	transform: translate(0,25vh);
+	animation:
+		FlashS 2s linear 5s infinite,
+		SlowOutS 1s linear 4s;
+}
+@keyframes SlowOutS{
+	0%{opacity: 0;}
+	100%{opacity: 1;}
+}
+@keyframes FlashS{
+	0%{opacity: 1;}
+	50%{opacity: 0.3;}
+	100%{opacity: 1;}
 }
 
 span.SmallT{
@@ -77,4 +93,5 @@ span.SmallT{
 	transform-origin: 50% 66%;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	left: -20vh;
+	transition-timing-function: linear !important;
 }
