@@ -1,0 +1,63 @@
+span#MainTriangle{
+	animation-iteration-count: unset;
+	mix-blend-mode: normal;
+	rotate: 20deg;
+	translate: -35% 0;
+	height: calc(200vmin * sqrt(3));;
+	width: 400vmin;
+	background-color: black;
+}
+span#ColorCont{
+	display: none;
+}
+p.welcome#sign{
+	animation:
+		SlowOut 2s,
+		FlashS 2s linear 5s;
+}
+p.welcome#title{
+	animation:
+		SlowOut 2s,
+		RotateB 0.75s infinite;
+}
+@keyframes SlowOut{
+	0%{opacity: 1;}
+	100%{opacity: 0;}
+}
+
+menu#Menu{
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	font-size: 12vh;
+	left: 10vw;
+	width: 90vw;
+	height: 100vh;
+	list-style: none;
+	isolation: isolate;
+}
+li.MenuItem{
+	text-align: center;
+	cursor: pointer;
+	line-height: 15vh;
+	margin-bottom: 2vh;
+	width: 100%;
+	background-color: white;
+	mix-blend-mode: difference;
+}
+li.MenuItem::before{
+	content: '';
+	position: fixed;
+	left: 0;
+	width: 0;
+	height: 15vh;
+	background-color: white;
+	mix-blend-mode: difference;
+	transition: 0.3s;
+	z-index: 1;
+}
+li.MenuItem:hover::before{
+	width: 100%;
+}
