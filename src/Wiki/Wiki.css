@@ -1,0 +1,42 @@
+*{
+	transition: 0.5s;
+}
+html{
+	overflow: hidden;
+}
+body{
+	color: black;
+	background: white;
+	font-size: 22px;
+	font-family: "Saira";
+}
+input#Input{
+	z-index: 1;
+	position: relative;
+}
+div#Body{
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	overflow-y: scroll;
+	backdrop-filter: blur(14px) saturate(150%);
+}
+div#Main{
+	margin: 10vh;
+	padding: 5vh;
+	border-radius: 20px;
+	border: #3498DB solid 1px;
+	box-shadow: #3498DB 0px 0px 3px,
+				#3498DB 0px 0px 6px;
+	background-color: white;
+}
+span.SmallT{
+	position: absolute;
+	transform-origin: 50% 66%;
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+	left: -20vh;
+	isolation: isolate;
+	transition-timing-function: linear !important;
+}

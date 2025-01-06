@@ -23,28 +23,23 @@ p.welcome#title{
 }
 
 menu#Menu{
-	position: fixed;
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	font-size: 12vh;
-	left: 10vw;
-	width: 90vw;
-	height: 100vh;
-	list-style: none;
-	isolation: isolate;
+	animation: SlowIn 4s;
 }
-li.MenuItem{
+a.MenuItem{
 	text-align: center;
-	cursor: pointer;
+	text-decoration: none;
 	line-height: 15vh;
 	margin-bottom: 2vh;
 	width: 100%;
 	background-color: white;
 	mix-blend-mode: difference;
 }
-li.MenuItem::before{
+a.MenuItem,a.MenuItem:active,
+a.MenuItem:visited,a.MenuItem:focus{
+	color: black;
+}
+a.MenuItem::before{
 	content: '';
 	position: fixed;
 	left: 0;
@@ -52,9 +47,9 @@ li.MenuItem::before{
 	height: 15vh;
 	background-color: white;
 	mix-blend-mode: difference;
-	transition: 0.3s;
+	transition: 0.5s;
 	z-index: 1;
 }
-li.MenuItem:hover::before{
+a.MenuItem:hover::before{
 	width: 100%;
 }

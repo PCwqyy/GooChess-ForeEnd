@@ -1,0 +1,93 @@
+h1, h2, h3, h4, h5, h6 {
+	font: 100%;
+	font-weight: normal;
+	text-decoration: none;
+	margin-top: unset;
+	margin-bottom: 1vh;
+}
+h1{
+	font: 7vh "Saira";
+	margin-top: 7vh;
+}
+h2{
+	font: 6vh "Saira";
+	margin-top: 5vh;
+}
+h3{
+	font: 5vh "Saira";
+	margin-top: 4vh;
+}
+h4{
+	font: 4.5vh "Saira";
+}
+h5{
+	font: 4vh "Saira";
+	padding-left: 1vw;
+}
+h6{
+	font: 3.5vh "Saira";
+	color: #888;
+	padding-left: 2vw;
+}
+a{
+	transition: 0.5s;
+}
+a:link {
+	color: #3498DB;
+	text-decoration: none;
+}
+a:visited {
+	color: #5EB95E;
+	text-decoration: none;
+}
+a:hover {
+	color: #FF5252;
+	text-decoration: none;
+}
+a:active {
+	color: #E67E22;
+	text-decoration: none;
+}
+table{
+	border-spacing: 0;
+}
+thead{
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+th,td{
+	padding: 1vh 3vh;
+	border-bottom: #eee solid 1px;
+}
+th{
+	background-color: gainsboro;
+	font-weight: normal;
+}
+
+blockquote p{
+	font-style: italic;
+	font-family: "宋体","楷体";
+}
+details{
+	background-color: white;
+	padding: 5px;
+	margin: 5px 0px 5px 0px;
+	border-left: 15px solid #3498DB;
+}
+summary{
+	list-style-type: none;
+}
+:not(pre,div)>code{
+	color: #0092a5;
+	background-color: #caf9ff;
+}
+code{
+	font-family: "Consolas";
+}
+pre{
+	background-color: #eee;
+	border-radius: 3px;
+	padding: 0px 3px 0px 3px;
+}
+
