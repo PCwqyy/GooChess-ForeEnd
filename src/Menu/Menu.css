@@ -1,14 +1,11 @@
-span#MainTriangle{
+span#MainTriangle,span#ColorCont{
 	animation-iteration-count: unset;
-	mix-blend-mode: normal;
+	/* mix-blend-mode: normal; */
 	rotate: 20deg;
 	translate: -35% 0;
 	height: calc(200vmin * sqrt(3));;
 	width: 400vmin;
 	background-color: black;
-}
-span#ColorCont{
-	display: none;
 }
 p.welcome#sign{
 	animation:

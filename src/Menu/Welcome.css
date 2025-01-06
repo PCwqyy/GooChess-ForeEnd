@@ -32,9 +32,10 @@ span#MainTriangle,span#ColorCont{
 	translate: 0 0;
 	scale: 1;
 	z-index: 2;
-	transition: 2s;
-	animation: RotateF 8s infinite,
-	FlashF 3s infinite;
+	transition:2s;
+	animation:
+		RotateF 8s infinite,
+		FlashF 3s infinite;
 } 
 span#MainTriangle{
 	mix-blend-mode: difference;
