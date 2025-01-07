@@ -7,12 +7,26 @@
 		<link rel="stylesheet" href="Main.css">
 	</head>
 	<body>
+		<grood id="main"><choos id="testchoos"></choos></grood>
+		<grood id="measurer"><choos id="measurerChoos"></choos></grood>
 		<script src="Main.js"></script>
 		<script>
-			Grood=CreateBoard('main');
-			Grood.appendChild(choos);
-			var mea=CreateBoard('measurer');
-			mea.appendChild(MeasurerChoos);
+			const ROWS=12;
+			const body=document.getElementsByTagName('body')[0];
+			var choos=document.getElementById('testchoos');
+			Grood=document.getElementById('main');
+			mea=document.getElementById('measurer');
+			/** @param e {Event} */
+			function GamingCell(e)
+			{
+				i=e.target.getAttribute('x');
+				j=e.target.getAttribute('y');
+				console.log(`(${XYtoNAR(new XY(i,j),ROWS).print()})`);
+				ChoosToCell(choos,`${i}`,`${j}`);
+			}
+
+			CreateBoard(Grood,GamingCell,ROWS);
+			CreateBoard(mea,GamingCell,ROWS);
 		</script>
 
 		<a id="butt" onclick="ScaleBoard()">Scale</a>

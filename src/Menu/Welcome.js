@@ -22,10 +22,8 @@ var thr=setInterval(()=>{
 		Body.removeChild(t);
 	},speed*1000);
 },200);
-var Zoomed=false;
+
 document.addEventListener('keydown',(event)=>{
-	if(Zoomed)	return;
-	Zoomed=true;
 	clearInterval(thr);
 	BigT.style.animation
 	StSh.setAttribute('href','Menu.css');
@@ -33,4 +31,4 @@ document.addEventListener('keydown',(event)=>{
 		for(var i=0;i<WelTxt.length;i++)
 			WelTxt[i].style.display='none';
 	},2000);
-})
+},{once:true});

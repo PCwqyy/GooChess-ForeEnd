@@ -32,20 +32,20 @@ h6{
 a{
 	transition: 0.5s;
 }
-a:link {
-	color: #3498DB;
+a:link{
+	color: #3498db;
 	text-decoration: none;
 }
-a:visited {
-	color: #5EB95E;
+a:visited{
+	color: #5eb95e;
 	text-decoration: none;
 }
-a:hover {
-	color: #FF5252;
+a:hover{
+	color: #ff5252;
 	text-decoration: none;
 }
-a:active {
-	color: #E67E22;
+a:active{
+	color: #e67e22;
 	text-decoration: none;
 }
 table{
@@ -58,36 +58,125 @@ thead{
 }
 th,td{
 	padding: 1vh 3vh;
-	border-bottom: #eee solid 1px;
+	border-bottom: gainsboro solid 1px;
 }
 th{
 	background-color: gainsboro;
 	font-weight: normal;
 }
-
+blockquote{
+	margin: unset;
+	border-left: gainsboro solid 10px;
+	padding: 3vh 3vw;
+}
 blockquote p{
+	margin: unset;
+	color: gray;
 	font-style: italic;
 	font-family: "宋体","楷体";
 }
 details{
 	background-color: white;
-	padding: 5px;
-	margin: 5px 0px 5px 0px;
-	border-left: 15px solid #3498DB;
+	border: 1px solid #ffb700;
+	border-radius: 5px;
+	overflow: clip;
+}
+details *{
+	padding-left: 5vh;
 }
 summary{
+	position: sticky;
+	top: 0;
+	width: 100%;
+	padding: 1vh 0 1vh 5vh;
+	background-color: #ffcc4d;
+	color: white;
 	list-style-type: none;
+	cursor: pointer;
 }
-:not(pre,div)>code{
-	color: #0092a5;
-	background-color: #caf9ff;
+:not(pre)>code{
+	color: #23791b;
+	background-color: #ceffca;
+	padding: 5px;
+	border-radius: 3px;
 }
 code{
 	font-family: "Consolas";
 }
 pre{
-	background-color: #eee;
-	border-radius: 3px;
-	padding: 0px 3px 0px 3px;
+	background-color: gainsboro;
+	border-radius: 6px;
+	padding: 3vh;
 }
 
+
+Grood{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	top: 0;
+	left: 0;
+	/* width: 96vmin;
+	height: calc(48vmin * sqrt(3)); */
+	transition: 2s;
+}
+.row{
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+.row.black{
+	height: 0vh;
+}
+cell{
+	width: 8vmin;
+	height: calc(4vmin * sqrt(3));
+	margin: 0;
+	position: relative;
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+	background-color: #f0d9b5;
+	transition: 0.5s;
+}
+.row.black cell{
+	background-color: #946f51;
+	transform: rotate(180deg);
+}
+cell:hover,.row.black cell:hover{
+	background-color: #ffd34f;
+}
+cell.shooter{
+	background-image:
+		linear-gradient(240deg, #d8ff74 35%, #00000000 41%),
+		linear-gradient(120deg, #d8ff74 35%, #00000000 41%),
+		linear-gradient(0deg, #d8ff74 4%, #00000000 10%)
+}
+cell.shooter:hover{
+	background-color: #d8ff74;
+}
+cell.red{
+	background-image: linear-gradient(#f6463230, #f6463230);
+}
+cell.blue{
+	background-image: linear-gradient(#10a3ff30, #10a3ff30);
+}
+cell.yellow{
+	background-image: linear-gradient(#f4fc0a30, #f4fc0a30);
+}
+
+span#Tip{
+	position: absolute;
+	border-radius: 5px;
+	padding: 1vh;
+	opacity: 0;
+	font-family: "Consolas";
+	background-color: #000000d0;
+	color: white;
+	z-index: 2;
+	transition: opacity 0.3s;
+	transform: matrix3d(
+		1, 0, 0, -0.0002,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		1, 1, 1, 1
+	);
+}
