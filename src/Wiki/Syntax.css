@@ -108,61 +108,11 @@ pre{
 	border-radius: 6px;
 	padding: 3vh;
 }
-
-
 Grood{
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	top: 0;
-	left: 0;
-	/* width: 96vmin;
-	height: calc(48vmin * sqrt(3)); */
-	transition: 2s;
+	width: max-content;
+	height: max-content;
+	margin: auto;
 }
-.row{
-	display: flex;
-	justify-content: center;
-	width: 100%;
-}
-.row.black{
-	height: 0vh;
-}
-cell{
-	width: 8vmin;
-	height: calc(4vmin * sqrt(3));
-	margin: 0;
-	position: relative;
-	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-	background-color: #f0d9b5;
-	transition: 0.5s;
-}
-.row.black cell{
-	background-color: #946f51;
-	transform: rotate(180deg);
-}
-cell:hover,.row.black cell:hover{
-	background-color: #ffd34f;
-}
-cell.shooter{
-	background-image:
-		linear-gradient(240deg, #d8ff74 35%, #00000000 41%),
-		linear-gradient(120deg, #d8ff74 35%, #00000000 41%),
-		linear-gradient(0deg, #d8ff74 4%, #00000000 10%)
-}
-cell.shooter:hover{
-	background-color: #d8ff74;
-}
-cell.red{
-	background-image: linear-gradient(#f6463230, #f6463230);
-}
-cell.blue{
-	background-image: linear-gradient(#10a3ff30, #10a3ff30);
-}
-cell.yellow{
-	background-image: linear-gradient(#f4fc0a30, #f4fc0a30);
-}
-
 span#Tip{
 	position: absolute;
 	border-radius: 5px;

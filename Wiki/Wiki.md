@@ -1,24 +1,41 @@
 # Test Page
 
 ```goochess
-[7]
+[1]
 (1,1,1)
 (3,4,5)
 ```
 
 ```goochess
-[3]
+[1]
 (1,1,1)
 (2,2,2)
 ```
 
-[Link](../Menu/Main.html)
+```goochess
+[4]
+```
+
+```goochess
+[5]
+```
+
+```goochess
+[1]
+```
+
+```goochess
+[4]
+```
 
 Text  
 **Blod**  
 ~~Delete Line~~  
 *Italic*  
+[Link](../Menu/Main.html)  
+
 > Reference
+
 # h1
 ## h2
 ### h3
@@ -45,7 +62,7 @@ Text
 
 ---
 
-![Img](../../Icon/GooChess.png)
+![Img](../../Icon/GooChess@16x.png)
 
 ===Folded Block===
 

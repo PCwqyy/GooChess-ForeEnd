@@ -1,15 +1,3 @@
-*{
-	transition: 0.5s;
-}
-html{
-	overflow: hidden;
-}
-body{
-	color: black;
-	background: white;
-	font-size: 22px;
-	font-family: "Saira";
-}
 input#Input{
 	z-index: 1;
 	position: relative;

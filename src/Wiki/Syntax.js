@@ -37,6 +37,7 @@ function RunGrood()
 	{
 		temp=ele.textContent;
 		res=temp.match(/^\[([1-9][0-9]*)\]/);
+		ele.innerHTML='';
 		CreateBoard(ele,WikiCell,Number(res[1]),false);
 	}
 	Cells=document.getElementsByTagName('cell')

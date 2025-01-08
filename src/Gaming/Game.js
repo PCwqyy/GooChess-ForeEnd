@@ -1,4 +1,6 @@
 const RomeApl={1:'i',2:'ii',3:'iii',4:'iv',5:'v',6:'vi',7:'vii',8:'viii',9:'ix',10:'x',11:'xi',12:'xii',13:'xiii',14:'xiv'};
+var Grood=document.getElementById('main');
+var Mea=document.getElementById('measurer');
 
 // 坐标
 class XY{
@@ -92,6 +94,8 @@ function QueryPos(x,y){
 	if(typeof x==String)	x=Number(x);
 	if(typeof y==String)	y=Number(y);
 	var pos=cell[x][y].getBoundingClientRect();
+	var posg=Mea.getBoundingClientRect();
+	pos.x-=posg.x;pos.y-=posg.y;
 	if(x%2==1)	return {left:pos.x+pos.width/2,top:pos.y+pos.height*2/3};
 	else		return {left:pos.x+pos.width/2,top:pos.y+pos.height/3};
 }
@@ -100,8 +104,9 @@ var MeasurerChoos=document.getElementById('measurerChoos');
 /** @param {Element} ch choos */
 function ChoosToCell(ch,x,y){
 	var posh=MeasurerChoos.getBoundingClientRect();
-	ch.style.left=`${QueryPos(x,y).left-posh.width/2}px`;
-	ch.style.top=`${QueryPos(x,y).top-posh.height/2}px`;
+	var posc=QueryPos(x,y);
+	ch.style.left=`${posc.left-posh.width/2}px`;
+	ch.style.top=`${posc.top-posh.height/2}px`;
 }
 
 function ScaleBoard(){
