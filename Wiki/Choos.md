@@ -1,0 +1,29 @@
+# List of chooses
+
+1. pawn
+2. bishop
+3. knight
+4. rook
+5. queen
+6. king
+7. gooshop
+8. gooking
+9. fircar
+10. seccar
+11. hoorse
+12. bomb
+13. goobomb
+14. stone
+15. trap
+16. rotator
+17. jumper
+18. jumplar
+19. portal
+20. diplomat
+21. deaf
+22. diploqueen
+23. diportal
+24. emploee
+25. cell[?]
+26. factory
+27. product
