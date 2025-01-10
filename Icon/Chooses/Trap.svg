@@ -3,23 +3,13 @@
   <defs>
     <style>
       .cls-1 {
-        fill: none;
-        stroke-width: 1.5px;
-      }
-
-      .cls-1, .cls-2 {
+        fill: #fff;
         stroke: #231f20;
         stroke-linecap: round;
         stroke-linejoin: round;
       }
-
-      .cls-2 {
-        fill: #fff;
-      }
     </style>
   </defs>
-  <ellipse class="cls-2" cx="25" cy="25" rx="16.08" ry="8.75"/>
-  <path class="cls-1" d="M30.72,21.22c.22-2.28-1.54-3.94-5.28-4.97"/>
-  <path class="cls-1" d="M17.07,25c-3.74,1.04-5.5,2.69-5.28,4.97"/>
-  <path class="cls-1" d="M28.6,29.04c3.52,1.24,7.03,1.24,10.55,0"/>
+  <circle class="cls-1" cx="25" cy="25" r="6.07"/>
+  <path class="cls-1" d="M37.61,12.39l-25.21,25.21c-.28.28-.76.08-.76-.32V12.71c0-.4.48-.6.76-.32l25.21,25.21c.28.28.76.08.76-.32V12.71c0-.4-.48-.6-.76-.32Z"/>
 </svg>

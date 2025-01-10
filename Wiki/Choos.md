@@ -24,6 +24,6 @@
 22. diploqueen
 23. diportal
 24. emploee
-25. cell[?]
-26. factory
-27. product
+25. factory
+26. product
+27. cell[?]
