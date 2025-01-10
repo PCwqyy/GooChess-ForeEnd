@@ -67,6 +67,8 @@ function CreateBoard(thisGrood,func,rows,game=true){
 			cell[i][j]=document.createElement('cell');
 			cell[i][j].setAttribute('x',`${i}`);
 			cell[i][j].setAttribute('y',`${j}`);
+			var preform=document.createElement('span');
+			cell[i][j].appendChild(preform);
 			if(game)
 			{
 				// 确定shooter
@@ -82,7 +84,7 @@ function CreateBoard(thisGrood,func,rows,game=true){
 				if(thisNar.rom<=4)	cell[i][j].classList.add(Side.rom);
 			}
 			//点击事件
-			cell[i][j].addEventListener('click',func);
+			preform.addEventListener('click',func);
 			row[i].appendChild(cell[i][j]);
 		}
 		thisGrood.appendChild(row[i]);

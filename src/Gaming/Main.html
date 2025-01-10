@@ -4,8 +4,8 @@
 		<link rel="icon" type="image/png" href="../../Icon/GooChess.png">
 		<meta charset="UTF-8">
 		<title>Goord</title>
-		<link rel="stylesheet" href="Game.css">
 		<link rel="stylesheet" href="../Global.css">
+		<link rel="stylesheet" href="Game.css">
 	</head>
 	<body>
 		<div id="Bkg">
@@ -20,8 +20,8 @@
 			/** @param e {Event} */
 			function GamingCell(e)
 			{
-				i=e.target.getAttribute('x');
-				j=e.target.getAttribute('y');
+				i=e.target.parentElement.getAttribute('x');
+				j=e.target.parentElement.getAttribute('y');
 				console.log(`(${XYtoNAR(new XY(i,j),ROWS).print()})`);
 				ChoosToCell(choos,`${i}`,`${j}`);
 			}

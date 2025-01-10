@@ -112,6 +112,7 @@ Grood{
 	width: max-content;
 	height: max-content;
 	margin: auto;
+	background-image: unset;
 }
 span#Tip{
 	position: absolute;

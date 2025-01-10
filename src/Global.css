@@ -36,40 +36,60 @@ Grood{
 	height: 0vh;
 }
 cell{
-	width: 8vmin;
-	height: calc(4vmin * sqrt(3));
-	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	position: relative;
+	height: calc(4vmin * sqrt(3));
+	width: 8vmin;
+	margin: 0;
+	transition: 0.5s;
+	pointer-events: none;
+}
+cell span{
+	display: block;
+	position: relative;
+	height: calc(4vmin * sqrt(3));
+	width: 8vmin;
+	margin: 0;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	background-color: #ffffff;
 	transition: 0.5s;
+	pointer-events: auto;
 }
-.row.black cell{
+.row.black cell span{
 	background-color: #d5d5d5;
 	transform: rotate(180deg);
 }
-cell:hover,.row.black cell:hover{
+cell:hover span,.row.black cell:hover span{
 	background-color: #ffd34f;
 }
-cell.shooter{
+cell.shooter span{
 	background-image:
 		linear-gradient(240deg, #d8ff74 35%, #00000000 41%),
 		linear-gradient(120deg, #d8ff74 35%, #00000000 41%),
 		linear-gradient(0deg, #d8ff74 4%, #00000000 10%)
 }
-cell.shooter:hover{
+cell.shooter:hover span{
 	background-color: #d8ff74;
 }
-cell.red{
+cell.red span{
 	background-image: linear-gradient(#f6463210, #f6463210);
 }
-cell.blue{
+cell.blue span{
 	background-image: linear-gradient(#10a3ff10, #10a3ff10);
 }
-cell.yellow{
+cell.yellow span{
 	background-image: linear-gradient(#f4fc0a10, #f4fc0a10);
 }
 choos{
-	display: flex;
+	position: absolute;
+	height: 7vmin;
+	width: 7vmin;
 	transition: 0.1s;
+	pointer-events: auto;
+	z-index: 2;
+}
+div.row.black choos {
+    top: -2vh;
 }
