@@ -10,11 +10,11 @@
 - [Gitee](https://gitee.com/)
 - [Microsoft VSCode](https://code.visualstudio.com/)
 - [Microsoft Edge Dev Tool](https://www.microsoft.com/en-us/edge/)
-- [Marked](marked.js.org)
+- [Marked](https://marked.js.org)
 - [Adobe Illustrator](https://www.adobe.com/products/illustrator.html)
 
 ## Version
 PClang Ver: Dev 0.1  
 GooChess Ver: 0.2  
-[Marked](marked.js.org) Ver: v15.0.5  
-2025/1/6 PCwqyy
+[Marked](https://marked.js.org) Ver: v15.0.5  
+2025/1/10 PCwqyy

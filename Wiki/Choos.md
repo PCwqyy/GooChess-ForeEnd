@@ -1,29 +1,31 @@
 # List of chooses
 
-1. pawn
-2. bishop
-3. knight
-4. rook
-5. queen
-6. king
-7. gooshop
-8. gooking
-9. fircar
-10. seccar
-11. hoorse
-12. bomb
-13. goobomb
-14. stone
-15. trap
-16. rotator
-17. jumper
-18. jumplar
-19. portal
-20. diplomat
-21. deaf
-22. diploqueen
-23. diportal
-24. emploee
-25. factory
-26. product
-27. cell[?]
+|Name|Icon|
+|:-:|:-:|
+|Pawn|![img](../../Icon/Chooses/Pawn.svg)|
+|Bishop|![img](../../Icon/Chooses/Bishop.svg)|
+|Knight|![img](../../Icon/Chooses/Knight.svg)|
+|Rook|![img](../../Icon/Chooses/Rook.svg)|
+|Queen|![img](../../Icon/Chooses/Queen.svg)|
+|King|![img](../../Icon/Chooses/King.svg)|
+|Gooshop|![img](../../Icon/Chooses/Gooshop.svg)|
+|Gooking|![img](../../Icon/Chooses/Gooking.svg)|
+|Fircar|![img](../../Icon/Chooses/Fircar.svg)|
+|Seccar|![img](../../Icon/Chooses/Seccar.svg)|
+|Hoorse|![img](../../Icon/Chooses/Hoorse.svg)|
+|Bomb|![img](../../Icon/Chooses/Bomb.svg)|
+|Goobomb|![img](../../Icon/Chooses/Goobomb.svg)|
+|Stone|![img](../../Icon/Chooses/Stone.svg)|
+|Trap|![img](../../Icon/Chooses/Trap.svg)|
+|Rotator|![img](../../Icon/Chooses/Rotator.svg)|
+|Jumper|![img](../../Icon/Chooses/Jumper.svg)|
+|Jumplar|![img](../../Icon/Chooses/Jumplar.svg)|
+|Portal|![img](../../Icon/Chooses/Portal.svg)|
+|Diplomat|![img](../../Icon/Chooses/Diplomat.svg)|
+|Deaf|![img](../../Icon/Chooses/Deaf.svg)|
+|Diploqueen|![img](../../Icon/Chooses/Diploqueen.svg)|
+|Diportal|![img](../../Icon/Chooses/Diportal.svg)|
+|Emploee|![img](../../Icon/Chooses/Emploee.svg)|
+|Factory|![img](../../Icon/Chooses/Factory.svg)|
+|Product|![img](../../Icon/Chooses/Product.svg)|
+|Cell[?]|![img](../../Icon/Chooses/Cell[?].svg)|

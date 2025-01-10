@@ -55,10 +55,9 @@ div#list{
 choos#testchoos,choos#measurerChoos{
 	position: absolute;
 	display: flex;
-	height: 2.5vmin;
-	width: 2.5vmin;
-	background-color: white;
-	border-radius: 50%;
-	border: 0.75vmin black solid;
+	height: 7vmin;
+	width: 7vmin;
+	background-image: url("../../Icon/Chooses/Jumper.svg");
+	pointer-events: none;
 	z-index: 2;
 }
