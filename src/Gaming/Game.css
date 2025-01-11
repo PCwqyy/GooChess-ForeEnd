@@ -1,0 +1,63 @@
+div#Bkg{
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Grood */
+Grood{
+	position: absolute;
+	width: 96vmin;
+	height: calc(48vmin * sqrt(3));
+}
+Grood#main{
+	z-index: 1;
+}
+Grood#measurer{
+	opacity: 0.3;
+}
+Grood.Scaled{
+	transform:
+		scale(2)
+		rotate(160deg)
+		matrix3d(1, 0, 0, -0.0015,
+				0, 1, 0, 0.0015,
+				0, 0, 1, 0,
+				1, 1, 1, 1)
+		translate(0, 35%)
+}
+
+/* test */
+a.butt{
+	border-radius: 3px;
+	margin: 2vh 0;
+	width: 10vw;
+	color: white;
+	background-color: #3689ce;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+}
+a.butt:hover{
+	color: #3689ce;
+	background-color: white;
+}
+div#list{
+	display: flex;
+	position: absolute;
+	flex-direction: column;
+	left: 5vw;
+	top: 10vh;
+	z-index: 10;
+}
+choos#testchoos,choos#measurerChoos{
+	position: absolute;
+	display: flex;
+	height: 7vmin;
+	width: 7vmin;
+	background-image: url("../../Icon/Chooses/Jumper.svg");
+	pointer-events: none;
+	z-index: 2;
+}
