@@ -27,7 +27,7 @@ const ChoosList=
 	"deaf",
 	"diploqueen",
 	"diportal",
-	"emploee",
+	"employee",
 	"factory",
 	"product",
 	"cell"

@@ -25,7 +25,7 @@
 |Deaf|![img](../../Icon/Chooses/Deaf.svg)|
 |Diploqueen|![img](../../Icon/Chooses/Diploqueen.svg)|
 |Diportal|![img](../../Icon/Chooses/Diportal.svg)|
-|Emploee|![img](../../Icon/Chooses/Emploee.svg)|
+|Employee|![img](../../Icon/Chooses/Employee.svg)|
 |Factory|![img](../../Icon/Chooses/Factory.svg)|
 |Product|![img](../../Icon/Chooses/Product.svg)|
 |Cell[?]|![img](../../Icon/Chooses/Cell[?].svg)|
