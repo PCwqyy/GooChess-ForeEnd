@@ -124,10 +124,4 @@ span#Tip{
 	color: white;
 	z-index: 2;
 	transition: opacity 0.3s;
-	transform: matrix3d(
-		1, 0, 0, -0.0002,
-		0, 1, 0, 0,
-		0, 0, 1, 0,
-		1, 1, 1, 1
-	);
 }

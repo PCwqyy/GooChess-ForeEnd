@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Wiki</title>
-		<link rel="stylesheet" href="../Global.css">
 		<link rel="stylesheet" href="Wiki.css">
-		<link rel="stylesheet" href="Syntax.css">
+		<link rel="stylesheet" href="../Global.css">
+		<link rel="stylesheet" href="../Syntax.css">
 		<link rel="icon" type="image/png" href="../../Icon/GooChess.png">
 	</head>
 	<body>
@@ -27,9 +27,30 @@
 				<p>Choose a .md file to view</p>
 			</div>
 		</div>
-		<script src="Wiki.js"></script>
-		<script src="marked.js"></script>
+		<script src="../marked.js"></script>
 		<script src="../Gaming/Game.js"></script>
-		<script src="Syntax.js"></script>
+		<script src="../Syntax.js"></script>
+		<script src="Wiki.js"></script>
+		<script>
+			var Input=document.getElementById('Input');
+			var Main=document.getElementById("Main");
+			Input.addEventListener('change',function(event)
+			{
+				const files=event.target.files;
+				if (files.length==0)
+					return;
+				const file=files[0];
+				const reader=new FileReader();
+				reader.onload=function(e)
+				{
+					temp=PCMake(e.target.result);
+					Main.innerHTML=marked.parse(temp);
+					RunGrood();
+				}
+				reader.onerror=function(e)
+					{console.error("Fail reading file");};
+				reader.readAsText(file);
+			});
+		</script>
 	</body>
 </html>

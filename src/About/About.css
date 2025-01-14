@@ -1,0 +1,51 @@
+div#ContentWrap{
+	position: absolute;
+	inset: 0 0 -10vh 0;
+	border-left: black solid 1px;
+	border-right: black solid 1px;
+	transform: matrix3d(
+		1, 0, 0, 0,
+		0, 1, 0, 0.0003,
+		0, 0, 1, 0,
+		1, 1, 1, 1
+	);
+}
+div#Main{
+	position: relative;
+	top: 0vh;
+	margin: 0 5vh;
+	padding: 3vh;
+	text-align: center;
+	transition-timing-function: linear;
+}
+p{
+	margin: 10vh 0;
+}
+div.Wheel{
+	display: inline-block;
+	position: absolute;
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+	background-color: #00000010;
+	transform-origin: 50% 66%;
+	animation: Rotate 32s linear infinite;
+}
+div#Wheel1{
+	left: calc(100vw - 50vmin);
+	top: -66vmin;
+	width: 100vmin;
+	height: calc(50vmin * sqrt(3));
+}
+div#Wheel2{
+	left: -30vmin;
+	top: calc(100vh - 40vmin);
+	width: 60vmin;
+	height: calc(30vmin * sqrt(3));
+}
+@keyframes Rotate{
+	0%{rotate: 0deg;}
+	100%{rotate: 360deg;}
+}
+input#Input{
+	position: absolute;
+	z-index: 2;
+}

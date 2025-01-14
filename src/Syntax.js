@@ -1,5 +1,4 @@
-var Input=document.getElementById('Input');
-var Main=document.getElementById("Main");
+var temp=new String();
 var Tip=document.getElementById('Tip');
 
 const ChoosList=
@@ -111,22 +110,3 @@ function RunGrood()
 		}			
 	}
 }
-
-var temp=new String();
-Input.addEventListener('change',function(event)
-{
-	const files=event.target.files;
-	if (files.length==0)
-		return;
-	const file=files[0];
-	const reader=new FileReader();
-	reader.onload=function(e)
-	{
-		temp=PCMake(e.target.result);
-		Main.innerHTML=marked.parse(temp);
-		RunGrood();
-	}
-	reader.onerror=function(e)
-		{console.error("Fail reading file");};
-	reader.readAsText(file);
-});
