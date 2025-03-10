@@ -5,6 +5,7 @@ body{
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background-color: light-dark(white,black);
 }
 div#BigTCon{
 	display: flex;
@@ -18,7 +19,6 @@ span#MainTriangle,span#ColorCont{
 	width: 150vmin;
 	height: calc(75vmin * sqrt(3));
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-	background-color: white;
 	transform-origin: 50% 66%;
 	translate: 0 0;
 	scale: 1;
@@ -30,9 +30,11 @@ span#MainTriangle,span#ColorCont{
 } 
 span#MainTriangle{
 	mix-blend-mode: difference;
+	background-color: light-dark(white,#c0c0c0);
 }
 span#ColorCont{
 	z-index: 1;
+	background-color: white;
 }
 @keyframes RotateF{
 	0%		{rotate: 20deg;}
@@ -70,7 +72,7 @@ p#title{
 	font-size: 15vh;
 	z-index: 3;
 	mix-blend-mode: difference;
-	font-family: Consolas;
+	font-family: Caviar Dreams;
 	animation: RotateB 0.75s infinite;
 }
 @keyframes RotateB{

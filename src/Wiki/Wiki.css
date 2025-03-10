@@ -11,13 +11,15 @@ div#Body{
 	width: 100vw;
 	backdrop-filter: blur(14px) saturate(150%);
 }
+div#Content,div#Main{
+	overflow-y: scroll;
+	box-shadow: light-dark(#3f3f3f,#afafaf) 1px 1px 5px;
+	background-color: light-dark(#ffffffc0,#000000c0);
+}
 div#Main{
 	margin: 3vh 5vw 3vh 0;
 	padding: 0 5vh;
 	width: 65%;
-	overflow-y: scroll;
-	box-shadow: gainsboro 1px 1px 5px;
-	background-color: #ffffffc0;
 	transform: matrix3d(
 		1, 0, 0, -0.0002,
 		0, 1, 0, 0,
@@ -41,8 +43,6 @@ div#ContentWrap{
 div#Content{
 	width: 100%;
 	padding: 2vh 0;
-	box-shadow: gainsboro 1px 1px 5px;
-	background-color: #ffffffc0;
 }
 div#Content a{
 	display: block;

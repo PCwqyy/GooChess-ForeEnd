@@ -1,2 +1,7 @@
 *.ai
 *.fcp
+
+test.*
+Test.*
+ignore.*
+Ignore.*

@@ -5,7 +5,7 @@ span#MainTriangle,span#ColorCont{
 	translate: -35% 0;
 	height: calc(200vmin * sqrt(3));;
 	width: 400vmin;
-	background-color: black;
+	background-color: light-dark(black,darkgray);
 }
 p.welcome#sign{
 	animation:
@@ -32,12 +32,12 @@ a.MenuItem{
 	line-height: 15vh;
 	margin-bottom: 2vh;
 	width: 100%;
-	background-color: white;
+	background-color: light-dark(white,black);
 	mix-blend-mode: difference;
 }
 a.MenuItem,a.MenuItem:active,
 a.MenuItem:visited,a.MenuItem:focus{
-	color: black;
+	color: light-dark(black,white);
 }
 a.MenuItem::before{
 	content: '';

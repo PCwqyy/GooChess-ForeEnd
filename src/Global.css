@@ -9,23 +9,28 @@ html{
 body{
 	height: 100vh;
 	width: 100vw;
-	color: black;
-	background: white;
+	color: light-drak(black,white);
+	background: light-drak(white,black);
 	font-size: 22px;
-	font-family: "Saira";
+	font-family: "Caviar Dreams";
 }
 Grood{
+	--color-p1: light-dark(#10a3ff,#2c56bf);
+	--color-p2: light-dark(#f64632,#ad0000);
+	--color-p3: light-dark(#f4fc0a,#eada00);
+	--color-hover: light-dark(#ffd34f,#daa300);
+	--color-shooter: light-dark(#d8ff74,#0da100);
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-	background-color: #f4f4f4;
+	background-color: light-dark(#f4f4f4,#2f2f2f);
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	padding: 2vh 2vh calc(2vh / sqrt(3)) 2vh;
 	transition: 2s;
 	background-image:
-		linear-gradient(60deg, #10a3ff ,transparent 26%),
-		linear-gradient(180deg, #f64632 ,transparent 40%),
-		linear-gradient(300deg, #f4fc0a ,transparent 26%);
+		linear-gradient(60deg,var(--color-p1),transparent 26%),
+		linear-gradient(180deg,var(--color-p2),transparent 40%),
+		linear-gradient(300deg,var(--color-p3),transparent 26%);
 }
 .row{
 	display: flex;
@@ -53,28 +58,28 @@ cell span{
 	width: 8vmin;
 	margin: 0;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-	background-color: #ffffff;
+	background-color: light-dark(#ffffff,#000000);
 	transition: 0.5s;
 	pointer-events: auto;
 }
 .row.black cell span{
-	background-color: #d5d5d5;
+	background-color: light-dark(#d5d5d5,#4f4f4f);
 	transform: rotate(180deg);
 }
 cell:hover span,.row.black cell:hover span{
-	background-color: #ffd34f;
+	background-color: var(--color-hover);
 }
 cell.shooter span{
 	background-image:
-		linear-gradient(240deg, #d8ff74 35%, #00000000 41%),
-		linear-gradient(120deg, #d8ff74 35%, #00000000 41%),
-		linear-gradient(0deg, #d8ff74 4%, #00000000 10%)
+		linear-gradient(240deg, var(--color-shooter) 35%, #00000000 41%),
+		linear-gradient(120deg, var(--color-shooter) 35%, #00000000 41%),
+		linear-gradient(0deg, var(--color-shooter) 4%, #00000000 10%)
 }
 cell.shooter:hover span{
-	background-color: #d8ff74;
+	background-color: var(--color-shooter);
 }
 cell.red span{
-	background-image: linear-gradient(#f6463210, #f6463210);
+	background-image:  linear-gradient(#f6463210, #f6463210);
 }
 cell.blue span{
 	background-image: linear-gradient(#10a3ff10, #10a3ff10);
