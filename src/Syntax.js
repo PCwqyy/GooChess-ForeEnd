@@ -74,8 +74,43 @@ function RunGrood()
 		res=temp.match(/^\[([1-9][0-9]*)\]/);
 		ele.innerHTML='';
 		CreateBoard(ele,WikiCell,Number(res[1]),false);
+		res=temp.match(new RegExp(ChoosMatch,'gim'));
+		if(res!=null)for(i of res)
+		{
+			var src=i.match(/([a-z|A-Z])+/)[0];
+			src='../../Icon/Chooses/'+src[0].toUpperCase()+src.substring(1)+'.svg';
+			var C=document.createElement('choos');
+			C.style.backgroundImage=`url(${src})`;
+			var tar=i.match(/\((\d+),(\d+),(\d+)\)/);
+			var pos=NARtoXY(new NAR(tar[1],tar[2],tar[3]),ele.getAttribute('rows'));
+			cell[pos.x][pos.y].appendChild(C);
+		}			
+		res=temp.match(/[OJME]!{0,1}\(\d+,\d+,\d+\)/gm);
+		if(res!=null)for(i of res)
+		{
+			var tar=i.match(/\((\d+),(\d+),(\d+)\)/);
+			var pos=NARtoXY(new NAR(tar[1],tar[2],tar[3]),ele.getAttribute('rows'));
+			cell[pos.x][pos.y].classList.add("sign");
+			switch(i[0])
+			{
+				case 'O':
+					cell[pos.x][pos.y].classList.add("oto");
+				break;
+				case 'J':
+					cell[pos.x][pos.y].classList.add("jump");
+				break;
+				case 'M':
+					cell[pos.x][pos.y].classList.add("moove");
+				break;
+				case 'E':
+					cell[pos.x][pos.y].classList.add("effect");
+				break;
+			}
+			if(i[1]=='!')
+				cell[pos.x][pos.y].classList.add("only");
+		}
 	}
-	Cells=document.getElementsByTagName('cell')
+	Cells=document.getElementsByTagName('cell');
 	for(var ele of Cells)
 	{
 		ele.addEventListener('mouseenter',(e)=>{
@@ -94,19 +129,5 @@ function RunGrood()
 			Tip.style.left=`${e.clientX+10}px`;
 			Tip.style.top=`${e.clientY+10}px`;
 		});
-	}
-	for(ele of Groods)
-	{
-		res=temp.match(new RegExp(ChoosMatch,'gim'));
-		for(i in res)
-		{
-			var src=res[i].match(/[a-z|A-Z]+/)[0];
-			src='../../Icon/Chooses/'+src[0].toUpperCase()+src.substring(1)+'.svg';
-			var C=document.createElement('choos');
-			C.style.backgroundImage=`url(${src})`;
-			var tar=res[i].match(/\((\d+),(\d+),(\d+)\)/);
-			var pos=NARtoXY(new NAR(tar[1],tar[2],tar[3]),ele.getAttribute('rows'));
-			cell[pos.x][pos.y].appendChild(C);
-		}			
 	}
 }

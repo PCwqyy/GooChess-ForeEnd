@@ -123,5 +123,7 @@ span#Tip{
 	background-color: #000000d0;
 	color: white;
 	z-index: 2;
+	pointer-events: none;
+	user-select: none;
 	transition: opacity 0.3s;
 }

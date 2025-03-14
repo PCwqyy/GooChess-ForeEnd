@@ -9,8 +9,8 @@ html{
 body{
 	height: 100vh;
 	width: 100vw;
-	color: light-drak(black,white);
-	background: light-drak(white,black);
+	color: light-dark(black,white);
+	background: light-dark(white,black);
 	font-size: 22px;
 	font-family: "Caviar Dreams";
 }
@@ -51,7 +51,7 @@ cell{
 	transition: 0.5s;
 	pointer-events: none;
 }
-cell span{
+cell>span{
 	display: block;
 	position: relative;
 	height: calc(4vmin * sqrt(3));
@@ -62,39 +62,90 @@ cell span{
 	transition: 0.5s;
 	pointer-events: auto;
 }
-.row.black cell span{
+.row.black cell>span{
 	background-color: light-dark(#d5d5d5,#4f4f4f);
 	transform: rotate(180deg);
 }
-cell:hover span,.row.black cell:hover span{
-	background-color: var(--color-hover);
+cell:hover>span,.row.black cell:hover>span{
+	background-color: var(--color-hover) !important;
 }
-cell.shooter span{
+cell.shooter>span{
 	background-image:
 		linear-gradient(240deg, var(--color-shooter) 35%, #00000000 41%),
 		linear-gradient(120deg, var(--color-shooter) 35%, #00000000 41%),
 		linear-gradient(0deg, var(--color-shooter) 4%, #00000000 10%)
 }
-cell.shooter:hover span{
+cell.shooter:hover>span{
 	background-color: var(--color-shooter);
 }
-cell.red span{
+cell.red>span{
 	background-image:  linear-gradient(#f6463210, #f6463210);
 }
-cell.blue span{
+cell.blue>span{
 	background-image: linear-gradient(#10a3ff10, #10a3ff10);
 }
-cell.yellow span{
+cell.yellow>span{
 	background-image: linear-gradient(#f4fc0a10, #f4fc0a10);
 }
+cell.sign>span{
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: center;
+	font-weight: bold;
+}
+.row.black cell.sign>span::after{
+	rotate: 180deg;
+}
+cell.sign>span::after{
+	translate: 0 16%;
+	user-select: none;
+	font-size: 75%;
+}
+cell.sign.oto>span{
+	background-color: light-dark(#ff9898,#7a2b2b);
+	color: light-dark(#b84444,#ff9898);
+}
+cell.sign.oto>span::after{
+	content: "O";
+}
+cell.sign.effect>span{
+	background-color: light-dark(#98fffc,#098b91);
+	color: light-dark(#10c7d0,#98fffc);
+}
+cell.sign.effect>span::after{
+	content: "E";
+}
+cell.sign.jump>span{
+	background-color: light-dark(#c4ff98,#246c24);
+	color: light-dark(#44b844,#c4ff98);
+}
+cell.sign.jump>span::after{
+	content: "J";
+}
+
+cell.sign.moove>span{
+	background-color: light-dark(#fff539,#7f781a);
+	color: light-dark(#9f9400,#fff539);
+}
+cell.sign.moove>span::after{
+	content: "M";
+}
+
+cell.sign.only>span{
+	background-image: linear-gradient(0deg,#dc4fff9f,transparent);
+}
+
 choos{
 	position: absolute;
 	height: 7vmin;
 	width: 7vmin;
 	transition: 0.1s;
-	pointer-events: auto;
 	z-index: 2;
 }
+cell>choos{
+	pointer-events: none;
+}
 div.row.black choos {
-    top: -2vh;
+	top: -2vh;
 }
