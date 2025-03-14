@@ -15,6 +15,6 @@
 
 ## Version
 PClang Ver: Dev 0.1  
-GooChess Ver: 0.2  
+GooChess Ver: 0.3  
 [Marked](https://marked.js.org) Ver: v15.0.5  
-2025/1/10 PCwqyy
+2025/3/14 PCwqyy
