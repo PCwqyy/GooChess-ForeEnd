@@ -51,12 +51,29 @@ function PCMake(Str){
 }
 
 /** @param e {Event} */
+sz=[]
 function WikiCell(e)
 {
 	i=e.target.parentElement.getAttribute('x');
 	j=e.target.parentElement.getAttribute('y');
 	r=e.target.parentElement.parentElement.parentElement.getAttribute('rows');
-	console.log(`(${XYtoNAR(new XY(i,j),r).print()})`);
+	//console.log(`(${XYtoNAR(new XY(i,j),r).print()})`);
+	var pos=XYtoNAR(
+		new XY(
+		Number(i),
+			Number(j)),
+			Number(r));
+	console.log(`O(${pos.print(true)})`);
+	sz.push(`O(${pos.print(true)})`);
+	
+}
+function __output(){
+	res=""
+	for(i of sz){
+	res+=i;
+	res+="\n";
+}
+	console.log(res)
 }
 var groodCnt=0;
 var Groods;
