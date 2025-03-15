@@ -106,27 +106,42 @@ cell.sign.oto>span{
 	background-color: light-dark(#ff9898,#7a2b2b);
 	color: light-dark(#b84444,#ff9898);
 }
-cell.sign.oto>span::after{
-	content: "O";
-}
 cell.sign.effect>span{
 	background-color: light-dark(#98fffc,#098b91);
 	color: light-dark(#10c7d0,#98fffc);
-}
-cell.sign.effect>span::after{
-	content: "E";
 }
 cell.sign.jump>span{
 	background-color: light-dark(#c4ff98,#246c24);
 	color: light-dark(#44b844,#c4ff98);
 }
-cell.sign.jump>span::after{
-	content: "J";
-}
-
 cell.sign.moove>span{
 	background-color: light-dark(#fff539,#7f781a);
 	color: light-dark(#9f9400,#fff539);
+}
+.row.black cell.sign.oto>span{
+	background-color: light-dark(#e17e7e,#980000);
+	color: light-dark(#b84444,#ff9898);
+}
+.row.black cell.sign.effect>span{
+	background-color: light-dark(#88e4e2,#00878e);
+	color: light-dark(#10c7d0,#98fffc);
+}
+.row.black cell.sign.jump>span{
+	background-color: light-dark(#acdf85,#008300);
+	color: light-dark(#44b844,#c4ff98);
+}
+.row.black cell.sign.moove>span{
+	background-color: light-dark(#e0d832,#978d00);
+	color: light-dark(#9f9400,#fff539);
+}
+cell.sign.oto>span::after{
+	content: "O";
+}
+cell.sign.effect>span::after{
+	content: "E";
+}
+cell.sign.jump>span::after{
+	content: "J";
 }
 cell.sign.moove>span::after{
 	content: "M";

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Wiki Editor</title>
+		<link rel="stylesheet" href="Editor.css">
+		<link rel="stylesheet" href="../Global.css">
+		<link rel="stylesheet" href="../Syntax.css">
+		<link rel="icon" type="image/png" href="../../Icon/GooChess.png">
+	</head>
+	<body>
+		<div id="Wrap">
+			<div id="View"></div>
+			<textarea id="Input" placeholder="Code"></textarea>
+			<div id="Operate">
+				<input id="Tag" type="text" placeholder="Tag">
+				<span onclick="Load()">Load</span>
+				<span onclick="Apply()">Apply</span>
+			</div>
+		</div>
+		<span id="Tip"></span>
+		<script src="../Gaming/Game.js"></script>
+		<script src="../Syntax.js"></script>
+		<script src="Editor.js"></script>
+		<script>
+			var Input=document.getElementById('Input');
+			var Tag=document.getElementById('Tag');
+			var ViewBox=document.getElementById('View');
+			function Load()
+			{
+				ViewBox.innerHTML=`<grood>${PCMake(Input.value)}</grood>`;
+				RunGrood();
+				LaunchEditor(Input.value);
+			}
+			function Apply()
+			{
+				if(Tag.value.length==0)
+					return;
+				var Grood=document.getElementsByTagName('grood')[0];
+				Input.value=ApplyTag(Grood,Tag.value);
+				Load();
+			}
+		</script>
+	</body>
+</html>

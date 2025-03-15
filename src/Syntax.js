@@ -46,38 +46,21 @@ function PCMake(Str){
 	match=Str.match(/^```goochess$[^`]+^```$/gm);
 	for(i in match)
 		Str=Str.replace(/^```goochess$[^`]+^```$/m,
-			`<grood>${match[i].substring(13,match[i].length-5)}</grood>`);
+			`<grood>${match[i].substring(12,match[i].length-4)}</grood>`);
 	return Str;
 }
 
-/** @param e {Event} */
-sz=[]
+/** @param {Event} e */
 function WikiCell(e)
 {
 	i=e.target.parentElement.getAttribute('x');
 	j=e.target.parentElement.getAttribute('y');
 	r=e.target.parentElement.parentElement.parentElement.getAttribute('rows');
-	//console.log(`(${XYtoNAR(new XY(i,j),r).print()})`);
-	var pos=XYtoNAR(
-		new XY(
-		Number(i),
-			Number(j)),
-			Number(r));
-	console.log(`O(${pos.print(true)})`);
-	sz.push(`O(${pos.print(true)})`);
-	
 }
-function __output(){
-	res=""
-	for(i of sz){
-	res+=i;
-	res+="\n";
-}
-	console.log(res)
-}
-var groodCnt=0;
 var Groods;
 var ChoosMatch=new String;
+var PosInTip=new NAR(-1,-1,-1);
+var PosPlainPaint=false;
 function RunGrood()
 {
 	ChoosMatch='^(';
@@ -88,7 +71,7 @@ function RunGrood()
 	for(var ele of Groods)
 	{
 		temp=ele.textContent;
-		res=temp.match(/^\[([1-9][0-9]*)\]/);
+		res=temp.match(/^\[([1-9][0-9]*)\]/m);
 		ele.innerHTML='';
 		CreateBoard(ele,WikiCell,Number(res[1]),false);
 		res=temp.match(new RegExp(ChoosMatch,'gim'));
@@ -132,12 +115,11 @@ function RunGrood()
 	{
 		ele.addEventListener('mouseenter',(e)=>{
 			Tip.style.opacity='1';
-		var pos=XYtoNAR(
-			new XY(
+			PosInTip=XYtoNAR(new XY(
 				Number(e.target.getAttribute('x')),
 				Number(e.target.getAttribute('y'))),
 				Number(e.target.parentElement.parentElement.getAttribute('rows')));
-				Tip.innerHTML=`${pos.print()}<br>${pos.print(true)}`;
+				Tip.innerHTML=`${PosInTip.print(PosPlainPaint)}`;
 			});
 		ele.addEventListener('mouseleave',(e)=>{
 			Tip.style.opacity=0;
@@ -147,4 +129,14 @@ function RunGrood()
 			Tip.style.top=`${e.clientY+10}px`;
 		});
 	}
+	document.body.addEventListener('keydown',(e)=>{
+		if(e.key!='Shift')	return;
+		PosPlainPaint=true;
+		Tip.innerHTML=`${PosInTip.print(PosPlainPaint)}`;
+	})
+	document.body.addEventListener('keyup',(e)=>{
+		if(e.key!='Shift')	return;
+		PosPlainPaint=false;
+		Tip.innerHTML=`${PosInTip.print(PosPlainPaint)}`;
+	})
 }
