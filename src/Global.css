@@ -119,20 +119,16 @@ cell.sign.moove>span{
 	color: light-dark(#9f9400,#fff539);
 }
 .row.black cell.sign.oto>span{
-	background-color: light-dark(#e17e7e,#980000);
-	color: light-dark(#b84444,#ff9898);
+	background-color: light-dark(#ff7979,#9c3838);
 }
 .row.black cell.sign.effect>span{
-	background-color: light-dark(#88e4e2,#00878e);
-	color: light-dark(#10c7d0,#98fffc);
+	background-color: light-dark(#82fffb,#0ca8b1);
 }
 .row.black cell.sign.jump>span{
-	background-color: light-dark(#acdf85,#008300);
-	color: light-dark(#44b844,#c4ff98);
+	background-color: light-dark(#b5ff7d,#2f8d2f);
 }
 .row.black cell.sign.moove>span{
-	background-color: light-dark(#e0d832,#978d00);
-	color: light-dark(#9f9400,#fff539);
+	background-color: light-dark(#f4e801,#a19922);
 }
 cell.sign.oto>span::after{
 	content: "O";

@@ -14,8 +14,8 @@
 			<textarea id="Input" placeholder="Code"></textarea>
 			<div id="Operate">
 				<input id="Tag" type="text" placeholder="Tag">
-				<span onclick="Load()">Load</span>
 				<span onclick="Apply()">Apply</span>
+				<span onclick="Load()">Load</span>
 			</div>
 		</div>
 		<span id="Tip"></span>
@@ -34,10 +34,12 @@
 			}
 			function Apply()
 			{
+				LaunchEditor(Input.value);
 				if(Tag.value.length==0)
 					return;
 				var Grood=document.getElementsByTagName('grood')[0];
 				Input.value=ApplyTag(Grood,Tag.value);
+				Tag.value="";
 				Load();
 			}
 		</script>

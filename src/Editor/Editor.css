@@ -44,6 +44,9 @@
 }
 #Tag{
 	margin: 1vh;
+	width: 22vw;
+	font-size: 3.5vh;
+	font-family: Consolas;
 }
 cell:not(.a):not(.b)>span.selected,
 .row.black cell:not(.a):not(.b)>span.selected{

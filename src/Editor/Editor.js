@@ -5,7 +5,7 @@ function LaunchEditor(t){
 	Tags.clear();
 	var Cells=document.getElementsByTagName('cell');
 	var res=t.match(/^[^\(\)\s]+\(\d+,\d+,\d+\)/mg);
-	for(var i=0;i<res.length;i++)
+	if(res!=null) for(var i=0;i<res.length;i++)
 	{
 		var res2=res[i].match(/^([^\(\)\s]+)\((\d+),(\d+),(\d+)\)/);
 		Tags.set(new NAR(res2[2],res2[3],res2[4]).print(true),res2[1]);
