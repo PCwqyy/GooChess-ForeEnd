@@ -1,16 +1,11 @@
 div#ContentWrap{
 	position: absolute;
-	inset: -10vh 5vw;
+	inset: 5vh 5vw;
 	border: 2px solid light-dark(black,white);
 	box-shadow: light-dark(gray,white) 0px 0px 10px;
 	background-color: light-dark(#00000010,#ffffff10);
 	backdrop-filter: blur(2px);
-	transform: matrix3d(
-		1, 0, 0, 0,
-		0, 1, 0, 0.0003,
-		0, 0, 1, 0,
-		1, 1, 1, 1
-	);
+	overflow: hidden;
 	z-index: 1;
 }
 div#Main{
@@ -70,7 +65,7 @@ span.Line{
 	display: block;
 	position: absolute;
 	width: 300vw;
-	height: 2px;
+	height: 1px;
 	opacity: 0;
 	pointer-events: none;
 	animation: LineDis 3s ease-in;

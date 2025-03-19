@@ -73,6 +73,7 @@ p#title{
 	z-index: 3;
 	mix-blend-mode: difference;
 	font-family: Caviar Dreams;
+	font-weight: bold;
 	animation: RotateB 0.75s infinite;
 }
 @keyframes RotateB{

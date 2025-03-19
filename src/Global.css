@@ -7,13 +7,25 @@ html{
 	width: 100vw;
 	overflow: hidden;
 }
+
+@media (prefers-color-scheme: dark){
+	html{
+		color-scheme: dark;
+	}
+}
+@media (prefers-color-scheme: light){
+	html{
+		color-scheme: light;
+	}
+}
+
 body{
 	height: 100vh;
 	width: 100vw;
 	color: light-dark(black,white);
 	background: light-dark(white,black);
 	font-size: 22px;
-	font-family: "Caviar Dreams";
+	font-family: Caviar Dreams, DengXian;
 }
 Grood{
 	--color-p1: light-dark(#10a3ff,#2c56bf);
