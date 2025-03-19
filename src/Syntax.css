@@ -1,31 +1,30 @@
 h1, h2, h3, h4, h5, h6 {
-	font: 100%;
-	font-weight: normal;
+	font-weight: bold;
 	text-decoration: none;
 	margin-top: unset;
 	margin-bottom: 1vh;
 }
 h1{
-	font: 7vh "Saira";
+	font-size: 7vh;
 	margin-top: 7vh;
 }
 h2{
-	font: 6vh "Saira";
+	font-size: 6vh;
 	margin-top: 5vh;
 }
 h3{
-	font: 5vh "Saira";
+	font-size: 5vh;
 	margin-top: 4vh;
 }
 h4{
-	font: 4.5vh "Saira";
+	font-size: 4.5vh;
 }
 h5{
-	font: 4vh "Saira";
+	font-size: 4vh;
 	padding-left: 1vw;
 }
 h6{
-	font: 3.5vh "Saira";
+	font-size: 3.5vh;
 	color: #888;
 	padding-left: 2vw;
 }
@@ -108,6 +107,17 @@ pre{
 	border-radius: 6px;
 	padding: 3vh;
 }
+svg.arrows{
+	position: absolute;
+	opacity: 60%;
+	pointer-events: none;
+}
+.GroodWarp{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100%;
+}
 Grood{
 	width: max-content;
 	height: max-content;
@@ -119,9 +129,8 @@ span#Tip{
 	border-radius: 5px;
 	padding: 1vh;
 	opacity: 0;
-	font-family: "Consolas";
-	background-color: #000000d0;
-	color: white;
+	background-color: light-dark(black,white);
+	color: light-dark(white,black);
 	z-index: 2;
 	pointer-events: none;
 	user-select: none;

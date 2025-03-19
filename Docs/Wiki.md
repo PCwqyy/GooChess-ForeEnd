@@ -1,88 +1,110 @@
-# Test Page
+## pawn
 
-Text  
-**Blod**  
-~~Delete Line~~  
-*Italic*  
-[Link](../Menu/Main.html)  
+```goochess
+[5]
+Pawn(4,4,4)
+M(3,5,3)
+M(4,4,3)
+M(3,4,4)
+O!(5,5,3)
+O!(3,5,5)
+```
+
+## rook
 
 ```goochess
 [7]
-// 大小必须写在最前面
-// 这里面 不准 使用markdown
-// 接下来每一行都是一个棋子
-pawn(4,6,6)
-rook(6,4,6)
-// 不合格式/不存在的棋子的都视为注释：
-我是注释
-Grimgod(1,1,4,5,1,4)
-这里不能写东西bishop(5,5,5)这里也是
-// 请勿拼错：
-pond(1,1,4)
-// 大小写不敏感：
-Diplomat(5,5,5)
-ROTATOR(6,6,4)
-// 请确保坐标真实存在，
-// 否则之后所有的棋子都会抽风
-// 其实不建议往这里面写别的……
+Rook(5,5,5)
+M(3,5,7)
+M(3,7,5)
+M(4,5,7)
+M(4,7,5)
+M(4,5,6)
+M(4,6,5)
+M(5,4,7)
+M(5,5,6)
+M(5,6,5)
+M(5,7,4)
+M(5,3,7)
+M(5,4,6)
+M(5,6,4)
+M(5,7,3)
+M(6,5,5)
+M(6,4,5)
+M(6,5,4)
+M(7,4,5)
+M(7,5,4)
+M(7,3,5)
+M(7,5,3)
 ```
 
-> Reference
+与一般的国际象棋类似地，可以朝六个方向移动，过程中不能经过任何棋子（除落点外）。
 
-# h1
-## h2
-### h3
-#### h4
-##### h5
-###### h6
+## bishop
 
-|Middle|Left|Right|
-|:-:|:-|-:|
-|Text|Text|Text|
-|Text|Text|Text|
-|Text|Text|Text|
-|Text|Text|Text|
-|Text|Text|Text|
-|Text|Text|Text|
-|Text|Text|Text|
-|Text|Text|Text|
-
-* Unoddered List
-* Unoddered List
-
-1. Oddered List
-2. Oddered List
-
----
-
-![Img](../../Icon/GooChess@16x.png)
-
-===Folded Block===
-
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-Hello!  
-
-===!===
-
-
-```Code
-code block
-blocky o' code
-block of code
+```goochess
+[7]
+Bishop(5,5,5)
+M(1,7,7)
+M(3,6,6)
+M(4,4,7)
+M(4,7,4)
+M(6,3,6)
+M(6,6,3)
+M(7,1,7)
+M(7,4,4)
+M(7,7,1)
 ```
 
-`Inline Code`
+可以朝六个对角的方向移动，过程中不能经过任何棋子（除落点外）。
+
+## king
+
+```goochess
+[5]
+King(4,4,4)
+M(3,3,5)
+M(3,4,4)
+M(3,5,3)
+M(4,3,4)
+M(4,4,3)
+M(5,3,3)
+```
+
+可以移动至周围六个异色的格子。  
+
+## queen
+```goochess
+[7]
+queen(5,5,5)
+M(3,5,7)
+M(3,7,5)
+M(4,5,7)
+M(4,7,5)
+M(4,5,6)
+M(4,6,5)
+M(5,4,7)
+M(5,5,6)
+M(5,6,5)
+M(5,7,4)
+M(5,3,7)
+M(5,4,6)
+M(5,6,4)
+M(5,7,3)
+M(6,5,5)
+M(6,4,5)
+M(6,5,4)
+M(7,4,5)
+M(7,5,4)
+M(7,3,5)
+M(7,5,3)
+M(1,7,7)
+M(3,6,6)
+M(4,4,7)
+M(4,7,4)
+M(6,3,6)
+M(6,6,3)
+M(7,1,7)
+M(7,4,4)
+M(7,7,1)
+```

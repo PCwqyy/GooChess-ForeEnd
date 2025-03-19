@@ -1,0 +1,55 @@
+#Wrap{
+	position: absolute;
+	inset: 1vh;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: center;
+	flex-direction: column;
+}
+#View,#Input,#Operate{
+	margin: 1vh;
+}
+#View{
+	height: 90vh;
+	width: 65vw;
+	padding: 2vh;
+}
+#Input{
+	height: 80vh;
+	width: 25vw;
+	font-size: 3.5vh;
+	resize: none;
+}
+#Operate{
+	display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+	width: 25vw;
+}
+#Operate>span{
+	margin: 0 1vh;
+	border-radius: 3px;
+	padding: 0 1vh;
+	color: white;
+	background-color: #3689ce;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+}
+#Operate>span:hover{
+	color: #3689ce;
+	background-color: white;
+}
+#Tag{
+	margin: 1vh;
+	width: 22vw;
+	font-size: 3.5vh;
+	font-family: Consolas;
+}
+cell:not(.a):not(.b)>span.selected,
+.row.black cell:not(.a):not(.b)>span.selected{
+	background-color: light-dark(#f473fb,#ff00e6);
+	background-image: none;
+}

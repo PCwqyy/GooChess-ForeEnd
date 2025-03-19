@@ -21,8 +21,8 @@ class NAR{
 	print(plain=false)
 	{
 		if(plain)
-			return `${this.num},${this.alp},${this.rom}`;
-		return `${this.num},${String.fromCharCode(96+this.alp)},${RomeApl[this.rom]}`;
+			return `${this.num}, ${this.alp}, ${this.rom}`;
+		return `${this.num}, ${String.fromCharCode(96+this.alp)}, ${RomeApl[this.rom]}`;
 	}
 }
 /** @returns {NAR} */
