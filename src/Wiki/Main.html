@@ -29,10 +29,8 @@
 			</div>
 		</div>
 		<script src="../marked.js"></script>
-		<script src="../Gaming/Game.js"></script>
-		<script src="../Syntax.js"></script>
-		<script src="Wiki.js"></script>
-		<script>
+		<script type="module">
+			import {PCMake,DecodeGrood} from "../Syntax.js";
 			var Input=document.getElementById('Input');
 			var Main=document.getElementById("Main");
 			Input.addEventListener('change',function(event)
@@ -44,15 +42,16 @@
 				const reader=new FileReader();
 				reader.onload=function(e)
 				{
-					temp=PCMake(e.target.result);
+					var temp=PCMake(e.target.result);
 					Main.innerHTML=marked.parse(temp);
-					RunGrood();
+					DecodeGrood();
 				}
 				reader.onerror=function(e)
 					{console.error("Fail reading file");};
 				reader.readAsText(file);
 			});
 		</script>
+		<script src="Wiki.js"></script>
 		<script src="../Global.js"></script>
 	</body>
 </html>

@@ -9,32 +9,28 @@
 		<link rel="stylesheet" href="Game.css">
 	</head>
 	<body>
-		<div id="Bkg">
-			<grood id="main"><choos id="testchoos"></choos></grood>
-			<grood id="measurer"><choos id="measurerChoos"></choos></grood>
-		</div>
-			<script src="Game.js"></script>
-			<script>
-			const ROWS=12;
-			const body=document.getElementsByTagName('body')[0];
-			var choos=document.getElementById('testchoos');
-			/** @param e {Event} */
-			function GamingCell(e)
-			{
-				i=e.target.parentElement.getAttribute('x');
-				j=e.target.parentElement.getAttribute('y');
-				console.log(`(${XYtoNAR(new XY(i,j),ROWS).print()})`);
-				ChoosToCell(choos,`${i}`,`${j}`);
-			}
-			
-			CreateBoard(Grood,GamingCell,ROWS);
-			CreateBoard(Mea,GamingCell,ROWS);
-			</script>
+		<div id="Wrapper"></div>
 		<div id="list">
-			<a class="butt" onclick="ScaleBoard()">Scale</a>
+			<a class="butt" id="ScaleButt">Scale</a>
 			<a class="butt" href="../Menu/Main.html">Menu</a>
 			<a class="butt" href="../Wiki/Main.html">Wiki</a>
 		</div>
+		<script id="debugger">
+			let Debug=new DOMRect;
+		</script>
+		<script type="module">
+			import {Grood,XY,NAR} from "../Game.js";
+			const ROWS=12;
+			var GroodMian=new Grood(ROWS,document.getElementById('Wrapper'),()=>{});
+			var ScaleButt=document.getElementById('ScaleButt');
+			ScaleButt.addEventListener('click',()=>{
+				GroodMian.element.classList.toggle('Scaled');
+			})
+			//Debug
+			Debug.Grood=GroodMian;
+			Debug.XY=XY;
+			Debug.NAR=NAR;
+		</script>
 		<script src="../Global.js"></script>
 	</body>
 </html>

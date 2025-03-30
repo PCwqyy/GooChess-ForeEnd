@@ -112,11 +112,12 @@ svg.arrows{
 	opacity: 60%;
 	pointer-events: none;
 }
-.GroodWarp{
+.GroodWrap{
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	width: 100%;
+	margin: 5vh 0px;
 }
 Grood{
 	width: max-content;

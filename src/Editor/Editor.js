@@ -1,14 +1,15 @@
+import * as G from '../Game.js'
 /** @type {Map<String,String>} */
 var Tags=new Map;
 /** @param {String} t */
-function LaunchEditor(t){
+export function LaunchEditor(t){
 	Tags.clear();
 	var Cells=document.getElementsByTagName('cell');
 	var res=t.match(/^[^\(\)\s]+\(\d+,\d+,\d+\)/mg);
 	if(res!=null) for(var i=0;i<res.length;i++)
 	{
 		var res2=res[i].match(/^([^\(\)\s]+)\((\d+),(\d+),(\d+)\)/);
-		Tags.set(new NAR(res2[2],res2[3],res2[4]).print(true),res2[1]);
+		Tags.set(new G.NAR(res2[2],res2[3],res2[4]).print(true),res2[1]);
 	}
 	for(var ele of Cells)
 	{
@@ -27,15 +28,15 @@ function GenCode(ele)
 	return res;
 }
 /** @param {String} t */
-function ApplyTag(g,t){
+export function ApplyTag(g,t){
 	var C=document.getElementsByClassName('selected');
 	var row=g.getAttribute('rows');
 	for(var ele of C)
 	{
-		var pos=new XY(
+		var pos=new G.XY(
 			ele.parentElement.getAttribute('x'),
 			ele.parentElement.getAttribute('y'));
-		Tags.set(XYtoNAR(pos,row).print(true),t);
+		Tags.set(G.XYtoNAR(pos,row).print(true),t);
 	}
 	for(var ele of C)
 		ele.classList.remove('selected');

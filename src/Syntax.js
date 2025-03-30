@@ -1,3 +1,5 @@
+import * as G from "./Game.js";
+
 var temp=new String();
 var Tip=document.getElementById('Tip');
 
@@ -32,7 +34,7 @@ const ChoosList=
 	"cell"
 ];
 var ChoosMatch='^(';
-for(ele of ChoosList)
+for(var ele of ChoosList)
 	ChoosMatch+='|'+ele;
 ChoosMatch+=')\\(\\d+,\\d+,\\d+\\)$';
 
@@ -40,34 +42,25 @@ ChoosMatch+=')\\(\\d+,\\d+,\\d+\\)$';
 /** @type {RegExpMatchArray} */
 var match;
 /** @param {String} Str */
-function PCMake(Str){
+export function PCMake(Str){
 	// <details>
 	match=Str.match(/^===[^!].+===$/gm);
-	for(i in match)
+	for(var i in match)
 		Str=Str.replace(/^===[^!].+===$/m,
 		`<details><summary>${match[i].substring(3,match[i].length-3)}</summary>\n`);
 	Str=Str.replace(/^===!===$/gm,'</details>');
 	// <grood>
 	match=Str.match(/^```goochess$[^`]+^```$/gm);
-	for(i in match)
+	for(var i in match)
 		Str=Str.replace(/^```goochess$[^`]+^```$/m,
-			`<div class="GroodWarp">
-				<grood>
-					${match[i].substring(12,match[i].length-4)}
-				</grood>
+			`<div class="GroodWrap">
+				${match[i].substring(12,match[i].length-4)}
 			</div>`);
 	return Str;
 }
 
-/** @param {Event} e */
-function WikiCell(e)
-{
-	i=e.target.parentElement.getAttribute('x');
-	j=e.target.parentElement.getAttribute('y');
-	r=e.target.parentElement.parentElement.parentElement.getAttribute('rows');
-}
-var Groods;
-var PosInTip=new NAR(-1,-1,-1);
+var Decodings;
+var PosInTip=new G.NAR(-1,-1,-1);
 var PosPlainPaint=false;
 const ClassNamesForSign={
 	O:"oto",
@@ -76,65 +69,54 @@ const ClassNamesForSign={
 	E:"effect"
 };
 
-/** 
- * @param {HTMLElement} cell 
- * @param {HTMLElement} grood
-*/
-function CellCenterToGrood(cell,grood)
+function WikiGroodClickFunc()
 {
-	return {
-		x:cell.offsetLeft-grood.offsetLeft+cell.offsetWidth/2,
-		y:cell.offsetTop-grood.offsetTop+
-			(cell.parentElement.classList.contains('black')?1:2)*cell.offsetHeight/3,
-	};
+
 }
 
-function RunGrood()
+export function DecodeGrood()
 {
-	Groods=document.getElementsByTagName('grood');
-	for(var ele of Groods)
+	Decodings=document.querySelectorAll('div.GroodWrap>p');
+	var res;
+	for(var ch of Decodings)
 	{
-		temp=ele.textContent;
+		temp=ch.textContent;
+		var ele=ch.parentElement;
 		ele.innerHTML='';
 		// [size]
 		res=temp.match(/^\[([1-9][0-9]*)\]$/m);
-		CreateBoard(ele,WikiCell,Number(res[1]),false);
+		var gr=new G.Grood(res[1],ele,WikiGroodClickFunc,false);
 		// choos(N,A,R)
 		res=temp.match(new RegExp(ChoosMatch,'gim'));
-		if(res!=null)for(i of res)
+		if(res!=null)for(var i of res)
 		{
-			var src=i.match(/([a-z|A-Z])+/)[0];
-			src='../../Icon/Chooses/'+src[0].toUpperCase()+src.substring(1)+'.svg';
-			var C=document.createElement('choos');
-			C.style.backgroundImage=`url(${src})`;
+			var type=i.match(/([a-z|A-Z])+/)[0];
 			var tar=i.match(/\((\d+),(\d+),(\d+)\)/);
-			var pos=NARtoXY(new NAR(tar[1],tar[2],tar[3]),ele.getAttribute('rows'));
-			cell[pos.x][pos.y].appendChild(C);
-		}			
+			gr.PlaceChoos(new G.NAR(tar[1],tar[2],tar[3]),type,-1);
+		}
 		// tag(N,A,R)
 		res=temp.match(/^[OJME]!{0,1}\(\d+,\d+,\d+\)$/gm);
-		if(res!=null)for(i of res)
+		if(res!=null)for(var i of res)
 		{
 			var tar=i.match(/\((\d+),(\d+),(\d+)\)/);
-			var pos=NARtoXY(new NAR(tar[1],tar[2],tar[3]),ele.getAttribute('rows'));
-			cell[pos.x][pos.y].classList.add("sign");
-			cell[pos.x][pos.y].classList.add(ClassNamesForSign[i[0]]);
+			var pos=G.NARtoXY(new G.NAR(tar[1],tar[2],tar[3]),gr.rows);
+			gr.SetSign(pos,"sign",ClassNamesForSign[i[0]]);
 			if(i[1]=='!')
-				cell[pos.x][pos.y].classList.add("only");
+				gr.SetSign(pos,"only");
 		}
 		// (N1,A1,R1)->(N2,A2,R2)color
 		res=temp.match(/^\(\d+,\d+,\d+\)->\(\d+,\d+,\d+\).+$/gm);
 		if(res!=null)
 		{
-			var svgHead=`<svg class="arrows" height="${ele.offsetHeight}" width="${ele.offsetWidth}"><defs>`;
+			var svgHead=`<svg class="arrows" height="${gr.element.offsetHeight}" width="${gr.element.offsetWidth}"><defs>`;
 			var svgBody=`</defs>`;
-			for(i in res)
+			for(var i in res)
 			{
 				var tar=res[i].match(/\((\d+),(\d+),(\d+)\)->\((\d+),(\d+),(\d+)\)(.+)/);
-				var pos1=NARtoXY(new NAR(tar[1],tar[2],tar[3]),ele.getAttribute('rows'));
-				var pos2=NARtoXY(new NAR(tar[4],tar[5],tar[6]),ele.getAttribute('rows'));
-				var p1=CellCenterToGrood(cell[pos1.x][pos1.y],ele);
-				var p2=CellCenterToGrood(cell[pos2.x][pos2.y],ele);
+				var pos1=G.NARtoXY(new G.NAR(tar[1],tar[2],tar[3]),gr.rows);
+				var pos2=G.NARtoXY(new G.NAR(tar[4],tar[5],tar[6]),gr.rows);
+				var p1=gr.QueryCellCenter(pos1);
+				var p2=gr.QueryCellCenter(pos2);
 				svgHead+=`<marker id="arrow${i}" markerWidth="3" markerHeight="3" refX="1" refY="1.5" orient="auto">
 							<path d="M 0 0 L 0 3 L 2 1.5 Z" fill="${tar[7]}" />
 						</marker>`
@@ -142,28 +124,31 @@ function RunGrood()
 					stroke="${tar[7]}" stroke-width="10" marker-end="url(#arrow${i})" />`
 			}
 			svgBody+=`</svg>`;
-			ele.parentElement.innerHTML+=svgHead+svgBody;
+			ele.innerHTML+=svgHead+svgBody;
 		}
 	}
-	Cells=document.getElementsByTagName('cell');
-	for(var ele of Cells)
-	{
-		ele.addEventListener('mouseenter',(e)=>{
-			PosInTip=XYtoNAR(new XY(
-				Number(e.target.getAttribute('x')),
-				Number(e.target.getAttribute('y'))),
-				Number(e.target.parentElement.parentElement.getAttribute('rows')));
-				Tip.innerHTML=`${PosInTip.print(PosPlainPaint)}`;
-			Tip.style.opacity='0.8';
-		});
-		ele.addEventListener('mouseleave',(e)=>{
+	var groods=document.getElementsByTagName('grood');
+	for(var ele of groods){
+		ele.addEventListener('mouseleave',()=>{
 			Tip.style.opacity=0;
+		});
+		ele.addEventListener('mouseenter',()=>{
+			Tip.style.opacity=0.8;
 		});
 		ele.addEventListener('mousemove',(e)=>{
 			Tip.style.left=`${e.clientX+10}px`;
 			Tip.style.top=`${e.clientY+10}px`;
 		});
 	}
+	var Cells=document.getElementsByTagName('cell');
+	for(var ele of Cells)
+		ele.addEventListener('mouseenter',(e)=>{
+			PosInTip=G.XYtoNAR(new G.XY(
+				Number(e.target.getAttribute('x')),
+				Number(e.target.getAttribute('y'))),
+				Number(e.target.parentElement.parentElement.getAttribute('rows')));
+				Tip.innerHTML=`${PosInTip.print(PosPlainPaint)}`;
+		});
 	document.body.addEventListener('keydown',(e)=>{
 		if(e.key!='Shift')	return;
 		PosPlainPaint=true;
