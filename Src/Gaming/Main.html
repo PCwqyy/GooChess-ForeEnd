@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" type="image/png" href="../../Icon/GooChess.png">
+		<meta charset="UTF-8">
+		<meta name="darkreader-lock">
+		<title>Goord</title>
+		<link rel="stylesheet" href="../Global.css">
+		<link rel="stylesheet" href="Game.css">
+	</head>
+	<body>
+		<div id="Wrapper"></div>
+		<div id="list">
+			<a class="butt" id="ScaleButt">Scale</a>
+			<a class="butt" href="../Menu/Main.html">Menu</a>
+			<a class="butt" href="../Wiki/Main.html">Wiki</a>
+		</div>
+		<script id="debugger">
+			let Debug=new DOMRect;
+		</script>
+		<script type="module">
+			import {Grood,XY,NAR} from "../Game.js";
+			const ROWS=12;
+			var GroodMian=new Grood(ROWS,document.getElementById('Wrapper'),()=>{});
+			var ScaleButt=document.getElementById('ScaleButt');
+			ScaleButt.addEventListener('click',()=>{
+				GroodMian.element.classList.toggle('Scaled');
+			})
+			//Debug
+			Debug.Grood=GroodMian;
+			Debug.XY=XY;
+			Debug.NAR=NAR;
+		</script>
+		<script src="../Global.js"></script>
+	</body>
+</html>

@@ -1,0 +1,139 @@
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+	text-decoration: none;
+	margin-top: unset;
+	margin-bottom: 1vh;
+}
+h1{
+	font-size: 7vh;
+	margin-top: 7vh;
+}
+h2{
+	font-size: 6vh;
+	margin-top: 5vh;
+}
+h3{
+	font-size: 5vh;
+	margin-top: 4vh;
+}
+h4{
+	font-size: 4.5vh;
+}
+h5{
+	font-size: 4vh;
+	padding-left: 1vw;
+}
+h6{
+	font-size: 3.5vh;
+	color: #888;
+	padding-left: 2vw;
+}
+a{
+	transition: 0.5s;
+}
+a:link{
+	color: #3498db;
+	text-decoration: none;
+}
+a:visited{
+	color: #5eb95e;
+	text-decoration: none;
+}
+a:hover{
+	color: #ff5252;
+	text-decoration: none;
+}
+a:active{
+	color: #e67e22;
+	text-decoration: none;
+}
+table{
+	border-spacing: 0;
+}
+thead{
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+th,td{
+	padding: 1vh 3vh;
+	border-bottom: gainsboro solid 1px;
+}
+th{
+	background-color: gainsboro;
+	font-weight: normal;
+}
+blockquote{
+	margin: unset;
+	border-left: gainsboro solid 10px;
+	padding: 3vh 3vw;
+}
+blockquote p{
+	margin: unset;
+	color: gray;
+	font-style: italic;
+	font-family: "宋体","楷体";
+}
+details{
+	background-color: white;
+	border: 1px solid #ffb700;
+	border-radius: 5px;
+	overflow: clip;
+}
+details *{
+	padding-left: 5vh;
+}
+summary{
+	position: sticky;
+	top: 0;
+	width: 100%;
+	padding: 1vh 0 1vh 5vh;
+	background-color: #ffcc4d;
+	color: white;
+	list-style-type: none;
+	cursor: pointer;
+}
+:not(pre)>code{
+	color: #23791b;
+	background-color: #ceffca;
+	padding: 5px;
+	border-radius: 3px;
+}
+code{
+	font-family: "Consolas";
+}
+pre{
+	background-color: gainsboro;
+	border-radius: 6px;
+	padding: 3vh;
+}
+svg.arrows{
+	position: absolute;
+	opacity: 60%;
+	pointer-events: none;
+}
+.GroodWrap{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100%;
+	margin: 5vh 0px;
+}
+Grood{
+	width: max-content;
+	height: max-content;
+	margin: auto;
+	background-image: unset;
+}
+span#Tip{
+	position: absolute;
+	border-radius: 5px;
+	padding: 1vh;
+	opacity: 0;
+	background-color: light-dark(black,white);
+	color: light-dark(white,black);
+	z-index: 2;
+	pointer-events: none;
+	user-select: none;
+	transition: opacity 0.3s;
+}
