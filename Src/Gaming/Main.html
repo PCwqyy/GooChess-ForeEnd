@@ -37,7 +37,6 @@
 				GroodMian.PlaceChoos(new XY(4,1),'pawn',0);
 				GroodMian.PlaceChoos(new XY(7,2),'pawn',0);
 				GroodMian.PlaceChoos(new XY(6,3),'pawn',0);
-				GroodMian.PlaceChoos(new XY(8,4),'pawn',0);
 				GroodMian.PlaceChoos(new XY(5,2),'bomb',0);
 				GroodMian.PlaceChoos(new XY(6,2),'bomb',60);
 				GroodMian.PlaceChoos(new XY(7,3),'bomb',120);
@@ -48,6 +47,9 @@
 				GroodMian.AnimMove(new XY(10,4),new XY(9,4));
 				GroodMian.AnimMove(new XY(9,4),new XY(8,3));
 				GroodMian.AnimExplode(new XY(8,3));
+
+				GroodMian.PlaceChoos(new XY(8,4),'king',210);
+				GroodMian.SetSign(new XY(8,4),'danger','checked')
 			}
 			Debug.Func=DebugFunc;
 		</script>

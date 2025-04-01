@@ -93,15 +93,7 @@ cell>span{
 cell:hover>span,.row.black cell:hover>span{
 	background-color: var(--color-hover) !important;
 }
-cell.shooter>span{
-	background-image:
-		linear-gradient(240deg, var(--color-shooter) 35%, #00000000 41%),
-		linear-gradient(120deg, var(--color-shooter) 35%, #00000000 41%),
-		linear-gradient(0deg, var(--color-shooter) 4%, #00000000 10%)
-}
-cell.shooter:hover>span{
-	background-color: var(--color-shooter);
-}
+
 cell.red>span{
 	background-image:  linear-gradient(#f6463210, #f6463210);
 }
@@ -166,10 +158,26 @@ cell.sign.jump>span::after{
 cell.sign.moove>span::after{
 	content: "M";
 }
-
 cell.sign.only>span{
 	background-image: linear-gradient(0deg,#dc4fff9f,transparent);
 }
+
+cell.shooter>span{
+	background-image:
+		linear-gradient(240deg, var(--color-shooter) 35%, #00000000 41%),
+		linear-gradient(120deg, var(--color-shooter) 35%, #00000000 41%),
+		linear-gradient(0deg, var(--color-shooter) 4%, #00000000 10%);
+}
+cell.shooter:hover>span{
+	background-color: var(--color-shooter) !important;
+}
+cell.danger.checked>span{
+	background-image:
+		linear-gradient(240deg, red 5%, #00000000 48%),
+		linear-gradient(120deg, red 5%, #00000000 48%),
+		linear-gradient(0deg, red -20%, #00000000 20%);
+}
+
 
 choos{
 	position: absolute;
@@ -201,7 +209,7 @@ div.row.black cell>choos{
 	animation: ExplodeBig 2.5s;
 }
 .perform.Explode.Small{
-	background-color: #ff660e;
+	background-color: #ff4400;
 	animation: ExplodeSmall 2.5s;
 }
 @keyframes ExplodeBig{
@@ -246,4 +254,11 @@ div.row.black cell>choos{
 		rotate: 720deg;
 		opacity: 0;
 	}
+}
+.perform.Checked{
+	height: calc(var(--cell-size) / 2);
+	width: calc(var(--cell-size) / 2);
+	border-radius: 100%;
+	background-color: red;
+	box-shadow: red 1px 1px 1px;
 }
