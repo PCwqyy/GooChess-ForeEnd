@@ -7,17 +7,6 @@ div#Wrapper{
 }
 
 /* Grood */
-Grood{
-	position: absolute;
-	width: 96vmin;
-	height: calc(48vmin * sqrt(3));
-}
-Grood#main{
-	z-index: 1;
-}
-Grood#measurer{
-	opacity: 0.3;
-}
 Grood.Scaled{
 	transform:
 		scale(2)
@@ -51,13 +40,4 @@ div#list{
 	left: 5vw;
 	top: 10vh;
 	z-index: 10;
-}
-choos#testchoos,choos#measurerChoos{
-	position: absolute;
-	display: flex;
-	height: 7vmin;
-	width: 7vmin;
-	background-image: url("../../Icon/Chooses/Jumper.svg");
-	pointer-events: none;
-	z-index: 2;
 }

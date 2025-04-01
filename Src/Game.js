@@ -11,6 +11,20 @@ export class XY{
 	}
 	print(){return `${this.x},${this.y}`;}
 }
+
+const BombRange={
+	white:[
+		{x:-1,y:0},
+		{x:1,y:0},
+		{x:-1,y:-1}
+	],
+	black:[
+		{x:-1,y:0},
+		{x:1,y:0},
+		{x:1,y:1}
+	],
+};
+
 export class NAR{
 	constructor(num,alp,rom)
 	{
@@ -94,6 +108,7 @@ export class Grood{
 	{
 		this.rows=rows;
 		this.element=document.createElement('grood');
+		/** @type {Array<Choos>} */
 		this.chooses=new Array;
 		/** @type {Array<Array<HTMLElement>>} */
 		this.cells=new Array(this.rows*2);
@@ -116,8 +131,8 @@ export class Grood{
 				this.cells[i][j]=document.createElement('cell');
 				this.cells[i][j].setAttribute('x',`${i}`);
 				this.cells[i][j].setAttribute('y',`${j}`);
-				var preform=document.createElement('span');
-				this.cells[i][j].appendChild(preform);
+				var perform=document.createElement('span');
+				this.cells[i][j].appendChild(perform);
 				if(game)
 				{
 					// 确定shooter
@@ -139,10 +154,32 @@ export class Grood{
 		return;
 	}
 	/** @param {NAR|XY} pos */
+	CheckCellExist(pos){
+		if(pos instanceof NAR)
+			pos=NARtoXY(pos,this.rows);
+		if(pos.x>this.rows||pos.x<1)
+			return false;
+		if(pos.y>Math.floor((pos.x+1)/2)||pos.y<1)
+			return false;
+		return true;
+	}
+	/** @param {NAR|XY} pos */
+	CheckCellEmpty(pos){
+		if(pos instanceof NAR)
+			pos=NARtoXY(pos,this.rows);
+		var c=this.GetChoosIdByPos(pos);
+		if(c==undefined||c=='-1'||c==null)
+			return true;
+		else return false;
+	}
+	/** @param {NAR|XY} pos */
 	GetChoosIdByPos(pos){
 		if(pos instanceof NAR)
 			pos=NARtoXY(pos,this.rows);
-		var id=this.cells[pos.x][pos.y].getAttribute('choosId');
+		if(!this.CheckCellExist(pos))
+			return;
+		var c=this.cells[pos.x][pos.y];
+		var id=c.getAttribute('choosId');
 		return id;
 	}
 	/**
@@ -153,8 +190,8 @@ export class Grood{
 	PlaceChoos(pos,type,hue){
 		if(pos instanceof XY)
 			pos=XYtoNAR(pos,this.rows);
-		if(this.GetChoosIdByPos(pos)!=undefined)
-			return;
+		if(!this.CheckCellEmpty(pos))
+			return 'Already a choos here';
 		var ch=new Choos(type,pos,hue);
 		this.AppendChoos(ch);
 	}
@@ -169,53 +206,16 @@ export class Grood{
 	RemoveChoos(pos){
 		if(pos instanceof NAR)
 			pos=NARtoXY(pos,this.rows);
-		var tar=this.cells[pos.x][pos.y];
-		var id=tar.getAttribute('choosId');
+		if(!this.CheckCellExist(pos))	return;
+		if(this.CheckCellEmpty(pos))	return;
+		var id=this.GetChoosIdByPos(pos);
+		var tar=this.cells[pos.x][pos.y]
 		tar.removeChild(this.chooses[id].element);
 		tar.setAttribute('choosId','-1');
 		return id;
 	}
-	/** 带动画
-	 * @param {NAR|XY} from
-	 * @param {NAR|XY} to
-	 */
-	MoveChoos(from,to){
-		if(from instanceof NAR)
-			from=NARtoXY(from,this.rows);
-		var id=this.GetChoosIdByPos(from);
-		if(id==undefined||id=='-1')
-			return 'No choos to move';
-		if(to instanceof NAR)
-			to=NARtoXY(to,this.rows);
-		if(this.GetChoosIdByPos(to)!=undefined)
-			return 'Already exist a choos';
-		if(from==to)
-			return 'You no move :(';
-		var prefromer=document.createElement('choos');
-		prefromer.style.backgroundImage=
-			`url(${GetChoosIconPath(this.chooses[id].type)})`;
-		prefromer.classList.add('prefromer');
-		var fromPos=this.QueryClientPos(from);
-		var toPos=this.QueryClientPos(to);
-		prefromer.style.left=`${fromPos.x}px`;
-		prefromer.style.top=`${fromPos.y}px`;
-		this.element.appendChild(prefromer);
-		this.chooses[id].Hide();
-		setTimeout(()=>{
-			prefromer.style.left=`${toPos.x}px`;
-			prefromer.style.top=`${toPos.y}px`;
-		},10);
-		setTimeout(()=>{
-			this.RemoveChoos(from);
-			this.chooses[id].pos=XYtoNAR(to,this.rows);
-			this.AppendChoos(this.chooses[id]);
-			this.chooses[id].Show();
-			this.element.removeChild(prefromer);
-		},2000);
-		return 'moved';
-	}
 	/** @param {NAR|XY} pos */
-	QueryClientPos(pos){
+	QueryChoosClientPos(pos){
 		if(pos instanceof NAR)
 			pos=NARtoXY(pos,this.rows);
 		var tar=this.cells[pos.x][pos.y];
@@ -227,14 +227,14 @@ export class Grood{
 		return {x:posc.x-posg.x,y:posc.y-posg.y};
 	}
 	/** @param {NAR|XY} pos */
-	QueryCellCenter(pos){
+	QueryCellCenterClientPos(pos){
 		if(pos instanceof NAR)
 			pos=NARtoXY(pos,this.rows);
 		var tar=this.cells[pos.x][pos.y];
 		var black=tar.parentElement.classList.contains('black');
 		return {
-			x:tar.offsetLeft-this.element.offsetLeft+tar.offsetWidth/2,
-			y:tar.offsetTop-this.element.offsetTop+(black?1:2)/3*tar.offsetHeight,
+			x:tar.offsetLeft+tar.offsetWidth/2,
+			y:tar.offsetTop+(black?1:2)/3*tar.offsetHeight,
 		};
 	}
 	/** @param {NAR|XY} pos */
@@ -243,5 +243,86 @@ export class Grood{
 			pos=NARtoXY(pos,this.rows);
 		for(var i of signs)
 			this.cells[pos.x][pos.y].classList.add(i);
+	}
+
+// ----------------------------带动画---------------------------
+	/**
+	 * @param {NAR|XY} from
+	 * @param {NAR|XY} to
+	 */
+	AnimMove(from,to){
+		if(from instanceof NAR)
+			from=NARtoXY(from,this.rows);
+		if(this.CheckCellEmpty(from))
+			return 'No choos to move';
+		if(to instanceof NAR)
+			to=NARtoXY(to,this.rows);
+		if(!this.CheckCellEmpty(to))
+			return 'Already exist a choos';
+		if(from==to)
+			return 'You no move :(';
+		var id=this.GetChoosIdByPos(from);
+		var performer=document.createElement('choos');
+		performer.style.backgroundImage=
+			`url(${GetChoosIconPath(this.chooses[id].type)})`;
+		performer.classList.add('performer');
+		var fromPos=this.QueryChoosClientPos(from);
+		var toPos=this.QueryChoosClientPos(to);
+		performer.style.left=`${fromPos.x}px`;
+		performer.style.top=`${fromPos.y}px`;
+		performer.style.filter=`hue-rotate(${this.chooses[id].hue}deg)`;
+		this.element.appendChild(performer);
+		this.chooses[id].Hide();
+		this.RemoveChoos(from);
+		this.chooses[id].pos=XYtoNAR(to,this.rows);
+		this.AppendChoos(this.chooses[id]);
+		setTimeout(()=>{
+			performer.style.left=`${toPos.x}px`;
+			performer.style.top=`${toPos.y}px`;
+		},10);
+		setTimeout(()=>{
+			this.chooses[id].Show();
+			this.element.removeChild(performer);
+		},110);
+		return 'moved';
+	}
+	/** @param {NAR|XY} pos */
+	AnimExplode(pos){
+		if(pos instanceof NAR)
+			pos=NARtoXY(from,this.rows);
+		if(this.CheckCellEmpty(pos))
+			return 'No choos here';
+		var c=this.chooses[this.GetChoosIdByPos(pos)];
+		var goo=false;
+		if(c.type=='goobomb')
+			goo=true;
+		else if(c.type!='bomb')
+			return 'Not a bomb';
+		var performer=document.createElement('span');
+		performer.classList.add('perform','ExplodeWrap');
+		performer.innerHTML=`
+			<span class="perform Explode Big${goo?' Goo':''}"></span>
+			<span class="perform Explode Small${goo?' Goo':''}"></span>`
+		var cpos=this.QueryCellCenterClientPos(pos);
+		performer.style.left=`${cpos.x}px`;
+		performer.style.top=`${cpos.y}px`;
+		performer.style.filter=`hue-rotate(${c.hue}deg)`
+		var black=this.cells[pos.x][pos.y].parentElement
+			.classList.contains('black');
+		if(!black)
+			performer.style.rotate='180deg';
+		this.element.appendChild(performer);
+		setTimeout(()=>{
+			this.RemoveChoos(pos);
+			for(var i of BombRange[black?'black':'white'])
+			{
+				var post=new XY(pos.x+i.x,pos.y+i.y);
+				this.AnimExplode(post);
+				this.RemoveChoos(post);
+			}
+		},1500);
+		setTimeout(()=>{
+			performer.remove();
+		},3000);
 	}
 };

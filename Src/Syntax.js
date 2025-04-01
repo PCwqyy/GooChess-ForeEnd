@@ -115,8 +115,8 @@ export function DecodeGrood()
 				var tar=res[i].match(/\((\d+),(\d+),(\d+)\)->\((\d+),(\d+),(\d+)\)(.+)/);
 				var pos1=new G.NAR(tar[1],tar[2],tar[3]);
 				var pos2=new G.NAR(tar[4],tar[5],tar[6]);
-				var p1=gr.QueryCellCenter(pos1);
-				var p2=gr.QueryCellCenter(pos2);
+				var p1=gr.QueryCellCenterClientPos(pos1);
+				var p2=gr.QueryCellCenterClientPos(pos2);
 				svgHead+=`<marker id="arrow${i}" markerWidth="3" markerHeight="3" refX="1" refY="1.5" orient="auto">
 							<path d="M 0 0 L 0 3 L 2 1.5 Z" fill="${tar[7]}" />
 						</marker>`

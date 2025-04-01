@@ -9,11 +9,14 @@
 		<link rel="stylesheet" href="Game.css">
 	</head>
 	<body>
-		<div id="Wrapper"></div>
+		<div id="Wrapper">
+			<div class="GroodWrap" id="GroodMain">
+		</div>
 		<div id="list">
 			<a class="butt" id="ScaleButt">Scale</a>
 			<a class="butt" href="../Menu/Main.html">Menu</a>
 			<a class="butt" href="../Wiki/Main.html">Wiki</a>
+			<a class="butt" onclick="Debug.Func()">Debug</a>
 		</div>
 		<script id="debugger">
 			let Debug=new DOMRect;
@@ -21,7 +24,7 @@
 		<script type="module">
 			import {Grood,XY,NAR} from "../Game.js";
 			const ROWS=12;
-			var GroodMian=new Grood(ROWS,document.getElementById('Wrapper'),()=>{});
+			var GroodMian=new Grood(ROWS,document.getElementById('GroodMain'),()=>{});
 			var ScaleButt=document.getElementById('ScaleButt');
 			ScaleButt.addEventListener('click',()=>{
 				GroodMian.element.classList.toggle('Scaled');
@@ -30,6 +33,23 @@
 			Debug.Grood=GroodMian;
 			Debug.XY=XY;
 			Debug.NAR=NAR;
+			function DebugFunc(){
+				GroodMian.PlaceChoos(new XY(4,1),'pawn',0);
+				GroodMian.PlaceChoos(new XY(7,2),'pawn',0);
+				GroodMian.PlaceChoos(new XY(6,3),'pawn',0);
+				GroodMian.PlaceChoos(new XY(8,4),'pawn',0);
+				GroodMian.PlaceChoos(new XY(5,2),'bomb',0);
+				GroodMian.PlaceChoos(new XY(6,2),'bomb',60);
+				GroodMian.PlaceChoos(new XY(7,3),'bomb',120);
+				GroodMian.PlaceChoos(new XY(8,2),'bomb',180);
+				GroodMian.PlaceChoos(new XY(9,3),'bomb',240);
+				GroodMian.PlaceChoos(new XY(10,5),'bomb',300);
+				GroodMian.AnimMove(new XY(10,5),new XY(10,4));
+				GroodMian.AnimMove(new XY(10,4),new XY(9,4));
+				GroodMian.AnimMove(new XY(9,4),new XY(8,3));
+				GroodMian.AnimExplode(new XY(8,3));
+			}
+			Debug.Func=DebugFunc;
 		</script>
 		<script src="../Global.js"></script>
 	</body>
