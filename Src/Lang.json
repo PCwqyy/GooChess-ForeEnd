@@ -1,10 +1,3 @@
-window.matchMedia('(prefers-color-scheme: dark)')
-	.addEventListener('change',()=>{
-		document.body.style.dark
-	}
-);
-
-const Translated=JSON.parse(`
 {
 	"zh.Editor":{
 		"Apply":"应用",
@@ -55,25 +48,3 @@ const Translated=JSON.parse(`
 		"DebugTip":"Choose a .md file to view"
 	}
 }
-`);
-
-var ThisPageName;
-var Metas=document.getElementsByTagName('meta');
-for(var ele of Metas){
-	if(ele.name=='PageName')
-		ThisPageName=ele.content;
-}
-var L=new Lang;
-L.setMessages(Translated);
-L.setLocale('zh');
-L.setFallback('en');
-
-/** @param {Array<HTMLElement>} eles */
-function PolyLang(eles){
-	for(var ele of eles)
-		ele.innerHTML=L.get(`${ThisPageName}.${ele.textContent}`);
-}
-
-PolyLang(document.getElementsByTagName('a'));
-PolyLang(document.getElementsByTagName('p'));
-PolyLang(document.getElementsByTagName('span'));
