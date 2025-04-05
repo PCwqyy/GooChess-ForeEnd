@@ -112,6 +112,8 @@ export class Grood{
 		this.chooses=new Array;
 		/** @type {Array<Array<HTMLElement>>} */
 		this.cells=new Array(this.rows*2);
+		/** @type {HTMLElement} */
+		this.visEle;
 		this.DrawGrood(game);
 		parentElement.appendChild(this.element);
 		this.element.addEventListener('click',clickFunc);
@@ -121,6 +123,9 @@ export class Grood{
 	 */
 	DrawGrood(game=true){
 		this.element.setAttribute('rows',`${this.rows}`);
+		this.visEle=document.createElement('div');
+		this.visEle.classList.add('cells');
+		this.element.appendChild(this.visEle);
 		var row=new Array(this.rows*2);
 		for(let i=1;i<=this.rows*2-1;i++){
 			row[i]=document.createElement('div');
@@ -149,7 +154,7 @@ export class Grood{
 				}
 				row[i].appendChild(this.cells[i][j]);
 			}
-			this.element.appendChild(row[i]);
+			this.visEle.appendChild(row[i]);
 		}
 		return;
 	}
@@ -222,7 +227,7 @@ export class Grood{
 		var measurer=document.createElement('choos');
 		tar.appendChild(measurer);
 		var posc=measurer.getBoundingClientRect();
-		var posg=this.element.getBoundingClientRect();
+		var posg=this.visEle.getBoundingClientRect();
 		tar.removeChild(measurer);
 		return {x:posc.x-posg.x,y:posc.y-posg.y};
 	}
@@ -271,7 +276,7 @@ export class Grood{
 		performer.style.left=`${fromPos.x}px`;
 		performer.style.top=`${fromPos.y}px`;
 		performer.style.filter=`hue-rotate(${this.chooses[id].hue}deg)`;
-		this.element.appendChild(performer);
+		this.visEle.appendChild(performer);
 		this.chooses[id].Hide();
 		this.RemoveChoos(from);
 		this.chooses[id].pos=XYtoNAR(to,this.rows);
@@ -282,7 +287,7 @@ export class Grood{
 		},10);
 		setTimeout(()=>{
 			this.chooses[id].Show();
-			this.element.removeChild(performer);
+			performer.remove();
 		},110);
 		return 'moved';
 	}
@@ -311,7 +316,7 @@ export class Grood{
 			.classList.contains('black');
 		if(!black)
 			performer.style.rotate='180deg';
-		this.element.appendChild(performer);
+		this.visEle.appendChild(performer);
 		setTimeout(()=>{
 			this.RemoveChoos(pos);
 			for(var i of BombRange[black?'black':'white'])

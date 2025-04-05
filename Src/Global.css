@@ -56,6 +56,9 @@ Grood{
 		linear-gradient(180deg,var(--color-p2),transparent 40%),
 		linear-gradient(300deg,var(--color-p3),transparent 26%);
 }
+div.cells{
+	position: relative;
+}
 .row{
 	display: flex;
 	justify-content: center;
