@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="darkreader-lock">
+		<meta name="PageName" content="Wiki">
 		<title>Wiki</title>
 		<link rel="stylesheet" href="Wiki.css">
 		<link rel="stylesheet" href="../Global.css">
@@ -16,7 +17,7 @@
 		<div id="Body">
 			<div id="ContentWrap">
 				<div id="Content">
-					<a href="../Menu/Main.html">Title Screen</a>
+					<a href="../Menu/Main.html">Menu</a>
 					<a href="../Gaming/Main.html">Game</a>
 					<a href="../Editor/Main.html">Editor</a>
 					<a>4</a>
@@ -25,14 +26,12 @@
 				</div>
 			</div>
 			<div id="Main">
-				<p>Choose a .md file to view</p>
+				<p>DebugTip</p>
 			</div>
 		</div>
 		<script src="../marked.js"></script>
-		<script src="../Gaming/Game.js"></script>
-		<script src="../Syntax.js"></script>
-		<script src="Wiki.js"></script>
-		<script>
+		<script type="module">
+			import {PCMake,DecodeGrood} from "../Syntax.js";
 			var Input=document.getElementById('Input');
 			var Main=document.getElementById("Main");
 			Input.addEventListener('change',function(event)
@@ -44,15 +43,17 @@
 				const reader=new FileReader();
 				reader.onload=function(e)
 				{
-					temp=PCMake(e.target.result);
+					var temp=PCMake(e.target.result);
 					Main.innerHTML=marked.parse(temp);
-					RunGrood();
+					DecodeGrood();
 				}
 				reader.onerror=function(e)
 					{console.error("Fail reading file");};
 				reader.readAsText(file);
 			});
 		</script>
+		<script src="Wiki.js"></script>
+		<script src="../lang.js"></script>
 		<script src="../Global.js"></script>
 	</body>
 </html>

@@ -7,13 +7,13 @@
       }
 
       .cls-1, .cls-2 {
-        stroke: #231f20;
+        stroke: #ff0000;
         stroke-linecap: round;
         stroke-linejoin: round;
       }
 
       .cls-2 {
-        fill: #fff;
+        fill: #ff8787;
       }
     </style>
   </defs>
