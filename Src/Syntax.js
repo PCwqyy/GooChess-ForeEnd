@@ -108,7 +108,7 @@ export function DecodeGrood()
 		res=temp.match(/^\(\d+,\d+,\d+\)->\(\d+,\d+,\d+\).+$/gm);
 		if(res!=null)
 		{
-			var svgHead=`<svg class="arrows" height="${gr.element.offsetHeight}" width="${gr.element.offsetWidth}"><defs>`;
+			var svgHead=`<svg class="arrows" height="${gr.element.firstChild.offsetHeight}" width="${gr.element.firstChild.offsetWidth}"><defs>`;
 			var svgBody=`</defs>`;
 			for(var i in res)
 			{
@@ -124,7 +124,7 @@ export function DecodeGrood()
 					stroke="${tar[7]}" stroke-width="10" marker-end="url(#arrow${i})" />`
 			}
 			svgBody+=`</svg>`;
-			ele.innerHTML+=svgHead+svgBody;
+			gr.element.innerHTML+=svgHead+svgBody;
 		}
 	}
 	var groods=document.getElementsByTagName('grood');
@@ -146,7 +146,7 @@ export function DecodeGrood()
 			PosInTip=G.XYtoNAR(new G.XY(
 				Number(e.target.getAttribute('x')),
 				Number(e.target.getAttribute('y'))),
-				Number(e.target.parentElement.parentElement.getAttribute('rows')));
+				Number(e.target.parentElement.parentElement.parentElement.getAttribute('rows')));
 				Tip.innerHTML=`${PosInTip.print(PosPlainPaint)}`;
 		});
 	document.body.addEventListener('keydown',(e)=>{
