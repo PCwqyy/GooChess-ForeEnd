@@ -1,7 +1,8 @@
 {
 	"zh.Editor":{
 		"Apply":"应用",
-		"Load":"加载"
+		"Load":"加载",
+		"Arrow":"添加箭头"
 	},
 	"zh.Menu":{
 		"Title":"Welcome to<br>Goochess",
@@ -9,7 +10,8 @@
 		"Account":"账户",
 		"Game":"游戏",
 		"Wiki":"维基",
-		"About":"关于"
+		"About":"关于",
+		"Settings":"设置"
 	},
 	"zh.Gaming":{
 		"Scale":"缩放",
@@ -33,7 +35,8 @@
 		"Account":"Account",
 		"Game":"Game",
 		"Wiki":"Wiki",
-		"About":"About"
+		"About":"About",
+		"Settings":"Settings"
 	},
 	"en.Gaming":{
 		"Scale":"Scale",

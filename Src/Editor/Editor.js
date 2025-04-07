@@ -1,6 +1,8 @@
 import * as G from '../Game.js'
 /** @type {Map<String,String>} */
 var Tags=new Map;
+/** @type {HTMLElement} */
+var lastEle=null;
 /** @param {String} t */
 export function LaunchEditor(t){
 	Tags.clear();
@@ -11,10 +13,19 @@ export function LaunchEditor(t){
 		var res2=res[i].match(/^([^\(\)\s]+)\((\d+),(\d+),(\d+)\)/);
 		Tags.set(new G.NAR(res2[2],res2[3],res2[4]).print(true),res2[1]);
 	}
+	var res=t.match(/^\(\d+,\d+,\d+\)->\(\d+,\d+,\d+\)[^\(\)\s]+/mg);
+	if(res!=null) for(var i=0;i<res.length;i++)
+		Tags.set(res[i],'Arrow');
+console.log(Tags);
 	for(var ele of Cells)
 	{
 		ele.addEventListener('click',(e)=>{
 			e.target.classList.toggle('selected');
+			if(!e.target.classList.contains('selected'))
+				return;
+			if(lastEle!=null)	lastEle.id=null;
+			e.target.id='last';
+			lastEle=e.target;
 		});
 	}
 }
@@ -24,7 +35,10 @@ function GenCode(ele)
 	var res="";
 	res+=`[${ele.getAttribute('rows')}]\n`
 	for(var i of Tags)
-		res+=`${i[1]}(${i[0]})\n`;
+		if(i[1]!='Arrow')
+			res+=`${i[1]}(${i[0]})\n`;
+		else
+			res+=`${i[0]}\n`;
 	return res;
 }
 /** @param {String} t */
@@ -40,5 +54,23 @@ export function ApplyTag(g,t){
 	}
 	for(var ele of C)
 		ele.classList.remove('selected');
+	return GenCode(g);
+}
+/** @param {String} c */
+export function AddArrow(g,c){
+	var C=document.getElementsByClassName('selected');
+	var prev;
+	for(var e of C)
+		if(e.id!='last')
+			prev=e;
+	var posP=G.XYtoNAR(new G.XY(
+		prev.parentElement.getAttribute('x'),
+		prev.parentElement.getAttribute('y')),
+		g.getAttribute('rows'));
+	var posL=G.XYtoNAR(new G.XY(
+		lastEle.parentElement.getAttribute('x'),
+		lastEle.parentElement.getAttribute('y')),
+		g.getAttribute('rows'));
+	Tags.set(`(${posP.print(true)})->(${posL.print(true)})${c}`,'Arrow');
 	return GenCode(g);
 }
