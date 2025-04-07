@@ -80,8 +80,8 @@ details{
 	border-radius: 5px;
 	overflow: clip;
 }
-details *{
-	padding-left: 5vh;
+details>*:not(summary){
+	margin-left: 5vh;
 }
 summary{
 	position: sticky;
@@ -92,6 +92,7 @@ summary{
 	color: white;
 	list-style-type: none;
 	cursor: pointer;
+	z-index: 4;
 }
 :not(pre)>code{
 	color: #23791b;
