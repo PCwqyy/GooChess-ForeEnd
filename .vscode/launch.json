@@ -2,15 +2,13 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Launch Edge",
+			"name": "Launch",
 			"request": "launch",
 			"type": "msedge",
-			"url": "${fileDirname}/${fileBasename}",
+			"url": "http://localhost:8000/${relativeFile}",
 			"webRoot": "${workspaceFolder}",
 			"preLaunchTask": "Python Localhost",
-			"runtimeArgs": [
-				"--allow-file-access-from-files"
-			]
+			"runtimeArgs": []
 		}
 	]
 }

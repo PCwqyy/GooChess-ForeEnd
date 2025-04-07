@@ -1,18 +1,13 @@
 var Main=document.getElementById('Main');
 var Body=document.getElementById('Home');
 var Input=document.getElementById('Input');
-var Top=0,Speed=20;
-Input.addEventListener('change',function(event)
-{
-	const files=event.target.files;
-	if(files.length==0)
-		return;
-	const file=files[0];
-	const reader=new FileReader();
-	reader.onload=function(e)
-	{
-		temp=e.target.result;
-		Main.innerHTML=marked.parse(temp);
+var Top=0,Speed=30;
+
+fetch('../../Docs/About.md')
+	.then((response)=>{return response.text();})
+	.then((data)=>{
+console.log(data);
+		Main.innerHTML=marked.parse(data);
 		Main.style.top='0px';
 		var h=Main.getBoundingClientRect().height;
 		Main.style.transition=`${h/Speed}s linear`;
@@ -20,11 +15,9 @@ Input.addEventListener('change',function(event)
 			Main.style.top=`-${h}px`;
 			console.log(h);
 		},500);
-	}
-	reader.onerror=function(e)
-	{console.error("Fail reading file");};
-	reader.readAsText(file);
-});
+	})
+	.catch((reason)=>{console.error(reason);});
+
 var Angle=0;
 setInterval(()=>{
 	var t=document.createElement('span');
@@ -41,4 +34,4 @@ setInterval(()=>{
 	setTimeout(() => {
 		Body.removeChild(t);
 	},3100);
-},75);
+},100);
