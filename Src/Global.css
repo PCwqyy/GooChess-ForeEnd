@@ -6,6 +6,13 @@ html{
 	height: 100vh;
 	width: 100vw;
 	overflow: hidden;
+
+	--color-p1: light-dark(#10a3ff,#2c56bf);
+	--color-p2: light-dark(#f64632,#ad0000);
+	--color-p3: light-dark(#f4fc0a,#eada00);
+	--color-hover: light-dark(#ffd34f,#daa300);
+	--color-shooter: light-dark(#d8ff74,#0da100);
+	--cell-size: 4vmin;
 }
 
 @media (prefers-color-scheme: dark){
@@ -27,13 +34,17 @@ body{
 	font-size: 22px;
 	font-family: Caviar Dreams, DengXian;
 }
-Grood{
-	--color-p1: light-dark(#10a3ff,#2c56bf);
-	--color-p2: light-dark(#f64632,#ad0000);
-	--color-p3: light-dark(#f4fc0a,#eada00);
-	--color-hover: light-dark(#ffd34f,#daa300);
-	--color-shooter: light-dark(#d8ff74,#0da100);
+
+div.GroodWrap{
 	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100%;
+	margin: 5vh 0px;
+}
+Grood{
+	display: flex;
+	position: relative;
 	flex-direction: column;
 	justify-content: flex-start;
 	background-color: light-dark(#f4f4f4,#2f2f2f);
@@ -44,6 +55,9 @@ Grood{
 		linear-gradient(60deg,var(--color-p1),transparent 26%),
 		linear-gradient(180deg,var(--color-p2),transparent 40%),
 		linear-gradient(300deg,var(--color-p3),transparent 26%);
+}
+div.cells{
+	position: relative;
 }
 .row{
 	display: flex;
@@ -58,8 +72,8 @@ cell{
 	justify-content: center;
 	align-items: center;
 	position: relative;
-	height: calc(4vmin * sqrt(3));
-	width: 8vmin;
+	height: calc(var(--cell-size) * sqrt(3));
+	width: calc(var(--cell-size) * 2);
 	margin: 0;
 	transition: 0.5s;
 	pointer-events: none;
@@ -67,8 +81,8 @@ cell{
 cell>span{
 	display: block;
 	position: relative;
-	height: calc(4vmin * sqrt(3));
-	width: 8vmin;
+	height: calc(var(--cell-size) * sqrt(3));
+	width: calc(var(--cell-size) * 2);
 	margin: 0;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	background-color: light-dark(#ffffff,#000000);
@@ -82,15 +96,7 @@ cell>span{
 cell:hover>span,.row.black cell:hover>span{
 	background-color: var(--color-hover) !important;
 }
-cell.shooter>span{
-	background-image:
-		linear-gradient(240deg, var(--color-shooter) 35%, #00000000 41%),
-		linear-gradient(120deg, var(--color-shooter) 35%, #00000000 41%),
-		linear-gradient(0deg, var(--color-shooter) 4%, #00000000 10%)
-}
-cell.shooter:hover>span{
-	background-color: var(--color-shooter);
-}
+
 cell.red>span{
 	background-image:  linear-gradient(#f6463210, #f6463210);
 }
@@ -155,10 +161,26 @@ cell.sign.jump>span::after{
 cell.sign.moove>span::after{
 	content: "M";
 }
-
 cell.sign.only>span{
 	background-image: linear-gradient(0deg,#dc4fff9f,transparent);
 }
+
+cell.shooter>span{
+	background-image:
+		linear-gradient(240deg, var(--color-shooter) 35%, #00000000 41%),
+		linear-gradient(120deg, var(--color-shooter) 35%, #00000000 41%),
+		linear-gradient(0deg, var(--color-shooter) 4%, #00000000 10%);
+}
+cell.shooter:hover>span{
+	background-color: var(--color-shooter) !important;
+}
+cell.danger.checked>span{
+	background-image:
+		linear-gradient(240deg, red 5%, #00000000 48%),
+		linear-gradient(120deg, red 5%, #00000000 48%),
+		linear-gradient(0deg, red -20%, #00000000 20%);
+}
+
 
 choos{
 	position: absolute;
@@ -170,6 +192,76 @@ choos{
 cell>choos{
 	pointer-events: none;
 }
-div.row.black choos {
+div.row.black cell>choos{
 	top: -2vh;
+}
+
+.perform{
+	position: absolute;
+	z-index: 3;
+}
+.perform.Explode{
+	height: 0px;
+	width: 0px;
+	translate: -50% -66.6%;
+	transform-origin: 50% 66.6%;
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+.perform.Explode.Big{
+	background-color: #fa6969;
+	animation: ExplodeBig 2.5s;
+}
+.perform.Explode.Small{
+	background-color: #ff4400;
+	animation: ExplodeSmall 2.5s;
+}
+@keyframes ExplodeBig{
+	0%{
+		height: 0px;
+		width: 0px;
+		opacity: 0;
+	}
+	60%{
+		height: calc(var(--cell-size) * sqrt(3) * 2);
+		width: calc(var(--cell-size) * 4);
+		rotate: 0deg;
+		opacity: 1;
+	}
+	100%{
+		height: 0px;
+		width: 0px;
+		rotate: 360deg;
+		opacity: 0;
+	}
+}
+@keyframes ExplodeSmall{
+	0%{
+		height: 0px;
+		width: 0px;
+		rotate: 180deg;
+		opacity: 0;
+	}
+	40%{
+		height: calc(var(--cell-size) * sqrt(3));
+		width: calc(var(--cell-size) * 2);
+		opacity: 1;
+	}
+	60%{
+		height: calc(var(--cell-size) * sqrt(3));
+		width: calc(var(--cell-size) * 2);
+		opacity: 1;
+	}
+	100%{
+		height: 0px;
+		width: 0px;
+		rotate: 720deg;
+		opacity: 0;
+	}
+}
+.perform.Checked{
+	height: calc(var(--cell-size) / 2);
+	width: calc(var(--cell-size) / 2);
+	border-radius: 100%;
+	background-color: red;
+	box-shadow: red 1px 1px 1px;
 }

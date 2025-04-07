@@ -1,0 +1,14 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch",
+			"request": "launch",
+			"type": "msedge",
+			"url": "http://localhost:8000/${relativeFile}",
+			"webRoot": "${workspaceFolder}",
+			"preLaunchTask": "Python Localhost",
+			"runtimeArgs": []
+		}
+	]
+}

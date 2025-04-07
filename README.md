@@ -12,9 +12,14 @@
 - [Microsoft Edge Dev Tool](https://www.microsoft.com/en-us/edge/)
 - [Marked](https://marked.js.org)
 - [Adobe Illustrator](https://www.adobe.com/products/illustrator.html)
+- [Lang.js](https://github.com/rmariuzzo/Lang.js)
 
 ## Version
 PClang Ver: Dev 0.1  
-GooChess Ver: 0.4  
+GooChess Ver: 0.5  
 [Marked](https://marked.js.org) Ver: v15.0.5  
-2025/3/19 PCwqyy
+[Lang.js](https://github.com/rmariuzzo/Lang.js) Ver: v1.1.12
+
+---
+
+2025/4/7 PCwqyy

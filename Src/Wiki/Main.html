@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="darkreader-lock">
+		<meta name="PageName" content="Wiki">
+		<title>Wiki</title>
+		<link rel="stylesheet" href="Wiki.css">
+		<link rel="stylesheet" href="../Global.css">
+		<link rel="stylesheet" href="../Syntax.css">
+		<link rel="icon" type="image/png" href="../../Icon/GooChess.png">
+	</head>
+	<body>
+		<span id="Tip"></span>
+		<div id="Home"></div>
+		<div id="Body">
+			<div id="ContentWrap">
+				<div id="Content">
+					<a class="TRANS" href="../Menu/Main.html">Menu</a>
+					<a class="TRANS" href="../Gaming/Main.html">Game</a>
+					<a class="TRANS" href="../Editor/Main.html">Editor</a>
+					<a onclick="LoadMd('/Docs/Test.md')">Test.md</a>
+					<a onclick="LoadMd('/Docs/Wiki.md')">Wiki.md</a>
+					<a onclick="LoadMd('/Docs/Choos.md')">Choos.md</a>
+				</div>
+			</div>
+			<div id="Main">
+				<p class="TRANS">DebugTip</p>
+			</div>
+		</div>
+		<script src="../marked.js"></script>
+		<script>
+			var LoadMd;
+		</script>
+		<script type="module">
+			import {PCMake,DecodeGrood} from "../Syntax.js";
+			var Main=document.getElementById("Main");
+			async function LoadMdF(src)
+			{
+				await fetch(src,{headers:{'Cache-Control':'no-cache'}})
+					.then((response)=>{return response.text()})
+					.then((data)=>{
+						var temp=PCMake(data);
+						Main.innerHTML=marked.parse(temp);
+						DecodeGrood();
+					})
+					.catch((reason)=>{console.error(reason);});
+				};
+			LoadMd=LoadMdF;
+		</script>
+		<script src="Wiki.js"></script>
+		<script src="../lang.js"></script>
+		<script src="../Global.js"></script>
+	</body>
+</html>
