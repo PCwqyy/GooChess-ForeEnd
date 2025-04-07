@@ -16,8 +16,9 @@
 			<textarea id="Input" placeholder="Code"></textarea>
 			<div id="Operate">
 				<input id="Tag" type="text" placeholder="Tag">
-				<span onclick="ButtonFuncs.Apply()">Apply</span>
 				<span onclick="ButtonFuncs.Load()">Load</span>
+				<span onclick="ButtonFuncs.Apply()">Apply</span>
+				<span onclick="ButtonFuncs.Arrow()">Arrow</span>
 			</div>
 		</div>
 		<span id="Tip"></span>
@@ -46,11 +47,20 @@
 					return;
 				var Grood=document.getElementsByTagName('grood')[0];
 				Input.value=E.ApplyTag(Grood,Tag.value);
-				Tag.value="";
+				Tag.value='';
+				LoadF();
+			}
+			function ArrowF(){
+				if(Tag.value.length==0)
+					return;
+				var Grood=document.getElementsByTagName('grood')[0];
+				Input.value=E.AddArrow(Grood,Tag.value);
+				Tag.value='';
 				LoadF();
 			}
 			ButtonFuncs.Load=LoadF;
 			ButtonFuncs.Apply=ApplyF;
+			ButtonFuncs.Arrow=ArrowF;
 		</script>
 		<script src="../lang.js"></script>
 		<script src="../Global.js"></script>
