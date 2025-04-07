@@ -84,7 +84,7 @@ M(7,7,1)
 (5,5,5)->(7,1,7)gray
 ```
 
-### Kight
+### Knight
 
 ```goochess
 [7]
