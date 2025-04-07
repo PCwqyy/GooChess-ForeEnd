@@ -37,7 +37,7 @@
 			var Main=document.getElementById("Main");
 			async function LoadMdF(src)
 			{
-				await fetch(src)
+				await fetch(src,{headers:{'Cache-Control':'no-cache'}})
 					.then((response)=>{return response.text()})
 					.then((data)=>{
 						var temp=PCMake(data);
