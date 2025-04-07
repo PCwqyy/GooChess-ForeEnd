@@ -11,7 +11,6 @@
 		<link rel="icon" type="image/png" href="../../Icon/GooChess.png">
 	</head>
 	<body>
-		<input type="file" id="Input">
 		<span id="Tip"></span>
 		<div id="Home"></div>
 		<div id="Body">
@@ -20,9 +19,9 @@
 					<a class="TRANS" href="../Menu/Main.html">Menu</a>
 					<a class="TRANS" href="../Gaming/Main.html">Game</a>
 					<a class="TRANS" href="../Editor/Main.html">Editor</a>
-					<a class="TRANS">4</a>
-					<a class="TRANS">5</a>
-					<a class="TRANS">6</a>
+					<a onclick="LoadMd('/Docs/Test.md')">Test.md</a>
+					<a onclick="LoadMd('/Docs/Wiki.md')">Wiki.md</a>
+					<a onclick="LoadMd('/Docs/Choos.md')">Choos.md</a>
 				</div>
 			</div>
 			<div id="Main">
@@ -30,27 +29,24 @@
 			</div>
 		</div>
 		<script src="../marked.js"></script>
+		<script>
+			var LoadMd;
+		</script>
 		<script type="module">
 			import {PCMake,DecodeGrood} from "../Syntax.js";
-			var Input=document.getElementById('Input');
 			var Main=document.getElementById("Main");
-			Input.addEventListener('change',function(event)
+			async function LoadMdF(src)
 			{
-				const files=event.target.files;
-				if (files.length==0)
-					return;
-				const file=files[0];
-				const reader=new FileReader();
-				reader.onload=function(e)
-				{
-					var temp=PCMake(e.target.result);
-					Main.innerHTML=marked.parse(temp);
-					DecodeGrood();
-				}
-				reader.onerror=function(e)
-					{console.error("Fail reading file");};
-				reader.readAsText(file);
-			});
+				await fetch(src)
+					.then((response)=>{return response.text()})
+					.then((data)=>{
+						var temp=PCMake(data);
+						Main.innerHTML=marked.parse(temp);
+						DecodeGrood();
+					})
+					.catch((reason)=>{console.error(reason);});
+				};
+			LoadMd=LoadMdF;
 		</script>
 		<script src="Wiki.js"></script>
 		<script src="../lang.js"></script>

@@ -1,12 +1,10 @@
 var Main=document.getElementById('Main');
 var Body=document.getElementById('Home');
-var Input=document.getElementById('Input');
 var Top=0,Speed=30;
 
 fetch('../../Docs/About.md')
 	.then((response)=>{return response.text();})
 	.then((data)=>{
-console.log(data);
 		Main.innerHTML=marked.parse(data);
 		Main.style.top='0px';
 		var h=Main.getBoundingClientRect().height;
