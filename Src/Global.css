@@ -186,7 +186,6 @@ choos{
 	position: absolute;
 	height: 7vmin;
 	width: 7vmin;
-	transition: 0.1s;
 	z-index: 2;
 }
 cell>choos{
@@ -197,10 +196,11 @@ div.row.black cell>choos{
 }
 
 .perform{
+	transition: 0.1s;
 	position: absolute;
 	z-index: 3;
 }
-.perform.Explode{
+.perform.Explode,.perform.TeleLight{
 	height: 0px;
 	width: 0px;
 	translate: -50% -66.6%;
@@ -261,7 +261,7 @@ div.row.black cell>choos{
 .perform.GooExplodeMask{
 	position: absolute;
 	inset: 0px 0px 0px 0px;
-	background-color: white;
+	background-color: light-dark(white,gray);
 	opacity: 0;
 	pointer-events: none;
 	z-index: 114514;
@@ -339,4 +339,26 @@ div.row.black cell>choos{
 	80%{translate: 0.2% -0.5%;}
 	90%{translate: -0.5% 0.2%;}
 	100%{translate: 0 0;}
+}
+.perform.TeleLight{
+	background-color: white;
+	filter: drop-shadow(0px 0px 3px white);
+	animation: TeleportLight 1.4s;
+}
+@keyframes TeleportLight{
+	0%{
+		height: 0;
+		width: 0;
+		opacity: 1;
+	}
+	30%{
+		height: calc(var(--cell-size) * sqrt(3));
+		width: calc(var(--cell-size) * 2);
+		opacity: 1;
+	}
+	100%{
+		height: calc(var(--cell-size) * sqrt(3));
+		width: calc(var(--cell-size) * 2);
+		opacity: 0;
+	}
 }

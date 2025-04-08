@@ -5,6 +5,11 @@ const RomeApl={
 	11:'xi',12:'xii',13:'xiii',14:'xiv'};
 // 坐标
 export class XY{
+	x;y;
+	/**D
+	 * @param {Number} x 
+	 * @param {Number} y 
+	 */
 	constructor(x,y)
 	{
 		this.x=x;
@@ -44,7 +49,27 @@ const GoobombRange={
 	],
 };
 
+function SetElementPos(ele,pos){
+	ele.style.left=`${pos.x}px`;
+	ele.style.top=`${pos.y}px`;
+}
+/** @returns {HTMLElement} */
+function NewPerformer(Tag,Pos,...Class){
+	var t=document.createElement(Tag);
+	if(Pos!=null)
+		SetElementPos(t,Pos);
+	t.classList.add('perform',...Class);
+	console.log(t);
+	return t;
+}
+
 export class NAR{
+	num;alp;rom;
+	/**
+	 * @param {Number} num 
+	 * @param {Number} alp 
+	 * @param {Number} rom 
+	 */
 	constructor(num,alp,rom)
 	{
 		this.num=num;
@@ -58,15 +83,23 @@ export class NAR{
 		return `${this.num}, ${String.fromCharCode(96+this.alp)}, ${RomeApl[this.rom]}`;
 	}
 }
-/** @returns {NAR} */
+/**
+ * @param {XY} a
+ * @param {Number} rows
+ */
 export function XYtoNAR(a,rows){
+	if(a instanceof NAR)	return a;
 	return new NAR(
 		Math.floor(a.x/2)+1,
 		Math.floor((2*rows+2*a.y-a.x)/2),
 		rows-a.y+1);
-	}
-/** @returns {XY} */
+}
+/**
+ * @param {NAR} a
+ * @param {Number} rows
+ */
 export function NARtoXY(a,rows){
+	if(a instanceof XY)	return a;
 	var b=new XY(2*a.num-2,rows-a.rom+1);
 	if(2*rows+2*b.y-b.x!=2*a.alp)	b.x++;
 	return b;
@@ -78,6 +111,7 @@ export function GetChoosIconPath(type){
 }
 
 export class Choos{
+	type;hue;element;pos;
 	/** 
 	 * @param {String} t type
 	 * @param {NAR} p position
@@ -85,8 +119,6 @@ export class Choos{
 	 */
 	constructor(t,p,h)
 	{
-		this.type;
-		this.hue;
 		this.element=document.createElement('choos');
 		this.SetType(t);
 		this.SetHue(h);
@@ -123,15 +155,25 @@ const Shooter={
 const Side={num:'red',alp:'blue',rom:'yellow'};
 
 export class Grood{
+	rows;
+	/** @type {Array<Array<HTMLElement>>} */
+	cells;
+	/** @type {HTMLElement} */
+	visEle;
+	element;
+	/** @type {Array<Choos>} */
+	chooses;
+	/**
+	 * @param {Number} rows 
+	 * @param {HTMLElement} parentElement 
+	 * @param {Function} clickFunc 
+	 */
 	constructor(rows,parentElement,clickFunc,game=true)
 	{
 		this.rows=rows;
 		this.element=document.createElement('grood');
-		/** @type {Array<Choos>} */
 		this.chooses=new Array;
-		/** @type {Array<Array<HTMLElement>>} */
 		this.cells=new Array(this.rows*2);
-		/** @type {HTMLElement} */
 		this.visEle;
 		this.DrawGrood(game);
 		parentElement.appendChild(this.element);
@@ -179,9 +221,8 @@ export class Grood{
 	}
 	/** @param {NAR|XY} pos */
 	CheckCellExist(pos){
-		if(pos instanceof NAR)
-			pos=NARtoXY(pos,this.rows);
-		if(pos.x>this.rows||pos.x<1)
+		pos=NARtoXY(pos,this.rows);
+		if(pos.x>this.rows*2||pos.x<1)
 			return false;
 		if(pos.y>Math.floor((pos.x+1)/2)||pos.y<1)
 			return false;
@@ -189,12 +230,16 @@ export class Grood{
 	}
 	/** @param {NAR|XY} pos */
 	CheckCellEmpty(pos){
-		if(pos instanceof NAR)
-			pos=NARtoXY(pos,this.rows);
+		pos=NARtoXY(pos,this.rows);
 		var c=this.GetChoosIdByPos(pos);
 		if(c==undefined||c=='-1'||c==null)
 			return true;
 		else return false;
+	}
+	/** @param {NAR|XY} pos */
+	CheckCellBlack(pos){
+		pos=NARtoXY(pos,this.rows);
+		return pos.x%2==0;
 	}
 	/** @param {NAR|XY} pos */
 	GetChoosIdByPos(pos){
@@ -212,8 +257,7 @@ export class Grood{
 	 * @param {Number} hue
 	 */
 	PlaceChoos(pos,type,hue){
-		if(pos instanceof XY)
-			pos=XYtoNAR(pos,this.rows);
+		pos=XYtoNAR(pos,this.rows);
 		if(!this.CheckCellEmpty(pos))
 			return 'Already a choos here';
 		var ch=new Choos(type,pos,hue);
@@ -228,8 +272,7 @@ export class Grood{
 	}
 	/** @param {NAR|XY} pos */
 	RemoveChoos(pos){
-		if(pos instanceof NAR)
-			pos=NARtoXY(pos,this.rows);
+		pos=NARtoXY(pos,this.rows);
 		if(!this.CheckCellExist(pos))	return;
 		if(this.CheckCellEmpty(pos))	return;
 		var id=this.GetChoosIdByPos(pos);
@@ -238,12 +281,36 @@ export class Grood{
 		tar.setAttribute('choosId','-1');
 		return id;
 	}
+	ClearChooses(){
+		for(var i of this.chooses)
+		{
+			var pos=NARtoXY(i.pos,this.rows);
+			this.cells[pos.x][pos.y].setAttribute('choosId','-1');
+			i.element.remove();
+		}
+		this.chooses=new Array;
+	}
+	/**
+	 * @param {NAR|XY} from
+	 * @param {NAR|XY} to
+	 */
+	MoveChoos(from,to){
+		from=NARtoXY(from,this.rows);
+		to=NARtoXY(to,this.rows);
+		if(from==to)	return;
+		if(!this.CheckCellExist(from))	return;
+		if(!this.CheckCellExist(to))	return;
+		var id=this.GetChoosIdByPos(from);
+		this.RemoveChoos(from);
+		this.chooses[id].pos=to;
+		this.AppendChoos(this.chooses[id]);
+	}
 	/** @param {NAR|XY} pos */
 	QueryChoosClientPos(pos){
-		if(pos instanceof NAR)
-			pos=NARtoXY(pos,this.rows);
+		pos=NARtoXY(pos,this.rows);
 		var tar=this.cells[pos.x][pos.y];
 		var measurer=document.createElement('choos');
+		measurer.style.opacity='0';
 		tar.appendChild(measurer);
 		var posc=measurer.getBoundingClientRect();
 		var posg=this.visEle.getBoundingClientRect();
@@ -252,10 +319,9 @@ export class Grood{
 	}
 	/** @param {NAR|XY} pos */
 	QueryCellCenterClientPos(pos){
-		if(pos instanceof NAR)
-			pos=NARtoXY(pos,this.rows);
+		pos=NARtoXY(pos,this.rows);
 		var tar=this.cells[pos.x][pos.y];
-		var black=tar.parentElement.classList.contains('black');
+		var black=this.CheckCellBlack(pos);
 		return {
 			x:tar.offsetLeft+tar.offsetWidth/2,
 			y:tar.offsetTop+(black?1:2)/3*tar.offsetHeight,
@@ -275,35 +341,27 @@ export class Grood{
 	 * @param {NAR|XY} to
 	 */
 	async AnimMove(from,to){
-		if(from instanceof NAR)
-			from=NARtoXY(from,this.rows);
+		from=NARtoXY(from,this.rows);
 		if(this.CheckCellEmpty(from))
 			return 'No choos to move';
-		if(to instanceof NAR)
-			to=NARtoXY(to,this.rows);
+		to=NARtoXY(to,this.rows);
 		if(!this.CheckCellEmpty(to))
 			return 'Already exist a choos';
 		if(from==to)
 			return 'You no move :(';
 		var id=this.GetChoosIdByPos(from);
-		var performer=document.createElement('choos');
-		performer.style.backgroundImage=
-			`url(${GetChoosIconPath(this.chooses[id].type)})`;
-		performer.classList.add('performer');
 		var fromPos=this.QueryChoosClientPos(from);
 		var toPos=this.QueryChoosClientPos(to);
-		performer.style.left=`${fromPos.x}px`;
-		performer.style.top=`${fromPos.y}px`;
+		var performer=NewPerformer('choos',fromPos)
+		performer.style.backgroundImage=
+			`url(${GetChoosIconPath(this.chooses[id].type)})`;
 		performer.style.filter=`hue-rotate(${this.chooses[id].hue}deg)`;
 		this.visEle.appendChild(performer);
 		await Sleep(10);
 		this.chooses[id].Hide();
-		this.RemoveChoos(from);
-		this.chooses[id].pos=XYtoNAR(to,this.rows);
-		this.AppendChoos(this.chooses[id]);
-		await Sleep(10);
-		performer.style.left=`${toPos.x}px`;
-		performer.style.top=`${toPos.y}px`;
+		this.MoveChoos(from,to);
+		console.log(toPos);
+		SetElementPos(performer,toPos);
 		await Sleep(100);
 		this.chooses[id].Show();
 		await Sleep(10);
@@ -312,8 +370,7 @@ export class Grood{
 	}
 	/** @param {NAR|XY} pos */
 	async AnimExplode(pos){
-		if(pos instanceof NAR)
-			pos=NARtoXY(from,this.rows);
+		pos=NARtoXY(pos,this.rows);
 		if(this.CheckCellEmpty(pos))
 			return 'No choos here';
 		var c=this.chooses[this.GetChoosIdByPos(pos)];
@@ -322,21 +379,15 @@ export class Grood{
 			goo=true;
 		else if(c.type!='bomb')
 			return 'Not a bomb';
-		var performer=document.createElement('span');
-		var mask=document.createElement('span');
-		performer.classList.add('perform','ExplodeWrap');
-		mask.classList.add('perform','GooExplodeMask');
+		var performer=NewPerformer('span',this.QueryCellCenterClientPos(pos),'ExplodeWrap');
+		var mask=NewPerformer('span',null,'GooExplodeMask');
 		performer.innerHTML=`
 			<span class="perform Explode Big${goo?' Goo':''}"></span>
 			<span class="perform Explode Small${goo?' Goo':''}"></span>`
-		var cpos=this.QueryCellCenterClientPos(pos);
-		performer.style.left=`${cpos.x}px`;
-		performer.style.top=`${cpos.y}px`;
 		performer.style.filter=
 			`hue-rotate(${c.hue}deg)
 			${goo?'drop-shadow(0px 0px 10px white)':''}`;
-		var black=this.cells[pos.x][pos.y].parentElement
-			.classList.contains('black');
+		var black=this.CheckCellBlack(pos);
 		if(!black&&!goo||black&&goo)
 			performer.style.rotate='180deg';
 		this.visEle.appendChild(performer);
@@ -360,5 +411,52 @@ export class Grood{
 		if(goo)
 			mask.remove(),
 			this.element.style.animation='Shake 1s';
+	}
+	async AnimTeleport(from,port1,port2,to){
+		from=NARtoXY(from,this.rows);
+		if(this.CheckCellEmpty(from))
+			return 'No choos to move';
+		to=NARtoXY(to,this.rows);
+		if(!this.CheckCellEmpty(to))
+			return 'Already exist a choos';
+		port1=NARtoXY(port1,this.rows);
+		port2=NARtoXY(port2,this.rows);
+		if(from==to)
+			return 'You no move :(';
+		var id=this.GetChoosIdByPos(from);
+		var fromPos=this.QueryChoosClientPos(from);
+		var toPos=this.QueryChoosClientPos(port1);
+		var performer=NewPerformer('choos',fromPos);
+		var performer2=NewPerformer('span',this.QueryCellCenterClientPos(port1),'TeleLight');
+		var performer3=NewPerformer('span',this.QueryCellCenterClientPos(port2),'TeleLight');
+		performer.style.backgroundImage=
+			`url(${GetChoosIconPath(this.chooses[id].type)})`;
+		performer.style.filter=`hue-rotate(${this.chooses[id].hue}deg)`;
+		if(this.CheckCellBlack(port1))
+			performer2.style.rotate='180deg';
+		if(this.CheckCellBlack(port2))
+			performer3.style.rotate='180deg';
+		this.visEle.appendChild(performer);
+		await Sleep(10);
+		this.chooses[id].Hide();
+		this.MoveChoos(from,to);
+		SetElementPos(performer,toPos);
+		this.visEle.appendChild(performer2);
+		this.visEle.appendChild(performer3);
+		await Sleep(100);
+		performer.style.display='none';
+		fromPos=this.QueryChoosClientPos(port2);
+		toPos=this.QueryChoosClientPos(to);
+		SetElementPos(performer,fromPos);
+		performer.style.display='block';
+		await Sleep(200);
+		SetElementPos(performer,toPos);
+		await Sleep(100);
+		this.chooses[id].Show();
+		await Sleep(10);
+		performer.remove();
+		await Sleep(1000);
+		performer2.remove();
+		performer3.remove();
 	}
 };

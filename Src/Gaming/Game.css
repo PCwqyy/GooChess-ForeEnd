@@ -22,12 +22,13 @@ Grood.Scaled{
 a.butt{
 	border-radius: 3px;
 	margin: 2vh 0;
-	width: 10vw;
+	width: 15vw;
 	color: white;
 	background-color: #3689ce;
 	text-align: center;
 	text-decoration: none;
 	cursor: pointer;
+	transition: 0.5s;
 }
 a.butt:hover{
 	color: #3689ce;
@@ -35,9 +36,16 @@ a.butt:hover{
 }
 div#list{
 	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
 	position: absolute;
 	flex-direction: column;
 	left: 5vw;
 	top: 10vh;
 	z-index: 10;
+}
+#DebugId{
+	width: 20vw;
+	font-size: 20px;
+	font-family: Consolas;
 }
