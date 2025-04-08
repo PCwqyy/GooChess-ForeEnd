@@ -207,11 +207,11 @@ div.row.black cell>choos{
 	transform-origin: 50% 66.6%;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
-.perform.Explode.Big{
+.perform.Explode.Big:not(.Goo){
 	background-color: #fa6969;
 	animation: ExplodeBig 2.5s;
 }
-.perform.Explode.Small{
+.perform.Explode.Small:not(.Goo){
 	background-color: #ff4400;
 	animation: ExplodeSmall 2.5s;
 }
@@ -258,10 +258,85 @@ div.row.black cell>choos{
 		opacity: 0;
 	}
 }
-.perform.Checked{
-	height: calc(var(--cell-size) / 2);
-	width: calc(var(--cell-size) / 2);
-	border-radius: 100%;
-	background-color: red;
-	box-shadow: red 1px 1px 1px;
+.perform.GooExplodeMask{
+	position: absolute;
+	inset: 0px 0px 0px 0px;
+	background-color: white;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 114514;
+	animation: GooExplodeFlash 3s;
+}
+@keyframes GooExplodeFlash{
+	0%{opacity: 0;}
+	10%{opacity: 1;}
+	40%{opacity: 1;}
+	100%{opacity: 0;}
+}
+.perform.Explode.Goo{
+	box-shadow: white 0px 0px 5px 5px;
+}
+.perform.Explode.Big.Goo{
+	background-color: #fa6969;
+	animation: GooExplodeBig 5s;
+}
+.perform.Explode.Small.Goo{
+	background-color: #ff4400;
+	animation: GooExplodeSmall 5s;
+}
+@keyframes GooExplodeBig{
+	0%{
+		height: 0px;
+		width: 0px;
+		opacity: 0;
+	}
+	80%{
+		height: calc(var(--cell-size) * sqrt(3) * 3);
+		width: calc(var(--cell-size) * 6);
+		rotate: 0deg;
+		opacity: 1;
+	}
+	100%{
+		height: 0px;
+		width: 0px;
+		rotate: 360deg;
+		opacity: 0;
+	}
+}
+@keyframes GooExplodeSmall{
+	0%{
+		height: 0px;
+		width: 0px;
+		rotate: 180deg;
+		opacity: 0;
+	}
+	60%{
+		height: calc(var(--cell-size) * sqrt(3) * 2);
+		width: calc(var(--cell-size) * 4);
+		opacity: 1;
+	}
+	80%{
+		height: calc(var(--cell-size) * sqrt(3) * 2);
+		width: calc(var(--cell-size) * 4);
+		opacity: 1;
+	}
+	100%{
+		height: 0px;
+		width: 0px;
+		rotate: 720deg;
+		opacity: 0;
+	}
+}
+@keyframes Shake{
+	0%{translate: 0 0;}
+	10%{translate: 0.2% 0.2%;}
+	20%{translate: -0.5% 0.2%;}
+	30%{translate: -0.2% -0.2%;}
+	40%{translate: 0.2% 0.5%;}
+	50%{translate: -0.5% 0.2%;}
+	60%{translate: 0.2% -0.2%;}
+	70%{translate: -0.5% 0.2%;}
+	80%{translate: 0.2% -0.5%;}
+	90%{translate: -0.5% 0.2%;}
+	100%{translate: 0 0;}
 }

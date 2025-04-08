@@ -1,3 +1,4 @@
+export const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 const RomeApl={
 	1:'i',2:'ii',3:'iii',4:'iv',5:'v',
 	6:'vi',7:'vii',8:'viii',9:'ix',10:'x',
@@ -22,6 +23,24 @@ const BombRange={
 		{x:-1,y:0},
 		{x:1,y:0},
 		{x:1,y:1}
+	],
+};
+const GoobombRange={
+	white:[
+		{x:-1,y:0},
+		{x:1,y:0},
+		{x:-1,y:-1},
+		{x:-3,y:-1},
+		{x:1,y:-1},
+		{x:1,y:1}
+	],
+	black:[
+		{x:-1,y:0},
+		{x:1,y:0},
+		{x:1,y:1},
+		{x:3,y:1},
+		{x:-1,y:1},
+		{x:-1,y:-1}
 	],
 };
 
@@ -255,7 +274,7 @@ export class Grood{
 	 * @param {NAR|XY} from
 	 * @param {NAR|XY} to
 	 */
-	AnimMove(from,to){
+	async AnimMove(from,to){
 		if(from instanceof NAR)
 			from=NARtoXY(from,this.rows);
 		if(this.CheckCellEmpty(from))
@@ -277,22 +296,22 @@ export class Grood{
 		performer.style.top=`${fromPos.y}px`;
 		performer.style.filter=`hue-rotate(${this.chooses[id].hue}deg)`;
 		this.visEle.appendChild(performer);
+		await Sleep(10);
 		this.chooses[id].Hide();
 		this.RemoveChoos(from);
 		this.chooses[id].pos=XYtoNAR(to,this.rows);
 		this.AppendChoos(this.chooses[id]);
-		setTimeout(()=>{
-			performer.style.left=`${toPos.x}px`;
-			performer.style.top=`${toPos.y}px`;
-		},10);
-		setTimeout(()=>{
-			this.chooses[id].Show();
-			performer.remove();
-		},110);
+		await Sleep(10);
+		performer.style.left=`${toPos.x}px`;
+		performer.style.top=`${toPos.y}px`;
+		await Sleep(100);
+		this.chooses[id].Show();
+		await Sleep(10);
+		performer.remove();
 		return 'moved';
 	}
 	/** @param {NAR|XY} pos */
-	AnimExplode(pos){
+	async AnimExplode(pos){
 		if(pos instanceof NAR)
 			pos=NARtoXY(from,this.rows);
 		if(this.CheckCellEmpty(pos))
@@ -304,30 +323,42 @@ export class Grood{
 		else if(c.type!='bomb')
 			return 'Not a bomb';
 		var performer=document.createElement('span');
+		var mask=document.createElement('span');
 		performer.classList.add('perform','ExplodeWrap');
+		mask.classList.add('perform','GooExplodeMask');
 		performer.innerHTML=`
 			<span class="perform Explode Big${goo?' Goo':''}"></span>
 			<span class="perform Explode Small${goo?' Goo':''}"></span>`
 		var cpos=this.QueryCellCenterClientPos(pos);
 		performer.style.left=`${cpos.x}px`;
 		performer.style.top=`${cpos.y}px`;
-		performer.style.filter=`hue-rotate(${c.hue}deg)`
+		performer.style.filter=
+			`hue-rotate(${c.hue}deg)
+			${goo?'drop-shadow(0px 0px 10px white)':''}`;
 		var black=this.cells[pos.x][pos.y].parentElement
 			.classList.contains('black');
-		if(!black)
+		if(!black&&!goo||black&&goo)
 			performer.style.rotate='180deg';
 		this.visEle.appendChild(performer);
-		setTimeout(()=>{
-			this.RemoveChoos(pos);
-			for(var i of BombRange[black?'black':'white'])
-			{
-				var post=new XY(pos.x+i.x,pos.y+i.y);
-				this.AnimExplode(post);
-				this.RemoveChoos(post);
-			}
-		},1500);
-		setTimeout(()=>{
-			performer.remove();
-		},3000);
+		if(goo)
+			document.body.appendChild(mask),
+			this.element.style.animation='Shake 0.5s infinite';
+		await Sleep(goo?4000:1500);
+		this.RemoveChoos(pos);
+		var range=goo?
+			GoobombRange[black?'black':'white']
+		   :BombRange[black?'black':'white'];
+		console.log(range);
+		for(var i of range)
+		{
+			var post=new XY(pos.x+i.x,pos.y+i.y);
+			this.AnimExplode(post);
+			this.RemoveChoos(post);
+		}
+		await Sleep(1100);
+		performer.remove();
+		if(goo)
+			mask.remove(),
+			this.element.style.animation='Shake 1s';
 	}
 };

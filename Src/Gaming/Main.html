@@ -23,7 +23,7 @@
 			let Debug=new DOMRect;
 		</script>
 		<script type="module">
-			import {Grood,XY,NAR} from "../Game.js";
+			import {Grood,XY,NAR,Sleep} from "../Game.js";
 			const ROWS=12;
 			var GroodMian=new Grood(ROWS,document.getElementById('GroodMain'),()=>{});
 			var ScaleButt=document.getElementById('ScaleButt');
@@ -34,25 +34,29 @@
 			Debug.Grood=GroodMian;
 			Debug.XY=XY;
 			Debug.NAR=NAR;
-			function DebugFunc(){
-				GroodMian.PlaceChoos(new XY(4,1),'pawn',0);
-				GroodMian.PlaceChoos(new XY(7,2),'pawn',0);
-				GroodMian.PlaceChoos(new XY(6,3),'pawn',0);
-				GroodMian.PlaceChoos(new XY(5,2),'bomb',0);
-				GroodMian.PlaceChoos(new XY(6,2),'bomb',60);
-				GroodMian.PlaceChoos(new XY(7,3),'bomb',120);
-				GroodMian.PlaceChoos(new XY(8,2),'bomb',180);
-				GroodMian.PlaceChoos(new XY(9,3),'bomb',240);
-				GroodMian.PlaceChoos(new XY(10,5),'bomb',300);
-				GroodMian.AnimMove(new XY(10,5),new XY(10,4));
-				GroodMian.AnimMove(new XY(10,4),new XY(9,4));
-				GroodMian.AnimMove(new XY(9,4),new XY(8,3));
-				GroodMian.AnimExplode(new XY(8,3));
-
-				GroodMian.PlaceChoos(new XY(8,4),'king',210);
-				GroodMian.SetSign(new XY(8,4),'danger','checked')
+			async function DebugFunc(){
+				GroodMian.PlaceChoos(new XY(1,1),'pawn',0);
+				GroodMian.PlaceChoos(new XY(2,1),'pawn',0);
+				GroodMian.PlaceChoos(new XY(3,1),'pawn',0);
+				GroodMian.PlaceChoos(new XY(3,2),'pawn',0);
+				GroodMian.PlaceChoos(new XY(4,1),'pawn',60);
+				GroodMian.PlaceChoos(new XY(4,2),'pawn',120);
+				GroodMian.PlaceChoos(new XY(5,1),'pawn',180);
+				GroodMian.PlaceChoos(new XY(5,2),'goobomb',240);
+				GroodMian.PlaceChoos(new XY(5,3),'pawn',240);
+				GroodMian.PlaceChoos(new XY(6,1),'pawn',240);
+				GroodMian.PlaceChoos(new XY(6,2),'pawn',240);
+				GroodMian.PlaceChoos(new XY(6,3),'pawn',240);
+				GroodMian.PlaceChoos(new XY(7,1),'pawn',240);
+				GroodMian.PlaceChoos(new XY(7,2),'pawn',240);
+				GroodMian.PlaceChoos(new XY(7,3),'pawn',240);
+				GroodMian.PlaceChoos(new XY(7,4),'pawn',240);
+				await GroodMian.AnimExplode(new XY(5,2));
+				// GroodMian.PlaceChoos(new XY(8,4),'king',210);
+				// GroodMian.SetSign(new XY(8,4),'danger','checked')
 			}
 			Debug.Func=DebugFunc;
+			Debug.Sleep=Sleep;
 		</script>
 		<script src="../lang.js"></script>
 		<script src="../Global.js"></script>
