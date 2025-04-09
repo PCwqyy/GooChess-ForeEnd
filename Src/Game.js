@@ -342,7 +342,7 @@ export class Grood{
 	SetSign(pos,...signs){
 		if(pos instanceof NAR)
 			pos=NARtoXY(pos,this.rows);
-		this.cells[pos.x][pos.y].classList.add(signs);
+		this.cells[pos.x][pos.y].classList.add(...signs);
 	}
 
 // ----------------------------带动画---------------------------

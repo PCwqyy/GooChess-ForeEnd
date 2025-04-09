@@ -2,25 +2,27 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Python Localhost",
+			"label": "Python Host",
 			"type": "shell",
 			"command": "python",
 			"args": [
-				"-m","http.server","8000"
+				"-m",
+				"http.server",
+				"8000"
 			],
 			"isBackground": true,
-			"problemMatcher":{
-				"owner": "Host",
-				"fileLocation": [
-					"autoDetect",
-					"${workspaceRoot}"
-				],
-				"pattern": {
-					"regexp": "(warning|error)\\s*(.*)$",
-					"severity": 1,
-					"message": 2
-				}
-			}
+			"problemMatcher": []
+		},
+		{
+			"label": "cpolar Forwarding",
+			"type": "shell",
+			"command": "cpolar",
+			"args": [
+				"http",
+				"8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
 		}
 	]
 }
