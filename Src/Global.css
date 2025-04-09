@@ -196,11 +196,13 @@ div.row.black cell>choos{
 }
 
 .perform{
-	transition: 0.1s;
+	transition: 0.2s;
 	position: absolute;
 	z-index: 3;
 }
-.perform.Explode,.perform.TeleLight{
+.perform.Explode,
+.perform.TeleLight,
+.perform.ShootLight{
 	height: 0px;
 	width: 0px;
 	translate: -50% -66.6%;
@@ -342,7 +344,6 @@ div.row.black cell>choos{
 }
 .perform.TeleLight{
 	background-color: white;
-	filter: drop-shadow(0px 0px 3px white);
 	animation: TeleportLight 1.4s;
 }
 @keyframes TeleportLight{
@@ -359,6 +360,28 @@ div.row.black cell>choos{
 	100%{
 		height: calc(var(--cell-size) * sqrt(3));
 		width: calc(var(--cell-size) * 2);
+		opacity: 0;
+	}
+}
+.perform.ShootLight{
+	background-color: var(--color-shooter);
+	animation: ShootLight 2s;
+}
+
+@keyframes ShootLight{
+	0%{
+		height: 0;
+		width: 0;
+		opacity: 1;
+	}
+	45%{
+		height: calc(var(--cell-size) * sqrt(3));
+		width: calc(var(--cell-size) * 2);
+		opacity: 1;
+	}
+	100%{
+		height: calc(var(--cell-size) * sqrt(3) * 2);
+		width: calc(var(--cell-size) * 4);
 		opacity: 0;
 	}
 }

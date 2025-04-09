@@ -18,6 +18,12 @@ async function DebugFunc(){
 		GroodMian.PlaceChoos(new XY(10,3),'pawn',210);
 		await GroodMian.AnimMove(new XY(10,3),new XY(17,5));
 	}
+	if(Id=='Shoot')
+	{
+		console.log('acbd');
+		GroodMian.PlaceChoos(new XY(17,5),'pawn',210);
+		await GroodMian.AnimMove(new XY(17,5),new XY(23,5),true);
+	}
 	if(Id=='Teleport')
 	{
 		GroodMian.PlaceChoos(new XY(10,5),'pawn',210);

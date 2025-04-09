@@ -53,13 +53,21 @@ function SetElementPos(ele,pos){
 	ele.style.left=`${pos.x}px`;
 	ele.style.top=`${pos.y}px`;
 }
+function SetElementHue(ele,hue){
+	ele.style.filter=(`hue-rotate(${hue}deg)`);
+}
+function SetElementUpSideDown(ele){
+	ele.style.rotate='180deg';
+}
+function SetElementChoosType(ele,type){
+	ele.style.backgroundImage=`url(${GetChoosIconPath(type)})`;
+}
 /** @returns {HTMLElement} */
 function NewPerformer(Tag,Pos,...Class){
 	var t=document.createElement(Tag);
 	if(Pos!=null)
 		SetElementPos(t,Pos);
 	t.classList.add('perform',...Class);
-	console.log(t);
 	return t;
 }
 
@@ -241,7 +249,10 @@ export class Grood{
 		pos=NARtoXY(pos,this.rows);
 		return pos.x%2==0;
 	}
-	/** @param {NAR|XY} pos */
+	/**
+	 * @param {NAR|XY} pos
+	 * @returns {Number}
+	 */
 	GetChoosIdByPos(pos){
 		if(pos instanceof NAR)
 			pos=NARtoXY(pos,this.rows);
@@ -331,75 +342,91 @@ export class Grood{
 	SetSign(pos,...signs){
 		if(pos instanceof NAR)
 			pos=NARtoXY(pos,this.rows);
-		for(var i of signs)
-			this.cells[pos.x][pos.y].classList.add(i);
+		this.cells[pos.x][pos.y].classList.add(signs);
 	}
 
 // ----------------------------带动画---------------------------
 	/**
+	 * @param {NAR|XY} pos
+	 * @param {Number} cid
+	 * @returns {HTMLElement}
+	 */
+	NewPerformerChoos(cid,...Class){
+		var ele=NewPerformer('choos',
+			this.QueryChoosClientPos(this.chooses[cid].pos),...Class);
+		SetElementChoosType(ele,this.chooses[cid].type);
+		SetElementHue(ele,this.chooses[cid].hue);
+		return ele;
+	}
+	/**
+	 * @param {NAR|XY} pos
+	 * @returns {HTMLElement}
+	 */
+	NewPerformerCell(pos,...Class){
+		var ele=NewPerformer('span',this.QueryCellCenterClientPos(pos),...Class);
+		if(this.CheckCellBlack(pos))
+			SetElementUpSideDown(ele);
+		return ele;
+	}
+	/**
 	 * @param {NAR|XY} from
 	 * @param {NAR|XY} to
 	 */
-	async AnimMove(from,to){
+	async AnimMove(from,to,shoot=false){
 		from=NARtoXY(from,this.rows);
-		if(this.CheckCellEmpty(from))
-			return 'No choos to move';
+		if(this.CheckCellEmpty(from))	return;
 		to=NARtoXY(to,this.rows);
-		if(!this.CheckCellEmpty(to))
-			return 'Already exist a choos';
-		if(from==to)
-			return 'You no move :(';
+		if(!this.CheckCellEmpty(to))	return;
+		if(from==to)	return;
+		this.SetSign(from,'latest');
+		this.SetSign(to,'latest');
 		var id=this.GetChoosIdByPos(from);
-		var fromPos=this.QueryChoosClientPos(from);
-		var toPos=this.QueryChoosClientPos(to);
-		var performer=NewPerformer('choos',fromPos)
-		performer.style.backgroundImage=
-			`url(${GetChoosIconPath(this.chooses[id].type)})`;
-		performer.style.filter=`hue-rotate(${this.chooses[id].hue}deg)`;
-		this.visEle.appendChild(performer);
-		await Sleep(10);
+		var pChoos=this.NewPerformerChoos(id);
+		var pCell=this.NewPerformerCell(from,'ShootLight');
+		if(shoot)
+			this.visEle.appendChild(pCell);
+		this.visEle.appendChild(pChoos);
+		await Sleep(shoot?1000:10);
 		this.chooses[id].Hide();
 		this.MoveChoos(from,to);
-		console.log(toPos);
-		SetElementPos(performer,toPos);
-		await Sleep(100);
+		SetElementPos(pChoos,this.QueryChoosClientPos(to));
+		await Sleep(200);
 		this.chooses[id].Show();
 		await Sleep(10);
-		performer.remove();
-		return 'moved';
+		pChoos.remove();
+		if(!shoot)	return;
+		await Sleep(1000);
+		pCell.remove();
+		return;
 	}
 	/** @param {NAR|XY} pos */
 	async AnimExplode(pos){
 		pos=NARtoXY(pos,this.rows);
-		if(this.CheckCellEmpty(pos))
-			return 'No choos here';
+		if(this.CheckCellEmpty(pos))	return;
 		var c=this.chooses[this.GetChoosIdByPos(pos)];
 		var goo=false;
-		if(c.type=='goobomb')
-			goo=true;
-		else if(c.type!='bomb')
-			return 'Not a bomb';
-		var performer=NewPerformer('span',this.QueryCellCenterClientPos(pos),'ExplodeWrap');
-		var mask=NewPerformer('span',null,'GooExplodeMask');
-		performer.innerHTML=`
+		if(c.type=='goobomb')	goo=true;
+		else if(c.type!='bomb')	return;
+		var pWrap=this.NewPerformerCell(pos,'ExplodeWrap');
+		var pMask=NewPerformer('span',null,'GooExplodeMask');
+		pWrap.innerHTML=`
 			<span class="perform Explode Big${goo?' Goo':''}"></span>
 			<span class="perform Explode Small${goo?' Goo':''}"></span>`
-		performer.style.filter=
+		pWrap.style.filter=
 			`hue-rotate(${c.hue}deg)
 			${goo?'drop-shadow(0px 0px 10px white)':''}`;
 		var black=this.CheckCellBlack(pos);
-		if(!black&&!goo||black&&goo)
-			performer.style.rotate='180deg';
-		this.visEle.appendChild(performer);
+		if((!black&&!goo)||(black&&goo))	SetElementUpSideDown(pWrap);
+		else	pWrap.style.rotate='0deg';
+		this.visEle.appendChild(pWrap);
 		if(goo)
-			document.body.appendChild(mask),
+			document.body.appendChild(pMask),
 			this.element.style.animation='Shake 0.5s infinite';
 		await Sleep(goo?4000:1500);
 		this.RemoveChoos(pos);
 		var range=goo?
 			GoobombRange[black?'black':'white']
 		   :BombRange[black?'black':'white'];
-		console.log(range);
 		for(var i of range)
 		{
 			var post=new XY(pos.x+i.x,pos.y+i.y);
@@ -407,56 +434,52 @@ export class Grood{
 			this.RemoveChoos(post);
 		}
 		await Sleep(1100);
-		performer.remove();
+		pWrap.remove();
 		if(goo)
-			mask.remove(),
+			pMask.remove(),
 			this.element.style.animation='Shake 1s';
 	}
+	/**
+	 * @param {XY|NAR} from
+	 * @param {XY|NAR} port1
+	 * @param {XY|NAR} port2
+	 * @param {XY|NAR} to
+	 */
 	async AnimTeleport(from,port1,port2,to){
 		from=NARtoXY(from,this.rows);
-		if(this.CheckCellEmpty(from))
-			return 'No choos to move';
+		if(this.CheckCellEmpty(from))	return;
 		to=NARtoXY(to,this.rows);
-		if(!this.CheckCellEmpty(to))
-			return 'Already exist a choos';
+		if(!this.CheckCellEmpty(to))	return;
 		port1=NARtoXY(port1,this.rows);
 		port2=NARtoXY(port2,this.rows);
-		if(from==to)
-			return 'You no move :(';
+		if(from==to)	return;
 		var id=this.GetChoosIdByPos(from);
 		var fromPos=this.QueryChoosClientPos(from);
 		var toPos=this.QueryChoosClientPos(port1);
-		var performer=NewPerformer('choos',fromPos);
-		var performer2=NewPerformer('span',this.QueryCellCenterClientPos(port1),'TeleLight');
-		var performer3=NewPerformer('span',this.QueryCellCenterClientPos(port2),'TeleLight');
-		performer.style.backgroundImage=
-			`url(${GetChoosIconPath(this.chooses[id].type)})`;
-		performer.style.filter=`hue-rotate(${this.chooses[id].hue}deg)`;
-		if(this.CheckCellBlack(port1))
-			performer2.style.rotate='180deg';
-		if(this.CheckCellBlack(port2))
-			performer3.style.rotate='180deg';
-		this.visEle.appendChild(performer);
+		var pChoos=this.NewPerformerChoos(id);
+		var pCell1=this.NewPerformerCell(port1,'TeleLight');
+		var pCell2=this.NewPerformerCell(port2,'TeleLight');
+		this.visEle.appendChild(pChoos);
 		await Sleep(10);
 		this.chooses[id].Hide();
 		this.MoveChoos(from,to);
-		SetElementPos(performer,toPos);
-		this.visEle.appendChild(performer2);
-		this.visEle.appendChild(performer3);
-		await Sleep(100);
-		performer.style.display='none';
+		SetElementPos(pChoos,toPos);
+		this.visEle.appendChild(pCell1);
+		this.visEle.appendChild(pCell2);
+		await Sleep(200);
+		pChoos.style.display='none';
 		fromPos=this.QueryChoosClientPos(port2);
 		toPos=this.QueryChoosClientPos(to);
-		SetElementPos(performer,fromPos);
-		performer.style.display='block';
+		SetElementPos(pChoos,fromPos);
+		pChoos.style.display='block';
 		await Sleep(200);
-		SetElementPos(performer,toPos);
-		await Sleep(100);
+		SetElementPos(pChoos,toPos);
+		await Sleep(200);
 		this.chooses[id].Show();
 		await Sleep(10);
-		performer.remove();
+		pChoos.remove();
 		await Sleep(1000);
-		performer2.remove();
-		performer3.remove();
+		pCell1.remove();
+		pCell2.remove();
 	}
 };
