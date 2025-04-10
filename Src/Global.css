@@ -25,6 +25,10 @@ html{
 		color-scheme: light;
 	}
 }
+@font-face {
+	font-family: Caviar Dreams;
+	src: url(/Fonts/CaviarDreams.ttf);
+}
 
 body{
 	height: 100vh;
