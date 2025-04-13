@@ -55,3 +55,7 @@ div#list{
 	color: white;
 	cursor: not-allowed;
 }
+#DebugButt.error{
+	background-color: red !important;
+	color: white;
+}
