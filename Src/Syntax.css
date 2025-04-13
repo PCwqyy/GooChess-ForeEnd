@@ -118,15 +118,3 @@ Grood{
 	margin: auto;
 	background-image: unset;
 }
-span#Tip{
-	position: absolute;
-	border-radius: 5px;
-	padding: 1vh;
-	opacity: 0;
-	background-color: light-dark(black,white);
-	color: light-dark(white,black);
-	z-index: 2;
-	pointer-events: none;
-	user-select: none;
-	transition: opacity 0.3s;
-}

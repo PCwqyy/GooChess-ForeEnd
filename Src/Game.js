@@ -2,13 +2,17 @@ export const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 const RomeApl={
 	1:'i',2:'ii',3:'iii',4:'iv',5:'v',
 	6:'vi',7:'vii',8:'viii',9:'ix',10:'x',
-	11:'xi',12:'xii',13:'xiii',14:'xiv'};
+	11:'xi',12:'xii',13:'xiii',14:'xiv',15:'xv',
+	16:'xvi',17:'xvii',18:'xviii',19:'xix',20:'xx',
+	21:'xxi',22:'xxii',23:'xxiii',24:'xxiv',25:'xxv',
+	26:'xxvi',27:'xxvii',28:'xxviii',29:'xxix',30:'xxx'
+};
 // 坐标
 export class XY{
 	x;y;
-	/**D
-	 * @param {Number} x 
-	 * @param {Number} y 
+	/**
+	 * @param {Number} x
+	 * @param {Number} y
 	 */
 	constructor(x,y)
 	{
@@ -16,39 +20,8 @@ export class XY{
 		this.y=y;
 	}
 	print(){return `${this.x},${this.y}`;}
+	valueOf(){return this.print();}
 }
-
-const BombRange={
-	white:[
-		{x:-1,y:0},
-		{x:1,y:0},
-		{x:-1,y:-1}
-	],
-	black:[
-		{x:-1,y:0},
-		{x:1,y:0},
-		{x:1,y:1}
-	],
-};
-const GoobombRange={
-	white:[
-		{x:-1,y:0},
-		{x:1,y:0},
-		{x:-1,y:-1},
-		{x:-3,y:-1},
-		{x:1,y:-1},
-		{x:1,y:1}
-	],
-	black:[
-		{x:-1,y:0},
-		{x:1,y:0},
-		{x:1,y:1},
-		{x:3,y:1},
-		{x:-1,y:1},
-		{x:-1,y:-1}
-	],
-};
-
 function SetElementPos(ele,pos){
 	ele.style.left=`${pos.x}px`;
 	ele.style.top=`${pos.y}px`;
@@ -58,6 +31,9 @@ function SetElementHue(ele,hue){
 }
 function SetElementUpSideDown(ele){
 	ele.style.rotate='180deg';
+}
+function SetElementRotate(ele,angle){
+	ele.style.rotate=`${angle}deg`;
 }
 function SetElementChoosType(ele,type){
 	ele.style.backgroundImage=`url(${GetChoosIconPath(type)})`;
@@ -90,6 +66,13 @@ export class NAR{
 			return `${this.num},${this.alp},${this.rom}`;
 		return `${this.num}, ${String.fromCharCode(96+this.alp)}, ${RomeApl[this.rom]}`;
 	}
+	/**
+	 * @param {NAR} pos
+	 */
+	delta(pos){
+		return new NAR(this.num+pos.num,this.alp+pos.alp,this.rom+pos.rom);
+	}
+	valueOf(){return this.print(true);}
 }
 /**
  * @param {XY} a
@@ -97,6 +80,7 @@ export class NAR{
  */
 export function XYtoNAR(a,rows){
 	if(a instanceof NAR)	return a;
+	if(a.x===-1)	return new NAR(-1,-1,-1);
 	return new NAR(
 		Math.floor(a.x/2)+1,
 		Math.floor((2*rows+2*a.y-a.x)/2),
@@ -108,10 +92,89 @@ export function XYtoNAR(a,rows){
  */
 export function NARtoXY(a,rows){
 	if(a instanceof XY)	return a;
+	if(a.alp===-1)	return new XY(-1,-1);
 	var b=new XY(2*a.num-2,rows-a.rom+1);
 	if(2*rows+2*b.y-b.x!=2*a.alp)	b.x++;
 	return b;
 }
+
+/**
+ * @param {XY|NAR} a
+ * @param {XY|NAR} b
+ */
+function SamePos(a,b){
+	a=XYtoNAR(a);
+	b=XYtoNAR(b);
+	return a.x===b.x&&a.y===b.y;
+}
+
+const BombRange={
+	white:[
+		new XY(-1,0),
+		new XY(1,0),
+		new XY(-1,-1)
+	],
+	black:[
+		new XY(-1,0),
+		new XY(1,0),
+		new XY(1,1)
+	],
+};
+const GoobombRange={
+	white:[
+		new XY(-1,0),
+		new XY(1,0),
+		new XY(-1,-1),
+		new XY(-3,-1),
+		new XY(1,-1),
+		new XY(1,1)
+	],
+	black:[
+		new XY(-1,0),
+		new XY(1,0),
+		new XY(1,1),
+		new XY(3,1),
+		new XY(-1,1),
+		new XY(-1,-1)
+	],
+};
+const RotateRange={
+	white:{
+		1:[
+			new NAR(0,0,1),
+			new NAR(0,1,0),
+			new NAR(1,0,0),
+		],
+		2:[
+			new NAR(1,1,-1),
+			new NAR(1,-1,1),
+			new NAR(-1,1,1),
+		],
+		3:[
+			new NAR(-1,-1,2),
+			new NAR(-1,2,-1),
+			new NAR(2,-1,-1),
+		]
+	},
+	black:{
+		1:[
+			new NAR(-1,0,0),
+			new NAR(0,-1,0),
+			new NAR(0,0,-1),
+		],
+		2:[
+			new NAR(-1,1,-1),
+			new NAR(-1,-1,1),
+			new NAR(1,-1,-1),
+		],
+		3:[
+			new NAR(-2,1,1),
+			new NAR(1,-2,1),
+			new NAR(1,1,-2),
+		]
+	}
+};
+
 
 /** @param {String} type */
 export function GetChoosIconPath(type){
@@ -119,18 +182,16 @@ export function GetChoosIconPath(type){
 }
 
 export class Choos{
-	type;hue;element;pos;
+	type;hue;element;
 	/** 
 	 * @param {String} t type
-	 * @param {NAR} p position
 	 * @param {Number} h hue
 	 */
-	constructor(t,p,h)
+	constructor(t,h)
 	{
 		this.element=document.createElement('choos');
 		this.SetType(t);
 		this.SetHue(h);
-		this.pos=p;
 	}
 	SetType(t){
 		this.type=t;
@@ -140,7 +201,7 @@ export class Choos{
 	SetHue(h){
 		if(!h instanceof Number)
 			return NaN;
-		if(h==-1)
+		if(h===-1)
 			this.element.style.filter=`brightness(2) grayscale(1)`;
 		else
 			this.element.style.filter=`hue-rotate(${h}deg)`
@@ -168,9 +229,9 @@ export class Grood{
 	cells;
 	/** @type {HTMLElement} */
 	visEle;
-	element;
-	/** @type {Array<Choos>} */
-	chooses;
+	/** @type {Map<String,Choos>} */
+	chooses=new Map();
+	element;Tip;TipPlainPaint=false;PosInTip=new NAR(-1,-1,-1);
 	/**
 	 * @param {Number} rows 
 	 * @param {HTMLElement} parentElement 
@@ -180,12 +241,20 @@ export class Grood{
 	{
 		this.rows=rows;
 		this.element=document.createElement('grood');
-		this.chooses=new Array;
+		this.Tip=document.createElement('span');
+		this.Tip.id='Tip';
 		this.cells=new Array(this.rows*2);
-		this.visEle;
 		this.DrawGrood(game);
 		parentElement.appendChild(this.element);
 		this.element.addEventListener('click',clickFunc);
+	}
+	/** @param {XY} xy */
+	XYtoNAR(xy){
+		return XYtoNAR(xy,this.rows);
+	}
+	/** @param {NAR} nar */
+	NARtoXY(nar){
+		return NARtoXY(nar,this.rows);
 	}
 	/**
 	 * @param {boolean} game is in game 
@@ -196,71 +265,103 @@ export class Grood{
 		this.visEle.classList.add('cells');
 		this.element.appendChild(this.visEle);
 		var row=new Array(this.rows*2);
-		for(let i=1;i<=this.rows*2-1;i++){
+		for(let i=1;i<this.rows*2;i++){
 			row[i]=document.createElement('div');
 			row[i].classList.add('row');
 			this.cells[i]=new Array(this.rows);
-			if(i%2==0)	row[i].classList.add('black');
+			if(i%2===0)	row[i].classList.add('black');
 			for(let j=1;j<=Math.floor((i-1)/2)+1;j++){
 				this.cells[i][j]=document.createElement('cell');
 				this.cells[i][j].setAttribute('x',`${i}`);
 				this.cells[i][j].setAttribute('y',`${j}`);
-				var perform=document.createElement('span');
-				this.cells[i][j].appendChild(perform);
+				var show=document.createElement('span');
+				this.cells[i][j].appendChild(show);
 				if(game)
 				{
 					// 确定shooter
 					for(var q in Shooter)
-						if(Shooter[q].x==i&&Shooter[q].y==j){
+						if(Shooter[q].x===i&&Shooter[q].y===j){
 							this.cells[i][j].classList.add('shooter');
 							break;
 						}
 					// 确定三方位置
-					var thisNar=XYtoNAR(new XY(i,j),this.rows);
+					var thisNar=this.XYtoNAR(new XY(i,j));
 					if(thisNar.num<=4)	this.cells[i][j].classList.add(Side.num);
 					if(thisNar.alp<=4)	this.cells[i][j].classList.add(Side.alp);
 					if(thisNar.rom<=4)	this.cells[i][j].classList.add(Side.rom);
 				}
+				this.cells[i][j].addEventListener('mouseenter',(e)=>{
+					this.Tip.style.opacity=0.8;
+					if(e.target.tagName!='CELL')	return;
+					this.PosInTip=this.XYtoNAR(
+						new XY(e.target.getAttribute('x'),e.target.getAttribute('y')),
+						this.rows);
+					this.Tip.innerHTML=`${this.PosInTip.print(this.TipPlainPaint)}`;
+				});
 				row[i].appendChild(this.cells[i][j]);
 			}
 			this.visEle.appendChild(row[i]);
 		}
+		document.body.appendChild(this.Tip);
+		this.element.addEventListener('mouseleave',()=>{
+			this.Tip.style.opacity=0;
+		});
+		this.element.addEventListener('mousemove',(e)=>{
+			this.Tip.style.left=`${e.clientX+10}px`;
+			this.Tip.style.top=`${e.clientY+10}px`;
+		});
+		document.body.addEventListener('keydown',(e)=>{
+			if(e.key!='Shift')	return;
+			this.TipPlainPaint=true;
+			this.Tip.innerHTML=`${this.PosInTip.print(this.TipPlainPaint)}`;
+		})
+		document.body.addEventListener('keyup',(e)=>{
+			if(e.key!='Shift')	return;
+			this.TipPlainPaint=false;
+			this.Tip.innerHTML=`${this.PosInTip.print(this.TipPlainPaint)}`;
+		})
 		return;
 	}
 	/** @param {NAR|XY} pos */
-	CheckCellExist(pos){
-		pos=NARtoXY(pos,this.rows);
+	CheckPosValid(pos){
+		pos=this.NARtoXY(pos);
+		if(pos.x===-1)	return true;
 		if(pos.x>this.rows*2||pos.x<1)
 			return false;
 		if(pos.y>Math.floor((pos.x+1)/2)||pos.y<1)
 			return false;
 		return true;
 	}
+	/**
+	 * @param {NAR|XY} pos
+	 */
+	GetChoosByPos(pos){
+		pos=this.XYtoNAR(pos);
+		if(!this.CheckPosValid(pos))
+			return undefined;
+		return this.chooses.get(pos.print(true));
+	}
 	/** @param {NAR|XY} pos */
 	CheckCellEmpty(pos){
-		pos=NARtoXY(pos,this.rows);
-		var c=this.GetChoosIdByPos(pos);
-		if(c==undefined||c=='-1'||c==null)
-			return true;
-		else return false;
+		return this.GetChoosByPos(pos)===undefined;
 	}
 	/** @param {NAR|XY} pos */
 	CheckCellBlack(pos){
-		pos=NARtoXY(pos,this.rows);
-		return pos.x%2==0;
+		pos=this.NARtoXY(pos);
+		return pos.x%2===0;
 	}
 	/**
 	 * @param {NAR|XY} pos
-	 * @returns {Number}
+	 * @param {Choos} ch
 	 */
-	GetChoosIdByPos(pos){
-		if(pos instanceof NAR)
-			pos=NARtoXY(pos,this.rows);
-		if(!this.CheckCellExist(pos))
-			return;
-		var c=this.cells[pos.x][pos.y];
-		var id=c.getAttribute('choosId');
-		return id;
+	AppendChoos(pos,ch){
+		pos=this.XYtoNAR(pos);
+		if(!this.CheckPosValid(pos))	return;
+		if(!this.CheckCellEmpty(pos))	return;
+		this.chooses.set(pos.print(true),ch);
+		if(pos.alp===-1)	return;
+		var posN=this.NARtoXY(pos);
+		this.cells[posN.x][posN.y].appendChild(ch.element);
 	}
 	/**
 	 * @param {NAR|XY} pos
@@ -268,57 +369,44 @@ export class Grood{
 	 * @param {Number} hue
 	 */
 	PlaceChoos(pos,type,hue){
-		pos=XYtoNAR(pos,this.rows);
-		if(!this.CheckCellEmpty(pos))
-			return 'Already a choos here';
-		var ch=new Choos(type,pos,hue);
-		this.AppendChoos(ch);
-	}
-	/** @param {Choos} c */
-	AppendChoos(c){
-		var id=this.chooses.push(c);
-		var pos=NARtoXY(c.pos,this.rows);
-		this.cells[pos.x][pos.y].appendChild(c.element);
-		this.cells[pos.x][pos.y].setAttribute('choosId',`${id-1}`);
+		pos=this.XYtoNAR(pos);
+		if(!this.CheckCellEmpty(pos))	return;
+		var ch=new Choos(type,hue);
+		this.AppendChoos(pos,ch);
 	}
 	/** @param {NAR|XY} pos */
 	RemoveChoos(pos){
-		pos=NARtoXY(pos,this.rows);
-		if(!this.CheckCellExist(pos))	return;
+		pos=this.XYtoNAR(pos);
+		if(!this.CheckPosValid(pos))	return;
 		if(this.CheckCellEmpty(pos))	return;
-		var id=this.GetChoosIdByPos(pos);
-		var tar=this.cells[pos.x][pos.y]
-		tar.removeChild(this.chooses[id].element);
-		tar.setAttribute('choosId','-1');
-		return id;
+		if(pos.x!==-1)
+			this.GetChoosByPos(pos).element.remove();
+		this.chooses.delete(pos.print(true));
 	}
 	ClearChooses(){
 		for(var i of this.chooses)
-		{
-			var pos=NARtoXY(i.pos,this.rows);
-			this.cells[pos.x][pos.y].setAttribute('choosId','-1');
-			i.element.remove();
-		}
-		this.chooses=new Array;
+			i[1].element.remove();
+		this.chooses.clear();
 	}
 	/**
 	 * @param {NAR|XY} from
 	 * @param {NAR|XY} to
 	 */
 	MoveChoos(from,to){
-		from=NARtoXY(from,this.rows);
-		to=NARtoXY(to,this.rows);
-		if(from==to)	return;
-		if(!this.CheckCellExist(from))	return;
-		if(!this.CheckCellExist(to))	return;
-		var id=this.GetChoosIdByPos(from);
+		from=this.XYtoNAR(from);
+		to=this.XYtoNAR(to);
+		if(from===to)	return;
+		if(!this.CheckPosValid(from))	return;
+		if(!this.CheckPosValid(to))	return;
+		if(this.CheckCellEmpty(from))	return;
+		if(!this.CheckCellEmpty(to))	return;
+		var c=this.GetChoosByPos(from);
 		this.RemoveChoos(from);
-		this.chooses[id].pos=to;
-		this.AppendChoos(this.chooses[id]);
+		this.AppendChoos(to,c);
 	}
 	/** @param {NAR|XY} pos */
 	QueryChoosClientPos(pos){
-		pos=NARtoXY(pos,this.rows);
+		pos=this.NARtoXY(pos);
 		var tar=this.cells[pos.x][pos.y];
 		var measurer=document.createElement('choos');
 		measurer.style.opacity='0';
@@ -330,7 +418,7 @@ export class Grood{
 	}
 	/** @param {NAR|XY} pos */
 	QueryCellCenterClientPos(pos){
-		pos=NARtoXY(pos,this.rows);
+		pos=this.NARtoXY(pos);
 		var tar=this.cells[pos.x][pos.y];
 		var black=this.CheckCellBlack(pos);
 		return {
@@ -341,21 +429,22 @@ export class Grood{
 	/** @param {NAR|XY} pos */
 	SetSign(pos,...signs){
 		if(pos instanceof NAR)
-			pos=NARtoXY(pos,this.rows);
+			pos=this.NARtoXY(pos);
 		this.cells[pos.x][pos.y].classList.add(...signs);
 	}
 
 // ----------------------------带动画---------------------------
 	/**
 	 * @param {NAR|XY} pos
-	 * @param {Number} cid
 	 * @returns {HTMLElement}
 	 */
-	NewPerformerChoos(cid,...Class){
+	NewPerformerChoos(pos,...Class){
+		pos=this.XYtoNAR(pos);
+		var ch=this.GetChoosByPos(pos);
 		var ele=NewPerformer('choos',
-			this.QueryChoosClientPos(this.chooses[cid].pos),...Class);
-		SetElementChoosType(ele,this.chooses[cid].type);
-		SetElementHue(ele,this.chooses[cid].hue);
+			this.QueryChoosClientPos(pos),...Class);
+		SetElementChoosType(ele,ch.type);
+		SetElementHue(ele,ch.hue);
 		return ele;
 	}
 	/**
@@ -373,25 +462,21 @@ export class Grood{
 	 * @param {NAR|XY} to
 	 */
 	async AnimMove(from,to,shoot=false){
-		from=NARtoXY(from,this.rows);
+		from=this.XYtoNAR(from);
 		if(this.CheckCellEmpty(from))	return;
-		to=NARtoXY(to,this.rows);
+		to=this.XYtoNAR(to);
 		if(!this.CheckCellEmpty(to))	return;
-		if(from==to)	return;
-		this.SetSign(from,'latest');
-		this.SetSign(to,'latest');
-		var id=this.GetChoosIdByPos(from);
-		var pChoos=this.NewPerformerChoos(id);
+		var ch=this.GetChoosByPos(from);
+		var pChoos=this.NewPerformerChoos(from);
 		var pCell=this.NewPerformerCell(from,'ShootLight');
-		if(shoot)
-			this.visEle.appendChild(pCell);
+		if(shoot)	this.visEle.appendChild(pCell);
 		this.visEle.appendChild(pChoos);
 		await Sleep(shoot?1000:10);
-		this.chooses[id].Hide();
+		ch.Hide();
 		this.MoveChoos(from,to);
 		SetElementPos(pChoos,this.QueryChoosClientPos(to));
 		await Sleep(200);
-		this.chooses[id].Show();
+		ch.Show();
 		await Sleep(10);
 		pChoos.remove();
 		if(!shoot)	return;
@@ -401,17 +486,17 @@ export class Grood{
 	}
 	/** @param {NAR|XY} pos */
 	async AnimExplode(pos){
-		pos=NARtoXY(pos,this.rows);
+		pos=this.NARtoXY(pos);
 		if(this.CheckCellEmpty(pos))	return;
-		var c=this.chooses[this.GetChoosIdByPos(pos)];
+		var c=this.GetChoosByPos(pos);
 		var goo=false;
-		if(c.type=='goobomb')	goo=true;
+		if(c.type==='goobomb')	goo=true;
 		else if(c.type!='bomb')	return;
 		var pWrap=this.NewPerformerCell(pos,'ExplodeWrap');
 		var pMask=NewPerformer('span',null,'GooExplodeMask');
 		pWrap.innerHTML=`
 			<span class="perform Explode Big${goo?' Goo':''}"></span>
-			<span class="perform Explode Small${goo?' Goo':''}"></span>`
+			<span class="perform Explode Small${goo?' Goo':''}"></span>`;
 		pWrap.style.filter=
 			`hue-rotate(${c.hue}deg)
 			${goo?'drop-shadow(0px 0px 10px white)':''}`;
@@ -437,7 +522,7 @@ export class Grood{
 		pWrap.remove();
 		if(goo)
 			pMask.remove(),
-			this.element.style.animation='Shake 1s';
+		this.element.style.animation='Shake 1s';
 	}
 	/**
 	 * @param {XY|NAR} from
@@ -446,22 +531,22 @@ export class Grood{
 	 * @param {XY|NAR} to
 	 */
 	async AnimTeleport(from,port1,port2,to){
-		from=NARtoXY(from,this.rows);
+		from=this.NARtoXY(from);
 		if(this.CheckCellEmpty(from))	return;
-		to=NARtoXY(to,this.rows);
+		to=this.NARtoXY(to);
 		if(!this.CheckCellEmpty(to))	return;
-		port1=NARtoXY(port1,this.rows);
-		port2=NARtoXY(port2,this.rows);
-		if(from==to)	return;
-		var id=this.GetChoosIdByPos(from);
+		port1=this.NARtoXY(port1);
+		port2=this.NARtoXY(port2);
+		if(from===to)	return;
+		var ch=this.GetChoosByPos(from);
 		var fromPos=this.QueryChoosClientPos(from);
 		var toPos=this.QueryChoosClientPos(port1);
-		var pChoos=this.NewPerformerChoos(id);
+		var pChoos=this.NewPerformerChoos(from);
 		var pCell1=this.NewPerformerCell(port1,'TeleLight');
 		var pCell2=this.NewPerformerCell(port2,'TeleLight');
 		this.visEle.appendChild(pChoos);
 		await Sleep(10);
-		this.chooses[id].Hide();
+		ch.Hide();
 		this.MoveChoos(from,to);
 		SetElementPos(pChoos,toPos);
 		this.visEle.appendChild(pCell1);
@@ -475,11 +560,56 @@ export class Grood{
 		await Sleep(200);
 		SetElementPos(pChoos,toPos);
 		await Sleep(200);
-		this.chooses[id].Show();
+		ch.Show();
 		await Sleep(10);
 		pChoos.remove();
 		await Sleep(1000);
 		pCell1.remove();
 		pCell2.remove();
+	}
+	/** @param {NAR|XY} pos */
+	async AnimRotate(pos,radius){
+		pos=this.XYtoNAR(pos);
+		var posN=this.QueryCellCenterClientPos(pos);
+		if(this.CheckCellEmpty(pos)) return;
+		var ch=this.GetChoosByPos(pos);
+		if(ch.type!='rotator') return;
+		var pCell=this.NewPerformerCell(pos,'RotateCircle');
+		var bw=this.CheckCellBlack(pos)?'black':'white';
+		var pWraps=Array(3),pChooses=Array(3),newChs=Array(3),newPoses=Array(3);
+		for(var i=0;i<3;i++)
+		{
+			newPoses[i]=pos.delta(RotateRange[bw][radius][i]);
+			if(!this.CheckPosValid(newPoses[i])) continue;
+			if(this.CheckCellEmpty(newPoses[i])) continue;
+			var posC=this.QueryChoosClientPos(newPoses[i]);
+			pWraps[i]=NewPerformer('span',posC,'RotateWrap');
+			newChs[i]=this.GetChoosByPos(newPoses[i]);
+			pChooses[i]=this.NewPerformerChoos(newPoses[i],'RotateChoos');
+			SetElementPos(pChooses[i],{x:0,y:0});
+			pWraps[i].style.transformOrigin=`${posN.x-posC.x}px ${posN.y-posC.y}px`;
+			this.visEle.appendChild(pWraps[i]);
+			pWraps[i].appendChild(pChooses[i]);
+			newChs[i].Hide();
+		}
+		await Sleep(10);
+		for(var i=0;i<3;i++)
+		{
+			if(pWraps[i]===undefined) continue;
+			SetElementRotate(pWraps[i],120);
+			SetElementRotate(pChooses[i],-120);
+		}
+		await Sleep(300);
+		this.MoveChoos(newPoses[0],new XY(-1,-1));
+		this.MoveChoos(newPoses[1],newPoses[0]);
+		this.MoveChoos(newPoses[2],newPoses[1]);
+		this.MoveChoos(new XY(-1,-1),newPoses[2]);
+		for(var i=0;i<3;i++)
+		{
+			if(pWraps[i]===undefined) continue;
+			newChs[i].Show();
+			pWraps[i].remove();
+			pChooses[i].remove();
+		}
 	}
 };

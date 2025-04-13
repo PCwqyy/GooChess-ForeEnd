@@ -27,6 +27,7 @@ a.butt{
 	background-color: #3689ce;
 	text-align: center;
 	text-decoration: none;
+	user-select: none;
 	cursor: pointer;
 	transition: 0.5s;
 }
@@ -48,4 +49,9 @@ div#list{
 	width: 20vw;
 	font-size: 20px;
 	font-family: Consolas;
+}
+#DebugButt.disable{
+	background-color: gray !important;
+	color: white;
+	cursor: not-allowed;
 }

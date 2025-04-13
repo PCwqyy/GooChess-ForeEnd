@@ -199,9 +199,23 @@ div.row.black cell>choos{
 	top: -2vh;
 }
 
+span#Tip{
+	position: absolute;
+	border-radius: 5px;
+	padding: 1vh;
+	opacity: 0;
+	background-color: light-dark(black,white);
+	color: light-dark(white,black);
+	z-index: 2;
+	pointer-events: none;
+	user-select: none;
+	transition: opacity 0.3s;
+}
+
 .perform{
 	transition: 0.2s;
 	position: absolute;
+	pointer-events: none;
 	z-index: 3;
 }
 .perform.Explode,
@@ -269,7 +283,6 @@ div.row.black cell>choos{
 	inset: 0px 0px 0px 0px;
 	background-color: light-dark(white,gray);
 	opacity: 0;
-	pointer-events: none;
 	z-index: 114514;
 	animation: GooExplodeFlash 3s;
 }
@@ -388,4 +401,7 @@ div.row.black cell>choos{
 		width: calc(var(--cell-size) * 4);
 		opacity: 0;
 	}
+}
+.perform.RotateChoos{
+	transform-origin: 50% 66.6%;
 }

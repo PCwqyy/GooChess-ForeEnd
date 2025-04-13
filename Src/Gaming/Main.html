@@ -18,12 +18,15 @@
 			<a class="butt TRANS" href="../Menu/Main.html">Menu</a>
 			<a class="butt TRANS" href="../Wiki/Main.html">Wiki</a>
 			<select id="DebugId">
+				<option>Init</option>
 				<option>Move</option>
 				<option>Shoot</option>
 				<option>Teleport</option>
+				<option>Explode</option>
 				<option>GooExplode</option>
+				<option>Rotate</option>
 			</select>
-			<a class="butt TRANS" onclick="Debug.Func()">Debug</a>
+			<a class="butt TRANS" id="DebugButt" onclick="Debug.Func()">Debug</a>
 		</div>
 		<script id="debugger">
 			let Debug=new DOMRect;
