@@ -1,6 +1,29 @@
 import {Grood,XY,NAR,Sleep} from "../Game.js";
 const ROWS=12;
-var GroodMian=new Grood(`[${ROWS}]`,document.getElementById('GroodMain'),()=>{},true);
+const InitGrood=`
+[${ROWS}]
+pawn(9,10,6)20
+pawn(10,10,6)20
+goobomb(10,10,5)210
+pawn(9,11,6)20
+bomb(9,11,5)20
+bomb(10,11,5)20
+pawn(10,9,6)20
+pawn(10,11,4)20
+pawn(12,1,12)20
+pawn(11,10,5)20
+pawn(11,11,4)20
+pawn(11,9,5)20
+pawn(11,10,4)20
+bomb(9,12,5)20
+bomb(6,9,10)20
+rotator(7,10,9)210
+pawn(8,9,8)210
+pawn(10,4,11)210
+portal(11,5,9)20
+portal(11,8,6)20
+`
+var GroodMian=new Grood(InitGrood,document.getElementById('GroodMain'),()=>{},true);
 var ScaleButt=document.getElementById('ScaleButt');
 ScaleButt.addEventListener('click',()=>{
 	GroodMian.element.classList.toggle('Scaled');
@@ -20,49 +43,19 @@ async function DebugFunc(){
 	DebugButt.classList.add('disable');
 	try{
 		if(Id=='Init')
-		{
-			console.log('Init');
-			GroodMian.ClearChooses();
-			GroodMian.PlaceChoos(new XY(10,3),'pawn',210);
-			GroodMian.PlaceChoos(new XY(17,5),'pawn',210);
-			GroodMian.PlaceChoos(new XY(10,5),'pawn',210);
-			GroodMian.PlaceChoos(new XY(13,5),'portal',210);
-			GroodMian.PlaceChoos(new XY(16,7),'portal',210);
-			GroodMian.PlaceChoos(new NAR(5,10,10),'bomb',210);
-			GroodMian.PlaceChoos(new NAR(6,10,10),'bomb',210);
-			GroodMian.PlaceChoos(new NAR(5,10,11),'bomb',210);
-			GroodMian.PlaceChoos(new NAR(5,11,10),'bomb',210);
-			GroodMian.PlaceChoos(new XY(1,1),'pawn',0);
-			GroodMian.PlaceChoos(new XY(2,1),'pawn',20);
-			GroodMian.PlaceChoos(new XY(3,1),'pawn',40);
-			GroodMian.PlaceChoos(new XY(3,2),'pawn',60);
-			GroodMian.PlaceChoos(new XY(4,1),'pawn',80);
-			GroodMian.PlaceChoos(new XY(4,2),'pawn',100);
-			GroodMian.PlaceChoos(new XY(5,1),'pawn',120);
-			GroodMian.PlaceChoos(new XY(5,2),'goobomb',140);
-			GroodMian.PlaceChoos(new XY(5,3),'pawn',160);
-			GroodMian.PlaceChoos(new XY(6,1),'pawn',180);
-			GroodMian.PlaceChoos(new XY(6,2),'pawn',200);
-			GroodMian.PlaceChoos(new XY(6,3),'pawn',220);
-			GroodMian.PlaceChoos(new XY(7,1),'pawn',240);
-			GroodMian.PlaceChoos(new XY(7,2),'pawn',260);
-			GroodMian.PlaceChoos(new XY(7,3),'pawn',280);
-			GroodMian.PlaceChoos(new XY(7,4),'pawn',300);
-			GroodMian.PlaceChoos(new NAR(8,9,9),'rotator',210);
-			GroodMian.PlaceChoos(new NAR(7,8,10),'pawn',330);
-		}
+			GroodMian.ParseFromText(InitGrood);
 		if(Id=='Move')
-			await GroodMian.AnimMove(new XY(10,3),new XY(17,2));
+			await GroodMian.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
 		if(Id=='Shoot')
-			await GroodMian.AnimMove(new XY(17,5),new XY(23,5),true);
+			await GroodMian.AnimMove(new NAR(8,9,8),new NAR(8,12,5),true);
 		if(Id=='Teleport')
-			await GroodMian.AnimTeleport(new XY(10,5),new XY(13,5),new XY(16,7),new XY(18,4));
+			await GroodMian.AnimTeleport(new NAR(12,1,12),new NAR(11,5,9),new NAR(11,8,6),new NAR(11,9,6));
 		if(Id=='Explode')
-			await GroodMian.AnimExplode(new NAR(5,10,10));
+			await GroodMian.AnimExplode(new NAR(8,12,5));
 		if(Id=='GooExplode')
-			await GroodMian.AnimExplode(new XY(5,2));
+			await GroodMian.AnimExplode(new NAR(10,10,5));
 		if(Id=='Rotate')
-			await GroodMian.AnimRotate(new NAR(8,9,9),2);
+			await GroodMian.AnimRotate(new NAR(7,10,9),2);
 		if(Id=='Error')
 			throw new Error('Test Error');
 		
