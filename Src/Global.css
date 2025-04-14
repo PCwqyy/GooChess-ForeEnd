@@ -402,6 +402,44 @@ span#Tip{
 		opacity: 0;
 	}
 }
+.perform.RotateCircle{
+	background-image: url('/Src/Gaming/PerformRotate.svg');
+	translate: -50% -50%;
+	/* height: var(--perform-size);
+	width: var(--perform-size); */
+	animation: RotateCircle 2s;
+}
+@keyframes RotateCircle{
+	0%{
+		height: 0;
+		width: 0;
+		rotate: 0deg;
+		opacity: 0;
+	}
+	30%{
+		height: var(--perform-size);
+		width: var(--perform-size);
+		opacity: 1;
+	}
+	100%{
+		height: var(--perform-size);
+		width: var(--perform-size);
+		rotate: 360deg;
+		opacity: 0;
+	}
+}
+.perform.RotateWrap{
+	transition-duration: 0.5s;
+}
 .perform.RotateChoos{
 	transform-origin: 50% 66.6%;
+	transition-duration: 0.5s;
+}
+@keyframes RotateChoos{
+	0%{
+		rotate: 0deg;
+	}
+	100%{
+		rotate: 360deg;
+	}
 }

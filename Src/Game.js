@@ -574,9 +574,14 @@ export class Grood{
 		if(this.CheckCellEmpty(pos)) return;
 		var ch=this.GetChoosByPos(pos);
 		if(ch.type!='rotator') return;
-		var pCell=this.NewPerformerCell(pos,'RotateCircle');
 		var bw=this.CheckCellBlack(pos)?'black':'white';
 		var pWraps=Array(3),pChooses=Array(3),newChs=Array(3),newPoses=Array(3);
+		var pCell=this.NewPerformerCell(pos,'RotateCircle');
+		pCell.style.setProperty('--perform-size',`${radius*9}vmin`);
+		SetElementHue(pCell,ch.hue);
+		ch.element.style.animation='RotateChoos 2s';
+		this.visEle.appendChild(pCell);
+		await Sleep(500);
 		for(var i=0;i<3;i++)
 		{
 			newPoses[i]=pos.delta(RotateRange[bw][radius][i]);
@@ -599,7 +604,7 @@ export class Grood{
 			SetElementRotate(pWraps[i],120);
 			SetElementRotate(pChooses[i],-120);
 		}
-		await Sleep(300);
+		await Sleep(500);
 		this.MoveChoos(newPoses[0],new XY(-1,-1));
 		this.MoveChoos(newPoses[1],newPoses[0]);
 		this.MoveChoos(newPoses[2],newPoses[1]);
@@ -611,5 +616,8 @@ export class Grood{
 			pWraps[i].remove();
 			pChooses[i].remove();
 		}
+		await Sleep(1000);
+		pCell.remove();
+		ch.element.style.animation='';
 	}
 };
