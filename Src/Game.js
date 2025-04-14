@@ -178,7 +178,7 @@ const RotateRange={
 
 /** @param {String} type */
 export function GetChoosIconPath(type){
-	return `../../Icon/Chooses/${type}.svg`;
+	return `/Assets/Chooses/${type}.svg`;
 }
 
 export class Choos{

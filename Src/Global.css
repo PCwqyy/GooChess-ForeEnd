@@ -370,8 +370,8 @@ span#Tip{
 		opacity: 1;
 	}
 	30%{
-		height: calc(var(--cell-size) * sqrt(3));
-		width: calc(var(--cell-size) * 2);
+		height: calc(var(--cell-size) * sqrt(3) * 1.5);
+		width: calc(var(--cell-size) * 3);
 		opacity: 1;
 	}
 	100%{
@@ -403,10 +403,8 @@ span#Tip{
 	}
 }
 .perform.RotateCircle{
-	background-image: url('/Src/Gaming/PerformRotate.svg');
+	background-image: url('/Assets/Perform/PerformRotate.svg');
 	translate: -50% -50%;
-	/* height: var(--perform-size);
-	width: var(--perform-size); */
 	animation: RotateCircle 2s;
 }
 @keyframes RotateCircle{

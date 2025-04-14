@@ -1,4 +1,4 @@
-![Logo](../../Icon/GooChessLarge.svg)
+![Logo](/Assets/Icon/GooChessLarge.svg)
 
 # About Us
 

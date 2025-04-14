@@ -4,7 +4,7 @@ Text
 **Blod**  
 ~~Delete Line~~  
 *Italic*  
-[Link](../Menu/Main.html)  
+[Link](/Src/Menu/Main.html)  
 
 ```goochess
 [7]
@@ -55,7 +55,7 @@ ROTATOR(5,5,5)
 
 ---
 
-![Img](../../Icon/GooChess@16x.png)
+![Img](/Assets/Icon/GooChess@16x.png)
 
 ===Folded Block===
 
