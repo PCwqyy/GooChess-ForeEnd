@@ -307,6 +307,7 @@ export class Grood{
 	 * @param {String} text
 	 */
 	ParseFromText(parentElement,text){
+		console.log(text);
 		if(text.length===0)
 			throw new Error('Empty text!');
 		var res;
@@ -419,6 +420,17 @@ export class Grood{
 		if(pos.x!==-1)
 			this.GetChoosByPos(pos).element.remove();
 		this.chooses.delete(pos.print(true));
+	}
+	/**
+	 * @param {NAR|XY} pos
+	 * @param {Choos} ch
+	 */
+	ReplaceChoos(pos,ch){
+		pos=this.XYtoNAR(pos);
+		if(!this.CheckPosValid(pos)) return;
+		if(this.CheckCellEmpty(pos)) return;
+		this.RemoveChoos(pos);
+		this.AppendChoos(pos,ch);
 	}
 	ClearChooses(){
 		for(var i of this.chooses)
@@ -656,5 +668,29 @@ export class Grood{
 		await Sleep(1000);
 		pCell.remove();
 		ch.element.style.animation='';
+	}
+	/** 
+	 * @param {NAR|XY} pos
+	 * @param {String} newType
+	 */
+	async AnimPromote(pos,newType){
+		pos=this.NARtoXY(pos);
+		if(this.CheckCellEmpty(pos)) return;
+		var ch=this.GetChoosByPos(pos);
+		if(ch.type!=='pawn') return;
+		var pChoos=this.NewPerformerChoos(pos,'PromoteChoos');
+		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(1) drop-shadow(0px 0px 0px gold)`;
+		this.visEle.appendChild(pChoos);
+		await Sleep(10);
+		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(10) drop-shadow(0px 0px 10px gold)`;
+		ch.Hide();
+		ch.SetType(newType);
+		await Sleep(2000);
+		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(1) drop-shadow(0px 0px 0px gold)`;
+		SetElementChoosType(pChoos,newType);
+		await Sleep(2000);
+		this.ReplaceChoos(pos,ch);
+		ch.Show();
+		pChoos.remove();
 	}
 };

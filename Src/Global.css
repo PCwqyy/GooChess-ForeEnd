@@ -441,3 +441,7 @@ span.Tip{
 		rotate: 360deg;
 	}
 }
+
+.perform.PromoteChoos{
+	transition-duration: 2s;
+}

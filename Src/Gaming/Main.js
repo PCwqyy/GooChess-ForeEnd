@@ -23,7 +23,8 @@ pawn(10,4,11)210
 portal(11,5,9)20
 portal(11,8,6)20
 `
-var GroodMian=new Grood(InitGrood,document.getElementById('GroodMain'),()=>{},true);
+var Wrap=document.getElementById('GroodMain');
+var GroodMian=new Grood(InitGrood,Wrap,()=>{},true);
 var ScaleButt=document.getElementById('ScaleButt');
 ScaleButt.addEventListener('click',()=>{
 	GroodMian.element.classList.toggle('Scaled');
@@ -43,7 +44,7 @@ async function DebugFunc(){
 	DebugButt.classList.add('disable');
 	try{
 		if(Id=='Init')
-			GroodMian.ParseFromText(InitGrood);
+			GroodMian.ParseFromText(Wrap,InitGrood);
 		if(Id=='Move')
 			await GroodMian.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
 		if(Id=='Shoot')
@@ -56,6 +57,8 @@ async function DebugFunc(){
 			await GroodMian.AnimExplode(new NAR(10,10,5));
 		if(Id=='Rotate')
 			await GroodMian.AnimRotate(new NAR(7,10,9),2);
+		if(Id=='Promote')
+			await GroodMian.AnimPromote(new NAR(11,10,4),'Queen');
 		if(Id=='Error')
 			throw new Error('Test Error');
 		
