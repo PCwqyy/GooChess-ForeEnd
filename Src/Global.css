@@ -27,7 +27,7 @@ html{
 }
 @font-face {
 	font-family: Caviar Dreams;
-	src: url(/Fonts/CaviarDreams.ttf);
+	src: url(/Assets/Fonts/CaviarDreams.ttf) format('truetype');
 }
 
 body{
@@ -199,7 +199,7 @@ div.row.black cell>choos{
 	top: -2vh;
 }
 
-span#Tip{
+span.Tip{
 	position: absolute;
 	border-radius: 5px;
 	padding: 1vh;

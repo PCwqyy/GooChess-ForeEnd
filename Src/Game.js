@@ -1,4 +1,5 @@
 export const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
+// 常量
 const RomeApl={
 	1:'i',2:'ii',3:'iii',4:'iv',5:'v',
 	6:'vi',7:'vii',8:'viii',9:'ix',10:'x',
@@ -7,20 +8,29 @@ const RomeApl={
 	21:'xxi',22:'xxii',23:'xxiii',24:'xxiv',25:'xxv',
 	26:'xxvi',27:'xxvii',28:'xxviii',29:'xxix',30:'xxx'
 };
-// 坐标
-export class XY{
-	x;y;
-	/**
-	 * @param {Number} x
-	 * @param {Number} y
-	 */
-	constructor(x,y)
-	{
-		this.x=x;
-		this.y=y;
-	}
-	print(){return `${this.x},${this.y}`;}
-	valueOf(){return this.print();}
+
+const ChoosList=
+[
+	"pawn","bishop","knight","rook","queen","king","gooshop","gooking",
+	"fircar","seccar","hoorse","bomb","goobomb","stone","trap","rotator",
+	"jumper","jumplar","portal","diplomat","deaf","diploqueen","diportal",
+	"employee","factory","product",'pecookie','__hzx','yzy'
+];
+var ChoosMatch='^(';
+for(var ele of ChoosList)
+	ChoosMatch+='|'+ele;
+ChoosMatch+=')\\(\\d+,\\d+,\\d+\\)\\d*$';
+const ClassNamesForSign={
+	O:"oto",
+	M:"moove",
+	J:"jump",
+	E:"effect"
+};
+// HTML操作
+function ParseFromHTML(html){
+	var parser=document.createElement('temp');
+	parser.innerHTML=html;
+	return parser.firstChild;
 }
 function SetElementPos(ele,pos){
 	ele.style.left=`${pos.x}px`;
@@ -47,6 +57,22 @@ function NewPerformer(Tag,Pos,...Class){
 	return t;
 }
 
+
+// 坐标
+export class XY{
+	x;y;
+	/**
+	 * @param {Number} x
+	 * @param {Number} y
+	 */
+	constructor(x,y)
+	{
+		this.x=x;
+		this.y=y;
+	}
+	print(){return `${this.x},${this.y}`;}
+	valueOf(){return this.print();}
+}
 export class NAR{
 	num;alp;rom;
 	/**
@@ -109,69 +135,23 @@ function SamePos(a,b){
 }
 
 const BombRange={
-	white:[
-		new XY(-1,0),
-		new XY(1,0),
-		new XY(-1,-1)
-	],
-	black:[
-		new XY(-1,0),
-		new XY(1,0),
-		new XY(1,1)
-	],
+	white:[new XY(-1,0),new XY(1,0),new XY(-1,-1)],
+	black:[new XY(-1,0),new XY(1,0),new XY(1,1)]
 };
 const GoobombRange={
-	white:[
-		new XY(-1,0),
-		new XY(1,0),
-		new XY(-1,-1),
-		new XY(-3,-1),
-		new XY(1,-1),
-		new XY(1,1)
-	],
-	black:[
-		new XY(-1,0),
-		new XY(1,0),
-		new XY(1,1),
-		new XY(3,1),
-		new XY(-1,1),
-		new XY(-1,-1)
-	],
+	white:[new XY(-1,0),new XY(1,0),new XY(-1,-1),new XY(-3,-1),new XY(1,-1),new XY(1,1)],
+	black:[new XY(-1,0),new XY(1,0),new XY(1,1),new XY(3,1),new XY(-1,1),new XY(-1,-1)],
 };
 const RotateRange={
 	white:{
-		1:[
-			new NAR(0,0,1),
-			new NAR(0,1,0),
-			new NAR(1,0,0),
-		],
-		2:[
-			new NAR(1,1,-1),
-			new NAR(1,-1,1),
-			new NAR(-1,1,1),
-		],
-		3:[
-			new NAR(-1,-1,2),
-			new NAR(-1,2,-1),
-			new NAR(2,-1,-1),
-		]
+		1:[new NAR(0,0,1),new NAR(0,1,0),new NAR(1,0,0)],
+		2:[new NAR(1,1,-1),new NAR(1,-1,1),new NAR(-1,1,1)],
+		3:[new NAR(-1,-1,2),new NAR(-1,2,-1),new NAR(2,-1,-1)]
 	},
 	black:{
-		1:[
-			new NAR(-1,0,0),
-			new NAR(0,-1,0),
-			new NAR(0,0,-1),
-		],
-		2:[
-			new NAR(-1,1,-1),
-			new NAR(-1,-1,1),
-			new NAR(1,-1,-1),
-		],
-		3:[
-			new NAR(-2,1,1),
-			new NAR(1,-2,1),
-			new NAR(1,1,-2),
-		]
+		1:[new NAR(-1,0,0),new NAR(0,-1,0),new NAR(0,0,-1)],
+		2:[new NAR(-1,1,-1),new NAR(-1,-1,1),new NAR(1,-1,-1)],
+		3:[new NAR(-2,1,1),new NAR(1,-2,1),new NAR(1,1,-2)]
 	}
 };
 
@@ -231,20 +211,20 @@ export class Grood{
 	visEle;
 	/** @type {Map<String,Choos>} */
 	chooses=new Map();
-	element;Tip;TipPlainPaint=false;PosInTip=new NAR(-1,-1,-1);
+	element;Tip;Game;
+	TipPlainPaint=false;PosInTip=new NAR(-1,-1,-1);
 	/**
-	 * @param {Number} rows 
-	 * @param {HTMLElement} parentElement 
-	 * @param {Function} clickFunc 
+	 * @param {String} text
+	 * @param {HTMLElement} parentElement
+	 * @param {Function} clickFunc
 	 */
-	constructor(rows,parentElement,clickFunc,game=true)
+	constructor(text='[12]',parentElement,clickFunc,game=false)
 	{
-		this.rows=rows;
 		this.element=document.createElement('grood');
 		this.Tip=document.createElement('span');
-		this.Tip.id='Tip';
-		this.cells=new Array(this.rows*2);
-		this.DrawGrood(game);
+		this.Tip.classList.add('Tip');
+		this.Game=game;
+		this.ParseFromText(parentElement,text);
 		parentElement.appendChild(this.element);
 		this.element.addEventListener('click',clickFunc);
 	}
@@ -256,10 +236,7 @@ export class Grood{
 	NARtoXY(nar){
 		return NARtoXY(nar,this.rows);
 	}
-	/**
-	 * @param {boolean} game is in game 
-	 */
-	DrawGrood(game=true){
+	DrawGrood(){
 		this.element.setAttribute('rows',`${this.rows}`);
 		this.visEle=document.createElement('div');
 		this.visEle.classList.add('cells');
@@ -276,7 +253,7 @@ export class Grood{
 				this.cells[i][j].setAttribute('y',`${j}`);
 				var show=document.createElement('span');
 				this.cells[i][j].appendChild(show);
-				if(game)
+				if(this.Game)
 				{
 					// 确定shooter
 					for(var q in Shooter)
@@ -294,8 +271,7 @@ export class Grood{
 					this.Tip.style.opacity=0.8;
 					if(e.target.tagName!='CELL')	return;
 					this.PosInTip=this.XYtoNAR(
-						new XY(e.target.getAttribute('x'),e.target.getAttribute('y')),
-						this.rows);
+						new XY(e.target.getAttribute('x'),e.target.getAttribute('y')));
 					this.Tip.innerHTML=`${this.PosInTip.print(this.TipPlainPaint)}`;
 				});
 				row[i].appendChild(this.cells[i][j]);
@@ -310,6 +286,10 @@ export class Grood{
 			this.Tip.style.left=`${e.clientX+10}px`;
 			this.Tip.style.top=`${e.clientY+10}px`;
 		});
+		this.element.addEventListener('wheel',(e)=>{
+			this.Tip.style.left=`${e.clientX+10}px`;
+			this.Tip.style.top=`${e.clientY+10}px`;
+		});
 		document.body.addEventListener('keydown',(e)=>{
 			if(e.key!='Shift')	return;
 			this.TipPlainPaint=true;
@@ -321,6 +301,63 @@ export class Grood{
 			this.Tip.innerHTML=`${this.PosInTip.print(this.TipPlainPaint)}`;
 		})
 		return;
+	}
+	/**
+	 * @param {HTMLElement} parentElement
+	 * @param {String} text
+	 */
+	ParseFromText(parentElement,text){
+		if(text.length===0)
+			throw new Error('Empty text!');
+		var res;
+		this.ClearChooses();
+		this.element.innerHTML='';
+		// [size]
+		this.rows=text.match(/^\[([1-9][0-9]*)\]$/m)[1];
+		this.cells=new Array(this.rows*2);
+		this.DrawGrood();
+		parentElement.appendChild(this.element);
+		// choos(N,A,R)hue
+		res=text.match(new RegExp(ChoosMatch,'gim'));
+		if(res!=null)for(var i of res)
+		{
+			var type=i.match(/([a-z|A-Z])+/)[0];
+			var tar=i.match(/\((\d+),(\d+),(\d+)\)(\d*)/);
+			this.PlaceChoos(new NAR(tar[1],tar[2],tar[3]),type,tar[4]==''?-1:tar[4]);
+		}
+		// tag(N,A,R)
+		res=text.match(/^[OJME]!{0,1}\(\d+,\d+,\d+\)$/gm);
+		if(res!=null)for(var i of res)
+		{
+			var tar=i.match(/\((\d+),(\d+),(\d+)\)/);
+			var pos=new NAR(tar[1],tar[2],tar[3]);
+			this.SetSign(pos,"sign",ClassNamesForSign[i[0]]);
+			if(i[1]=='!')
+				this.SetSign(pos,"only");
+		}
+		// (N1,A1,R1)->(N2,A2,R2)color
+		res=text.match(/^\(\d+,\d+,\d+\)->\(\d+,\d+,\d+\).+$/gm);
+		if(res!=null)
+		{
+			var svgHead=`<svg class="arrows" height="${this.visEle.offsetHeight}" width="${this.visEle.offsetWidth}"><defs>`;
+			var svgBody=`</defs>`;
+			for(var i in res)
+			{
+				var tar=res[i].match(/\((\d+),(\d+),(\d+)\)->\((\d+),(\d+),(\d+)\)(.+)/);
+				var pos1=new NAR(tar[1],tar[2],tar[3]);
+				var pos2=new NAR(tar[4],tar[5],tar[6]);
+				var p1=this.QueryCellCenterClientPos(pos1);
+				var p2=this.QueryCellCenterClientPos(pos2);
+				svgHead+=`<marker id="arrow${tar[7]}" markerWidth="3" markerHeight="3" refX="1" refY="1.5" orient="auto">
+							<path d="M 0 0 L 0 3 L 2 1.5 Z" fill="${tar[7]}" />
+						</marker>`
+				svgBody+=`<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}"
+					stroke="${tar[7]}" stroke-width="10" marker-end="url(#arrow${tar[7]})" />`
+			}
+			svgBody+=`</svg>`;
+			var c=ParseFromHTML(svgHead+svgBody);
+			this.element.appendChild(c);
+		}
 	}
 	/** @param {NAR|XY} pos */
 	CheckPosValid(pos){

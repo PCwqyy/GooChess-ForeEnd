@@ -1,6 +1,6 @@
 import {Grood,XY,NAR,Sleep} from "../Game.js";
 const ROWS=12;
-var GroodMian=new Grood(ROWS,document.getElementById('GroodMain'),()=>{});
+var GroodMian=new Grood(`[${ROWS}]`,document.getElementById('GroodMain'),()=>{},true);
 var ScaleButt=document.getElementById('ScaleButt');
 ScaleButt.addEventListener('click',()=>{
 	GroodMian.element.classList.toggle('Scaled');
