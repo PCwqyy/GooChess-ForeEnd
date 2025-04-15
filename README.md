@@ -1,9 +1,3 @@
-<p style="font-size: 36px; color: red;">This branch is for yzy to write WIKI!</p>
-
-yzy, Please come back...
-
----
-
 好棋！真是一盘好棋啊！
 
 ## Thanks
