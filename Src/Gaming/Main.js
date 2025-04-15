@@ -8,7 +8,7 @@ goobomb(10,10,5)210
 pawn(9,11,6)20
 bomb(9,11,5)20
 bomb(10,11,5)20
-pawn(10,9,6)20
+employee(10,9,6)20
 pawn(10,11,4)20
 pawn(12,1,12)20
 pawn(11,10,5)20
@@ -22,15 +22,23 @@ pawn(8,9,8)210
 pawn(10,4,11)210
 portal(11,5,9)20
 portal(11,8,6)20
+pawn(8,6,12)20
+pawn(8,7,11)20
+gooshop(9,6,11)20
+diplomat(8,6,11)210
+king(1,12,12)210
+pawn(6,11,8)20
+bomb(8,12,6)20
+factory(7,7,11)210
 `
 var Wrap=document.getElementById('GroodMain');
-var GroodMian=new Grood(InitGrood,Wrap,()=>{},true);
+var GroodMain=new Grood(InitGrood,Wrap,()=>{},true);
 var ScaleButt=document.getElementById('ScaleButt');
 ScaleButt.addEventListener('click',()=>{
-	GroodMian.element.classList.toggle('Scaled');
+	GroodMain.element.classList.toggle('Scaled');
 })
 //Debug
-Debug.Grood=GroodMian;
+Debug.Grood=GroodMain;
 Debug.XY=XY;
 Debug.NAR=NAR;
 var DebugIdInput=document.getElementById('DebugId');
@@ -44,21 +52,31 @@ async function DebugFunc(){
 	DebugButt.classList.add('disable');
 	try{
 		if(Id=='Init')
-			GroodMian.ParseFromText(Wrap,InitGrood);
+			GroodMain.ParseFromText(Wrap,InitGrood);
 		if(Id=='Move')
-			await GroodMian.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
+			await GroodMain.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
 		if(Id=='Shoot')
-			await GroodMian.AnimMove(new NAR(8,9,8),new NAR(8,12,5),true);
+			await GroodMain.AnimMove(new NAR(8,9,8),new NAR(8,12,5),true);
 		if(Id=='Teleport')
-			await GroodMian.AnimTeleport(new NAR(12,1,12),new NAR(11,5,9),new NAR(11,8,6),new NAR(11,9,6));
+			await GroodMain.AnimTeleport(new NAR(12,1,12),new NAR(11,5,9),new NAR(11,8,6),new NAR(11,9,6));
+		if(Id=='Bounce')
+			await GroodMain.AnimBounce(new NAR(9,6,11),new NAR(10,3,12),new NAR(12,2,11));
 		if(Id=='Explode')
-			await GroodMian.AnimExplode(new NAR(8,12,5));
+			await GroodMain.AnimExplode(new NAR(8,12,5));
 		if(Id=='GooExplode')
-			await GroodMian.AnimExplode(new NAR(10,10,5));
+			await GroodMain.AnimExplode(new NAR(10,10,5));
 		if(Id=='Rotate')
-			await GroodMian.AnimRotate(new NAR(7,10,9),2);
+			await GroodMain.AnimRotate(new NAR(7,10,9),2);
 		if(Id=='Promote')
-			await GroodMian.AnimPromote(new NAR(11,10,4),'Queen');
+			await GroodMain.AnimPromote(new NAR(11,10,4),'Queen');
+		if(Id=='Control')
+			await GroodMain.AnimToggleControl(new NAR(8,6,11));
+		if(Id=='Check')
+			await GroodMain.AnimToggleCheck(new NAR(1,12,12));
+		if(Id=='Produce')
+			await GroodMain.AnimProduce(new NAR(7,7,11),new NAR(8,7,11));
+		if(Id=='Revolt')
+			await GroodMain.AnimToggleRevolt(new NAR(10,9,6),210);
 		if(Id=='Error')
 			throw new Error('Test Error');
 		

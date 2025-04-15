@@ -12,7 +12,10 @@ html{
 	--color-p3: light-dark(#f4fc0a,#eada00);
 	--color-hover: light-dark(#ffd34f,#daa300);
 	--color-shooter: light-dark(#d8ff74,#0da100);
-	--cell-size: 4vmin;
+	--cell-size-half: 4vmin;
+	--cell-height: calc(var(--cell-size-half) * sqrt(3));
+	--cell-width: calc(var(--cell-size-half) * 2);
+	--choos-size: 7vmin;
 }
 
 @media (prefers-color-scheme: dark){
@@ -76,8 +79,8 @@ cell{
 	justify-content: center;
 	align-items: center;
 	position: relative;
-	height: calc(var(--cell-size) * sqrt(3));
-	width: calc(var(--cell-size) * 2);
+	height: var(--cell-height);
+	width: calc(var(--cell-width));
 	margin: 0;
 	transition: 0.5s;
 	pointer-events: none;
@@ -85,8 +88,8 @@ cell{
 cell>span{
 	display: block;
 	position: relative;
-	height: calc(var(--cell-size) * sqrt(3));
-	width: calc(var(--cell-size) * 2);
+	height: var(--cell-height);
+	width: calc(var(--cell-width));
 	margin: 0;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	background-color: light-dark(#ffffff,#000000);
@@ -191,6 +194,7 @@ choos{
 	height: 7vmin;
 	width: 7vmin;
 	z-index: 2;
+	transition: 0.2s;
 }
 cell>choos{
 	pointer-events: none;
@@ -220,11 +224,13 @@ span.Tip{
 }
 .perform.Explode,
 .perform.TeleLight,
-.perform.ShootLight{
-	height: 0px;
-	width: 0px;
+.perform.ShootLight,
+.perform.BounceLight{
+	height: var(--cell-height);
+	width: var(--cell-width);
 	translate: -50% -66.6%;
 	transform-origin: 50% 66.6%;
+	scale: 0;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
 .perform.Explode.Big:not(.Goo){
@@ -237,43 +243,36 @@ span.Tip{
 }
 @keyframes ExplodeBig{
 	0%{
-		height: 0px;
-		width: 0px;
+		scale: 0;
 		opacity: 0;
 	}
 	60%{
-		height: calc(var(--cell-size) * sqrt(3) * 2);
-		width: calc(var(--cell-size) * 4);
+		scale: 2;
 		rotate: 0deg;
 		opacity: 1;
 	}
 	100%{
-		height: 0px;
-		width: 0px;
+		scale: 0;
 		rotate: 360deg;
 		opacity: 0;
 	}
 }
 @keyframes ExplodeSmall{
 	0%{
-		height: 0px;
-		width: 0px;
+		scale: 0;
 		rotate: 180deg;
 		opacity: 0;
 	}
 	40%{
-		height: calc(var(--cell-size) * sqrt(3));
-		width: calc(var(--cell-size) * 2);
+		scale: 1;
 		opacity: 1;
 	}
 	60%{
-		height: calc(var(--cell-size) * sqrt(3));
-		width: calc(var(--cell-size) * 2);
+		scale: 1;
 		opacity: 1;
 	}
 	100%{
-		height: 0px;
-		width: 0px;
+		scale: 0;
 		rotate: 720deg;
 		opacity: 0;
 	}
@@ -305,43 +304,36 @@ span.Tip{
 }
 @keyframes GooExplodeBig{
 	0%{
-		height: 0px;
-		width: 0px;
+		scale: 0;
 		opacity: 0;
 	}
 	80%{
-		height: calc(var(--cell-size) * sqrt(3) * 3);
-		width: calc(var(--cell-size) * 6);
+		scale: 3;
 		rotate: 0deg;
 		opacity: 1;
 	}
 	100%{
-		height: 0px;
-		width: 0px;
+		scale: 0;
 		rotate: 360deg;
 		opacity: 0;
 	}
 }
 @keyframes GooExplodeSmall{
 	0%{
-		height: 0px;
-		width: 0px;
+		scale: 0;
 		rotate: 180deg;
 		opacity: 0;
 	}
 	60%{
-		height: calc(var(--cell-size) * sqrt(3) * 2);
-		width: calc(var(--cell-size) * 4);
+		scale: 2;
 		opacity: 1;
 	}
 	80%{
-		height: calc(var(--cell-size) * sqrt(3) * 2);
-		width: calc(var(--cell-size) * 4);
+		scale: 2;
 		opacity: 1;
 	}
 	100%{
-		height: 0px;
-		width: 0px;
+		scale: 0;
 		rotate: 720deg;
 		opacity: 0;
 	}
@@ -365,18 +357,15 @@ span.Tip{
 }
 @keyframes TeleportLight{
 	0%{
-		height: 0;
-		width: 0;
+		scale: 0;
 		opacity: 1;
 	}
 	30%{
-		height: calc(var(--cell-size) * sqrt(3) * 1.5);
-		width: calc(var(--cell-size) * 3);
+		scale: 1.5;
 		opacity: 1;
 	}
 	100%{
-		height: calc(var(--cell-size) * sqrt(3));
-		width: calc(var(--cell-size) * 2);
+		scale: 1;
 		opacity: 0;
 	}
 }
@@ -387,20 +376,26 @@ span.Tip{
 
 @keyframes ShootLight{
 	0%{
-		height: 0;
-		width: 0;
+		scale: 0;
 		opacity: 1;
 	}
 	45%{
-		height: calc(var(--cell-size) * sqrt(3));
-		width: calc(var(--cell-size) * 2);
+		scale: 1;
 		opacity: 1;
 	}
 	100%{
-		height: calc(var(--cell-size) * sqrt(3) * 2);
-		width: calc(var(--cell-size) * 4);
+		scale: 2;
 		opacity: 0;
 	}
+}
+.perform.perform.BounceLight{
+	background-color: #d5d5d5cf;
+	animation: BounceLight 0.5s;
+}
+@keyframes BounceLight{
+	0%{scale: 0;}
+	40%{scale: 1.1;}
+	100%{scale: 0;}
 }
 .perform.RotateCircle{
 	background-image: url('/Assets/Perform/PerformRotate.svg');
@@ -434,14 +429,55 @@ span.Tip{
 	transition-duration: 0.5s;
 }
 @keyframes RotateChoos{
-	0%{
-		rotate: 0deg;
-	}
-	100%{
-		rotate: 360deg;
-	}
+	0%{rotate: 0deg;}
+	100%{rotate: 360deg;}
 }
 
 .perform.PromoteChoos{
 	transition-duration: 2s;
+}
+.row cell.DiplomatControlled>span,
+.row.black cell.DiplomatControlled>span,
+.row cell.Revolting>span,
+.row.black cell.Revolting>span{
+	background-color: light-dark(#ffb9b2,#ff0000);
+}
+.perform.Eaten{
+	filter: drop-shadow(0px 0px 5px red);
+	animation: EatenAnimation 0.2s;
+}
+@keyframes EatenAnimation {
+	0%{transform: scale(1);}
+	50%{transform: scale(1.1);}
+	100%{transform: scale(1);}
+}
+.perform.Factory{
+	transition: 2s;
+	animation: RotateChoos 2s;
+}
+.perform.Product{
+	animation: Product 1s;
+}
+@keyframes Product{
+	0%{
+		scale: 2;
+		opacity: 0;
+	}
+	100%{
+		scale: 1;
+		opacity: 1;
+	}
+}
+.perform.Revolt{
+	animation: Revolt 1s;
+}
+@keyframes Revolt{
+	0%{
+		scale: 1;
+		opacity: 1;
+	}
+	100%{
+		scale: 2;
+		opacity: 0;
+	}
 }

@@ -142,7 +142,7 @@ const GoobombRange={
 	white:[new XY(-1,0),new XY(1,0),new XY(-1,-1),new XY(-3,-1),new XY(1,-1),new XY(1,1)],
 	black:[new XY(-1,0),new XY(1,0),new XY(1,1),new XY(3,1),new XY(-1,1),new XY(-1,-1)],
 };
-const RotateRange={
+const RotatorRange={
 	white:{
 		1:[new NAR(0,0,1),new NAR(0,1,0),new NAR(1,0,0)],
 		2:[new NAR(1,1,-1),new NAR(1,-1,1),new NAR(-1,1,1)],
@@ -154,7 +154,10 @@ const RotateRange={
 		3:[new NAR(-2,1,1),new NAR(1,-2,1),new NAR(1,1,-2)]
 	}
 };
-
+const DiplomatRange={
+	white:[new NAR(0,0,1),new NAR(0,1,0),new NAR(1,0,0)],
+	black:[new NAR(-1,0,0),new NAR(0,-1,0),new NAR(0,0,-1)]
+};
 
 /** @param {String} type */
 export function GetChoosIconPath(type){
@@ -411,6 +414,7 @@ export class Grood{
 		if(!this.CheckCellEmpty(pos))	return;
 		var ch=new Choos(type,hue);
 		this.AppendChoos(pos,ch);
+		return ch;
 	}
 	/** @param {NAR|XY} pos */
 	RemoveChoos(pos){
@@ -481,6 +485,18 @@ export class Grood{
 			pos=this.NARtoXY(pos);
 		this.cells[pos.x][pos.y].classList.add(...signs);
 	}
+	async KillChoos(pos){
+		pos=this.XYtoNAR(pos);
+		if(!this.CheckPosValid(pos))	return;
+		if(this.CheckCellEmpty(pos))	return;
+		var ch=this.GetChoosByPos(pos);
+		if(ch.type==='goobomb'||ch.type==='bomb')
+			await this.AnimExplode(pos);
+		else if(ch.type==='king')
+			;// [TODO]:king die
+		else
+			await this.RemoveChoos(pos);
+	}
 
 // ----------------------------带动画---------------------------
 	/**
@@ -512,13 +528,20 @@ export class Grood{
 	 */
 	async AnimMove(from,to,shoot=false){
 		from=this.XYtoNAR(from);
-		if(this.CheckCellEmpty(from))	return;
 		to=this.XYtoNAR(to);
-		if(!this.CheckCellEmpty(to))	return;
+		if(this.CheckCellEmpty(from))	return;
+		var eat=!this.CheckCellEmpty(to);
 		var ch=this.GetChoosByPos(from);
+		if(eat&&this.GetChoosByPos(to).hue===ch.hue)	return;
 		var pChoos=this.NewPerformerChoos(from);
 		var pCell=this.NewPerformerCell(from,'ShootLight');
 		if(shoot)	this.visEle.appendChild(pCell);
+		if(eat)
+		{
+			var pChoos2=this.NewPerformerChoos(to,'Eaten');
+			this.KillChoos(to);
+			this.visEle.appendChild(pChoos2);
+		}
 		this.visEle.appendChild(pChoos);
 		await Sleep(shoot?1000:10);
 		ch.Hide();
@@ -526,52 +549,52 @@ export class Grood{
 		SetElementPos(pChoos,this.QueryChoosClientPos(to));
 		await Sleep(200);
 		ch.Show();
-		await Sleep(10);
+		await Sleep(200);
 		pChoos.remove();
+		if(eat)	pChoos2.remove();
 		if(!shoot)	return;
 		await Sleep(1000);
 		pCell.remove();
 		return;
 	}
-	/** @param {NAR|XY} pos */
-	async AnimExplode(pos){
-		pos=this.NARtoXY(pos);
-		if(this.CheckCellEmpty(pos))	return;
-		var c=this.GetChoosByPos(pos);
-		var goo=false;
-		if(c.type==='goobomb')	goo=true;
-		else if(c.type!='bomb')	return;
-		var pWrap=this.NewPerformerCell(pos,'ExplodeWrap');
-		var pMask=NewPerformer('span',null,'GooExplodeMask');
-		pWrap.innerHTML=`
-			<span class="perform Explode Big${goo?' Goo':''}"></span>
-			<span class="perform Explode Small${goo?' Goo':''}"></span>`;
-		pWrap.style.filter=
-			`hue-rotate(${c.hue}deg)
-			${goo?'drop-shadow(0px 0px 10px white)':''}`;
-		var black=this.CheckCellBlack(pos);
-		if((!black&&!goo)||(black&&goo))	SetElementUpSideDown(pWrap);
-		else	pWrap.style.rotate='0deg';
-		this.visEle.appendChild(pWrap);
-		if(goo)
-			document.body.appendChild(pMask),
-			this.element.style.animation='Shake 0.5s infinite';
-		await Sleep(goo?4000:1500);
-		this.RemoveChoos(pos);
-		var range=goo?
-			GoobombRange[black?'black':'white']
-		   :BombRange[black?'black':'white'];
-		for(var i of range)
+	/**
+	 * @param {XY|NAR} from
+	 * @param {XY|NAR} edge
+	 * @param {XY|NAR} to
+	 */
+	async AnimBounce(from,edge,to){
+		from=this.NARtoXY(from);
+		to=this.NARtoXY(to);
+		edge=this.NARtoXY(edge);
+		if(this.CheckCellEmpty(from))	return;
+		var eat=!this.CheckCellEmpty(to);
+		var ch=this.GetChoosByPos(from);
+		if(eat&&this.GetChoosByPos(to).hue===ch.hue)	return;
+		var midPos=this.QueryChoosClientPos(edge);
+		var toPos=this.QueryChoosClientPos(to);
+		var pChoos=this.NewPerformerChoos(from);
+		var pCell=this.NewPerformerCell(edge,'BounceLight');
+		if(eat)
 		{
-			var post=new XY(pos.x+i.x,pos.y+i.y);
-			this.AnimExplode(post);
-			this.RemoveChoos(post);
+			var pChoos2=this.NewPerformerChoos(to,'Eaten');
+			this.KillChoos(to);
+			this.visEle.appendChild(pChoos2);
 		}
-		await Sleep(1100);
-		pWrap.remove();
-		if(goo)
-			pMask.remove(),
-		this.element.style.animation='Shake 1s';
+		this.visEle.appendChild(pCell);
+		this.visEle.appendChild(pChoos);
+		await Sleep(10);
+		ch.Hide();
+		this.MoveChoos(from,to);
+		SetElementPos(pChoos,midPos);
+		await Sleep(200);
+		SetElementPos(pChoos,toPos);
+		await Sleep(200);
+		ch.Show();
+		await Sleep(200);
+		if(eat)	pChoos2.remove();
+		pChoos.remove();
+		await Sleep(1000);
+		pCell.remove();
 	}
 	/**
 	 * @param {XY|NAR} from
@@ -581,18 +604,24 @@ export class Grood{
 	 */
 	async AnimTeleport(from,port1,port2,to){
 		from=this.NARtoXY(from);
-		if(this.CheckCellEmpty(from))	return;
 		to=this.NARtoXY(to);
-		if(!this.CheckCellEmpty(to))	return;
 		port1=this.NARtoXY(port1);
 		port2=this.NARtoXY(port2);
-		if(from===to)	return;
+		if(this.CheckCellEmpty(from))	return;
+		var eat=!this.CheckCellEmpty(to);
 		var ch=this.GetChoosByPos(from);
+		if(eat&&this.GetChoosByPos(to).hue===ch.hue)	return;
 		var fromPos=this.QueryChoosClientPos(from);
 		var toPos=this.QueryChoosClientPos(port1);
 		var pChoos=this.NewPerformerChoos(from);
 		var pCell1=this.NewPerformerCell(port1,'TeleLight');
 		var pCell2=this.NewPerformerCell(port2,'TeleLight');
+		if(eat)
+		{
+			var pChoos2=this.NewPerformerChoos(to,'Eaten');
+			this.KillChoos(to);
+			this.visEle.appendChild(pChoos2);
+		}
 		this.visEle.appendChild(pChoos);
 		await Sleep(10);
 		ch.Hide();
@@ -610,13 +639,56 @@ export class Grood{
 		SetElementPos(pChoos,toPos);
 		await Sleep(200);
 		ch.Show();
-		await Sleep(10);
+		await Sleep(200);
+		if(eat)	pChoos2.remove();
 		pChoos.remove();
 		await Sleep(1000);
 		pCell1.remove();
 		pCell2.remove();
 	}
 	/** @param {NAR|XY} pos */
+	async AnimExplode(pos){
+		pos=this.NARtoXY(pos);
+		if(this.CheckCellEmpty(pos))	return;
+		var c=this.GetChoosByPos(pos);
+		var goo=false;
+		if(c.type==='goobomb')	goo=true;
+		else if(c.type!=='bomb')	return;
+		var pWrap=this.NewPerformerCell(pos,'ExplodeWrap');
+		var pMask=NewPerformer('span',null,'GooExplodeMask');
+		pWrap.innerHTML=`
+			<span class="perform Explode Big${goo?' Goo':''}"></span>
+			<span class="perform Explode Small${goo?' Goo':''}"></span>`;
+		pWrap.style.filter=
+			`hue-rotate(${c.hue}deg)
+			${goo?'drop-shadow(0px 0px 10px white)':''}`;
+		var black=this.CheckCellBlack(pos);
+		if((!black&&!goo)||(black&&goo))	SetElementUpSideDown(pWrap);
+		else	pWrap.style.rotate='0deg';
+		this.visEle.appendChild(pWrap);
+		if(goo)
+			document.body.appendChild(pMask),
+			this.element.style.animation='Shake 0.5s infinite';
+		this.RemoveChoos(pos);
+		await Sleep(goo?4000:1500);
+		var range=goo?
+			GoobombRange[black?'black':'white']
+		   :BombRange[black?'black':'white'];
+		for(var i of range)
+		{
+			var post=new XY(pos.x+i.x,pos.y+i.y);
+			this.KillChoos(post);
+		}
+		await Sleep(1100);
+		pWrap.remove();
+		if(goo)
+			pMask.remove(),
+		this.element.style.animation='Shake 1s';
+	}
+	/**
+	 * @param {NAR|XY} pos
+	 * @param {1|2|3} radius
+	 */
 	async AnimRotate(pos,radius){
 		pos=this.XYtoNAR(pos);
 		var posN=this.QueryCellCenterClientPos(pos);
@@ -633,7 +705,7 @@ export class Grood{
 		await Sleep(500);
 		for(var i=0;i<3;i++)
 		{
-			newPoses[i]=pos.delta(RotateRange[bw][radius][i]);
+			newPoses[i]=pos.delta(RotatorRange[bw][radius][i]);
 			if(!this.CheckPosValid(newPoses[i])) continue;
 			if(this.CheckCellEmpty(newPoses[i])) continue;
 			var posC=this.QueryChoosClientPos(newPoses[i]);
@@ -684,13 +756,122 @@ export class Grood{
 		await Sleep(10);
 		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(10) drop-shadow(0px 0px 10px gold)`;
 		ch.Hide();
-		ch.SetType(newType);
 		await Sleep(2000);
+		ch.SetType(newType);
 		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(1) drop-shadow(0px 0px 0px gold)`;
 		SetElementChoosType(pChoos,newType);
 		await Sleep(2000);
 		this.ReplaceChoos(pos,ch);
 		ch.Show();
 		pChoos.remove();
+	}
+	/** @param {NAR|XY} pos */
+	async AnimToggleControl(pos){
+		pos=this.XYtoNAR(pos);
+		if(!this.CheckPosValid(pos)) return;
+		if(this.CheckCellEmpty(pos)) return;
+		var ch=this.GetChoosByPos(pos);
+		if(ch.type!=='diplomat') return;
+		var bw=this.CheckCellBlack(pos)?'black':'white';
+		for(var i=0;i<3;i++)
+		{
+			var newPoses=pos.delta(DiplomatRange[bw][i]);
+			if(!this.CheckPosValid(newPoses)) continue;
+			if(this.CheckCellEmpty(newPoses)) continue;
+			var c=this.GetChoosByPos(newPoses);
+			if(c.hue===ch.hue)	continue;
+			var posN=this.NARtoXY(newPoses);
+			if(this.cells[posN.x][posN.y].classList.contains('DiplomatControlled'))
+				this.cells[posN.x][posN.y].classList.remove('DiplomatControlled'),
+				this.cells[posN.x][posN.y].firstChild.style.filter='',
+				SetElementHue(c.element,c.hue);
+			else
+				this.cells[posN.x][posN.y].classList.add('DiplomatControlled'),
+				SetElementHue(this.cells[posN.x][posN.y].firstChild,ch.hue),
+				c.element.style.filter=
+					`grayscale(0.1) brightness(0.9)
+					drop-shadow(0px 0px 3px hsl(${ch.hue},100%,85%))
+					hue-rotate(${c.hue}deg)`;
+		}
+		await Sleep(200);
+	}
+	/** @param {NAR|XY} pos */
+	async AnimToggleCheck(pos){
+		pos=this.XYtoNAR(pos);
+		if(!this.CheckPosValid(pos)) return;
+		if(this.CheckCellEmpty(pos)) return;
+		var ch=this.GetChoosByPos(pos);
+		if(ch.type!=='king'&&ch.type!=='gooking') return;
+		console.log(ch);
+		if(ch.element.classList.contains('Checked'))
+			ch.element.classList.remove('Checked'),
+			ch.element.style.filter=`hue-rotate(${ch.hue}deg)`;
+		else
+			ch.element.classList.add('Checked'),
+			ch.element.style.filter=`hue-rotate(${ch.hue}deg) drop-shadow(0px 0px 5px red)`;
+		await Sleep(200);
+	}
+	/**
+	 * @param {NAR|XY} fact
+	 * @param {NAR|XY} prod
+	 */
+	async AnimProduce(fact,prod){
+		fact=this.XYtoNAR(fact);
+		prod=this.XYtoNAR(prod);
+		if(!this.CheckPosValid(fact)) return;
+		if(!this.CheckPosValid(prod)) return;
+		if(this.CheckCellEmpty(fact)) return;
+		var eat=!this.CheckCellEmpty(prod);
+		var ch=this.GetChoosByPos(fact);
+		if(ch.type!=='factory') return;
+		if(eat&&this.GetChoosByPos(prod).hue===ch.hue) return;
+		var pChoos=this.NewPerformerChoos(fact,'Factory');
+		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(1)`;
+		ch.Hide();
+		this.visEle.appendChild(pChoos);
+		await Sleep(10);
+		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(2)`;
+		await Sleep(2000);
+		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(1)`;
+		ch.Show();
+		if(eat) this.KillChoos(prod);
+		var produced=!this.CheckCellEmpty(fact)&&this.GetChoosByPos(fact).type==='factory';
+		if(produced)
+		{
+			var c=this.PlaceChoos(prod,'product',ch.hue);
+			c.Hide();
+			var pChoos2=this.NewPerformerChoos(prod,'Product');
+			this.visEle.appendChild(pChoos2);
+		}
+		await Sleep(1000);
+		if(produced)
+			c.Show(),
+			await Sleep(200),
+			pChoos2.remove();
+	}
+	/** @param {NAR|XY} pos */
+	async AnimToggleRevolt(pos,by){
+		pos=this.XYtoNAR(pos);
+		if(!this.CheckPosValid(pos)) return;
+		if(this.CheckCellEmpty(pos)) return;
+		var ch=this.GetChoosByPos(pos);
+		if(ch.type!=='employee') return;
+		var posN=this.NARtoXY(pos);
+		var c=this.cells[posN.x][posN.y];
+		if(c.classList.contains('Revolting'))
+		{
+			c.firstChild.style.filter='';
+			c.classList.remove('Revolting');
+		}
+		else
+		{
+			c.classList.add('Revolting');
+			var pChoos=this.NewPerformerChoos(pos,'Revolt');
+			SetElementHue(c.firstChild,by);
+			SetElementHue(pChoos,by);
+			this.visEle.appendChild(pChoos);
+			await Sleep(1000);
+			pChoos.remove();
+		}
 	}
 };
