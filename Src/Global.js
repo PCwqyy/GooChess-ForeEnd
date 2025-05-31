@@ -1,12 +1,5 @@
-window.matchMedia('(prefers-color-scheme: dark)')
-	.addEventListener('change',()=>{
-		document.body.style.dark
-	}
-);
+var Lang;
 
-var L=new Lang;
-L.setLocale('zh');
-L.setFallback('en');
 var ThisPageName;
 var Metas=document.getElementsByTagName('meta');
 for(var ele of Metas){
@@ -14,19 +7,40 @@ for(var ele of Metas){
 		ThisPageName=ele.content;
 }
 var NeedTrans=document.getElementsByClassName('TRANS');
-async function SetLang(lang,init=false){
-	if(init)
-	{
-		for(var ele of NeedTrans)
-			ele.setAttribute('OriText',`${ThisPageName}.${ele.textContent}`);
-		await fetch('../Lang.json')
-			.then((response)=>response.json())
-			.then((data)=>{
-				L.setMessages(data);
-			});
-	}
-	L.setLocale(lang);
+function InitLang(){
 	for(var ele of NeedTrans)
-		ele.innerHTML=L.get(ele.getAttribute('OriText'));
+		ele.setAttribute('OriText',`${ele.textContent}`);
 }
-SetLang('zh',true);
+async function SetLang(lang){
+	await fetch(`/Assets/Lang/${lang}.json`)
+		.then((response)=>{
+			return response.json();
+		})
+		.then((data)=>{
+			Lang=data;
+		});
+	for(var ele of NeedTrans)
+		ele.innerHTML=Lang[ThisPageName][ele.getAttribute('OriText')];
+	return true;
+}
+function SetLangByCookie(){
+	var lang=getCookie('lang');
+	if(lang==null||lang=='')
+		lang='zh-cn';
+	SetLang(lang,true);
+}
+function SetLangByBrowser(){
+	InitLang();
+	var lang=navigator.languages;
+	for(var i of lang)
+	{
+		try{
+			if(SetLang(i))
+				return;
+		}
+		catch(e){
+			console.log(`SetLang(${i}) failed`);
+		}
+	}
+}
+SetLangByBrowser('zh-cn');

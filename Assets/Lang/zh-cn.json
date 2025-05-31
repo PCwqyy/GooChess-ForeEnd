@@ -1,0 +1,28 @@
+{
+	"Editor":{
+		"Apply":"应用",
+		"Load":"加载",
+		"Arrow":"添加箭头"
+	},
+	"Menu":{
+		"Title":"Welcome to<br>Goochess",
+		"SubTitle":"按任意键以继续",
+		"Account":"账户",
+		"Game":"游戏",
+		"Wiki":"维基",
+		"About":"关于",
+		"Settings":"设置"
+	},
+	"Gaming":{
+		"Scale":"缩放",
+		"Menu":"主菜单",
+		"Wiki":"Wiki",
+		"Debug":"运行调试"
+	},
+	"Wiki":{
+		"Menu":"主菜单",
+		"Game":"棋盘界面",
+		"Editor":"棋盘编辑器",
+		"DebugTip":"选择一个 .md 文件来查看"
+	}
+}
