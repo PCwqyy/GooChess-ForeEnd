@@ -1,6 +1,7 @@
 *.ai
-*.fcp
+*.vfc
 *.flp
+*.backup
 
 test.*
 Test.*
