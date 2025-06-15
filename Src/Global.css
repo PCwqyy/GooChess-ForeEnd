@@ -32,6 +32,10 @@ html{
 	font-family: Caviar Dreams;
 	src: url(/Assets/Fonts/CaviarDreams.ttf) format('truetype');
 }
+@font-face {
+	font-family: PCLang;
+	src: url(/Assets/Fonts/PClang.ttf) format('truetype');
+}
 
 body{
 	height: 100vh;
@@ -40,6 +44,10 @@ body{
 	background: light-dark(white,black);
 	font-size: 22px;
 	font-family: Caviar Dreams, DengXian;
+}
+body.pclang{
+	font-family: PCLang, Caviar Dreams, DengXian;
+
 }
 canvas.Background{
 	position: absolute;

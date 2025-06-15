@@ -13,6 +13,12 @@ function InitLang(){
 		ele.setAttribute('OriText',`${ele.textContent}`);
 }
 async function SetLang(lang){
+	if(lang==null||lang=='')
+		lang='zh-cn';
+	if(lang=='x-pc')
+		document.body.classList.add('pclang');
+	else
+		document.body.classList.remove('pclang');
 	await fetch(`/Assets/Lang/${lang}.json`)
 		.then((response)=>{
 			return response.json();
@@ -44,4 +50,4 @@ function SetLangByBrowser(){
 		}
 	}
 }
-SetLangByBrowser('zh-cn');
+SetLangByBrowser();

@@ -1,0 +1,28 @@
+{
+	"Editor":{
+		"Apply":"Apply",
+		"Load":"Load",
+		"Arrow":"Add an arrow"
+	},
+	"Menu":{
+		"Title":"Welcome to<br>Goochess",
+		"SubTitle":"Press Any Key",
+		"Account":"Account",
+		"Game":"Game",
+		"Wiki":"Wiki",
+		"About":"About",
+		"Settings":"Settings"
+	},
+	"Gaming":{
+		"Scale":"Scale",
+		"Menu":"Main Menu",
+		"Wiki":"Wiki",
+		"Debug":"Run Debug"
+	},
+	"Wiki":{
+		"Menu":"Title Screen",
+		"Game":"Gaming",
+		"Editor":"Grood Editor",
+		"DebugTip":"Choose a .md file to view"
+	}
+}

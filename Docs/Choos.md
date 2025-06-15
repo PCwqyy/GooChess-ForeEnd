@@ -28,4 +28,7 @@
 |Employee|![img](/Assets/Chooses/Employee.svg)|
 |Factory|![img](/Assets/Chooses/Factory.svg)|
 |Product|![img](/Assets/Chooses/Product.svg)|
-|Cell[?]|![img](/Assets/Chooses/Cell[?].svg)|
+|||
+|Pecookie|![img](/Assets/Chooses/Pecookie.svg)|
+|__hzx|![img](/Assets/Chooses/Hzx.svg)|
+|Yzy|![img](/Assets/Chooses/Yzy.svg)|
