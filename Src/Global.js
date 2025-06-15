@@ -1,3 +1,4 @@
+// Language
 var Lang;
 
 var ThisPageName;

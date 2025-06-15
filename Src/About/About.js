@@ -15,21 +15,3 @@ fetch('../../Docs/About.md')
 		},500);
 	})
 	.catch((reason)=>{console.error(reason);});
-
-var Angle=0;
-setInterval(()=>{
-	var t=document.createElement('span');
-	t.classList.add('LineWarp');
-	var q=document.createElement('span');
-	q.classList.add('Line');
-	Angle+=Math.random()*30+30;
-	Angle%=180;
-	q.style.rotate=`${Angle}deg`;
-	q.style.top=`${Math.random()*150-25}vh`;
-	q.style.backgroundColor=`hsl(${Math.random()*360} 80% 50%`;
-	t.appendChild(q);
-	Body.appendChild(t);
-	setTimeout(() => {
-		Body.removeChild(t);
-	},3100);
-},100);
