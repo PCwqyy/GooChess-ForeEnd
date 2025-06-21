@@ -12,29 +12,65 @@
 	</head>
 	<body>
 		<div id="Wrapper">
-			<div class="GroodWrap" id="GroodMain">
-		</div>
-		<div id="list">
-			<a class="butt TRANS" id="ScaleButt">Scale</a>
-			<a class="butt TRANS" href="../Menu/Main.html">Menu</a>
-			<a class="butt TRANS" href="../Wiki/Main.html">Wiki</a>
-			<select id="DebugId">
-				<option>Init</option>
-				<option>Move</option>
-				<option>Shoot</option>
-				<option>Teleport</option>
-				<option>Bounce</option>
-				<option>Explode</option>
-				<option>GooExplode</option>
-				<option>Rotate</option>
-				<option>Promote</option>
-				<option>Control</option>
-				<option>Check</option>
-				<option>Produce</option>
-				<option>Revolt</option>
-				<option>Error</option>
-			</select>
-			<a class="butt TRANS" id="DebugButt" onclick="Debug.Func()">Debug</a>
+			<div class="gamebox" id="left">
+				<div class="timer" id="t1">
+					<div class="time">11:23</div>
+					<div class="bar">
+						<span class="display"></span>
+					</div>
+					<span class="avatar"></span>
+					<div class="info">
+						<div class="nickname">PCwqyy</div>
+						<div class="coin">114</div>
+					</div>
+				</div>
+				<div class="timer" id="t2">
+					<div class="time">11:23</div>
+					<div class="bar">
+						<span class="display"></span>
+					</div>
+					<span class="avatar"></span>
+					<div class="info">
+						<div class="nickname">PCwqyy</div>
+						<div class="coin">114</div>
+					</div>
+				</div>
+				<div class="timer" id="t3">
+					<div class="time">11:23</div>
+					<div class="bar">
+						<span class="display"></span>
+					</div>
+					<span class="avatar"></span>
+					<div class="info">
+						<div class="nickname">PCwqyy</div>
+						<div class="coin">114</div>
+					</div>
+				</div>
+			</div>
+			<div class="GroodWrap" id="GroodMain"></div>
+			<div class="gamebox" id="right"></div>
+			<div id="list">
+				<a class="butt TRANS" id="ScaleButt">Scale</a>
+				<a class="butt TRANS" href="../Menu/Main.html">Menu</a>
+				<a class="butt TRANS" href="../Wiki/Main.html">Wiki</a>
+				<select id="DebugId">
+					<option>Init</option>
+					<option>Move</option>
+					<option>Shoot</option>
+					<option>Teleport</option>
+					<option>Bounce</option>
+					<option>Explode</option>
+					<option>GooExplode</option>
+					<option>Rotate</option>
+					<option>Promote</option>
+					<option>Control</option>
+					<option>Check</option>
+					<option>Produce</option>
+					<option>Revolt</option>
+					<option>Error</option>
+				</select>
+				<a class="butt TRANS" id="DebugButt" onclick="Debug.Func()">Debug</a>
+			</div>
 		</div>
 		<script id="debugger">
 			let Debug=new DOMRect;

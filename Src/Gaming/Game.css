@@ -7,6 +7,10 @@ div#Wrapper{
 }
 
 /* Grood */
+div.GroodWrap{
+	display: block;
+	width: unset;
+}
 Grood.Scaled{
 	transform:
 		scale(2)
@@ -17,6 +21,70 @@ Grood.Scaled{
 				1, 1, 1, 1)
 		translate(0, 35%)
 }
+
+/* GameBox */
+div.gamebox{
+	height: 86vh;
+	width: 18vw;
+	margin: 0px 1vw;
+	background-color: #ffffff3f;
+	transform-origin: bottom;
+}
+div.gamebox#left{
+	transform: matrix(1, 0, -0.583, 1, 0, 0);
+}
+div.gamebox#right{
+	transform: matrix(1, 0, 0.583, 1, 0, 0);
+}
+
+div.timer{
+	text-align: center;
+	user-select: none;
+	--hue: 210;
+	--time-percent: 60%;
+}
+div.timer>*:not(.bar){
+	transform: matrix(1, 0, 0.583, 1, 0, 0);
+	margin: 0 1vw;
+}
+div.timer div.time{
+	font-size: 2.5em;
+}
+div.timer div.bar{
+	height: 10px;
+	background-color: light-dark(#ccc,#333);
+}
+div.timer div.bar span.display{
+	display: block;
+	background-color: hsl(var(--hue) 100% 50%);
+	width: var(--time-percent);
+	height: 100%;
+	transition: 0.5s width;
+}
+div.timer span.avatar{
+	display: block;
+	position: absolute;
+	height: var(--cell-height);
+	width: var(--cell-width);
+	background-color: red;
+	rotate: -10deg;
+	translate: calc(0px - var(--cell-height) * 1) calc(0px - var(--cell-height) * 0.4);
+	transform: matrix(0.87, 0, 0.49, 1, 0, 0);
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+div.timer div.info{
+	margin-top: 5px;
+	height: 1em;
+}
+div.timer div.nickname{
+	float: left;
+	margin-left: 2vw;
+}
+div.timer div.coin{
+	float: right;
+	color: gold;
+}
+
 
 /* test */
 a.butt{
@@ -41,9 +109,15 @@ div#list{
 	align-items: center;
 	position: absolute;
 	flex-direction: column;
-	left: 5vw;
-	top: 10vh;
+	background-color: #ffffff3f;
+	left: -21vw;
+	top: 3vh;
+	padding: 0 1vw;
 	z-index: 10;
+	transition: 0.5s;
+}
+div#list:hover{
+	left: 0vw;
 }
 #DebugId{
 	width: 20vw;

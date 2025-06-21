@@ -171,7 +171,7 @@ class Background
 		}
 		Draw();
 	}
-	Slashes(hue=210,speed=1,stroke=10,slope=0.1,opacity=0.2)
+	Slashes(hue=210,speed=1,stroke=10,slope=0.2,opacity=0.2)
 	{
 		speed/=1000;
 		const draw=()=>

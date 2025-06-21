@@ -99,7 +99,7 @@ cell{
 	align-items: center;
 	position: relative;
 	height: var(--cell-height);
-	width: calc(var(--cell-width));
+	width: var(--cell-width);
 	margin: 0;
 	transition: 0.5s;
 	pointer-events: none;
@@ -108,7 +108,7 @@ cell>span{
 	display: block;
 	position: relative;
 	height: var(--cell-height);
-	width: calc(var(--cell-width));
+	width: var(--cell-width);
 	margin: 0;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	background-color: light-dark(#ffffff,#000000);
