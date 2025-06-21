@@ -127,13 +127,96 @@ class Background
 		}
 		Draw();
 	}
+	Stars(interval=100,stroke=3,slowIn=300,slowOut=2700)
+	{
+		const ttl=slowIn+slowOut;
+		var stars=[];
+		const GenStar=()=>
+		{
+			var mx=Math.random()*this.canvas.width;
+			var my=Math.random()*this.canvas.height;
+			return {
+				x:mx,y:my,
+				color:`hsl(${Math.random()*360},80%,50%)`,
+				startTime:performance.now()
+			};
+		}
+		setInterval(()=>
+			{
+				if(!this.run)	return;
+				stars.push(GenStar());
+			},interval);
+		const Opacity=(time)=>
+		{
+			if(time<slowIn)	return time/slowIn;
+			else	return 1-(time-slowIn)/slowOut;
+		}
+		const Draw=()=>
+		{
+			this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+			var now=performance.now();
+			stars=stars.filter(star=>now-star.startTime<ttl);
+			for (let star of stars)
+			{
+				this.ctx.save();
+				this.ctx.strokeStyle=star.color;
+				this.ctx.lineWidth=stroke;
+				this.ctx.globalAlpha=Opacity(now-star.startTime);
+				this.ctx.beginPath();
+				this.ctx.arc(star.x,star.y,stroke*2,0,Math.PI*2);
+				this.ctx.stroke();
+				this.ctx.restore();
+			}
+			requestAnimationFrame(Draw);
+		}
+		Draw();
+	}
+	Slashes(hue=210,speed=1,stroke=10,slope=0.1,opacity=0.2)
+	{
+		speed/=1000;
+		const draw=()=>
+		{
+			this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+			var cnt=Math.ceil(this.canvas.width*(1+2*slope)/stroke/2);
+			var x=stroke*2*(speed*(performance.now()%(1/speed))-1);
+			this.ctx.globalAlpha=opacity;;
+			this.ctx.fillStyle=`hsl(${hue},100%,50%)`;
+			this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
+			for(var i=0;i<cnt;i++)
+			{
+				this.ctx.save();
+				this.ctx.lineWidth=stroke;
+				this.ctx.strokeStyle=`hsl(${hue},100%,50%)`;
+				this.ctx.beginPath();
+				this.ctx.moveTo(x,-20);
+				this.ctx.lineTo(x-slope*this.canvas.height,this.canvas.height+20);
+				this.ctx.stroke();
+				this.ctx.restore();
+				x+=stroke*2;
+			}
+			requestAnimationFrame(draw);
+		};
+		draw();
+	}
 }
 
 // interface
 var bkg=new Background(document.body);
-var content=document.querySelector('meta[name="Background"]').content;
-if(content.match(/\w+\([\d,]*\)/)!=null)
+var metaEle=document.querySelector('meta[name="Background"]');
+function LoadBackground()
 {
-	eval('bkg.'+content);
-	console.log('Background loaded:',content);
+	var content=metaEle.content;
+	if(content.match(/\w+\([\d,]*\)/)!=null)
+	{
+		eval('bkg.'+content);
+		console.log('Background loaded:',content);
+	}
 }
+LoadBackground();
+var observer=new MutationObserver((mutations)=>{
+	for(var mutation of mutations)
+		if(mutation.type=='attributes'&&mutation.attributeName=='content')
+			LoadBackground();
+	console.log('Background changed:',mutation);
+});
+observer.observe(metaEle,{attributes:true});
