@@ -24,34 +24,60 @@ Grood.Scaled{
 
 /* GameBox */
 div.gamebox{
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: space-around;
 	height: 86vh;
 	width: 18vw;
 	margin: 0px 1vw;
 	background-color: #ffffff3f;
 	transform-origin: bottom;
 }
+div.gamebox>*{
+	width: 100%;
+}
 div.gamebox#left{
-	transform: matrix(1, 0, -0.583, 1, 0, 0);
+	transform: skewX(-30deg);
 }
 div.gamebox#right{
-	transform: matrix(1, 0, 0.583, 1, 0, 0);
+	transform: skewX(30deg);
+}
+div.timer>*:not(.bar),
+div#chatRoom input,
+div#chatMsgs div.message>*{
+	transform: skewX(30deg);
+	transform-origin: 50% 65%;
+	margin: 0 1vw;
 }
 
 div.timer{
 	text-align: center;
 	user-select: none;
-	--hue: 210;
-	--time-percent: 60%;
+	--time-percent: 100%; /* default */
 }
-div.timer>*:not(.bar){
-	transform: matrix(1, 0, 0.583, 1, 0, 0);
-	margin: 0 1vw;
+div.timer.running{
+	animation: TimerRunning 1s infinite;
+}
+@keyframes TimerRunning{
+	0%{background-color: transparent;}
+	50%{background-color: hsla(var(--hue), 100%, 50%, 0.3);}
+	100%{background-color: transparent;}
+}
+div.timer#p1{
+	--hue: var(--hue-p1);
+}
+div.timer#p2{
+	--hue: var(--hue-p2);
+}
+div.timer#p3{
+	--hue: var(--hue-p3);
 }
 div.timer div.time{
-	font-size: 2.5em;
+	font-size: 5vw;
 }
 div.timer div.bar{
-	height: 10px;
+	height: 8px;
 	background-color: light-dark(#ccc,#333);
 }
 div.timer div.bar span.display{
@@ -64,25 +90,62 @@ div.timer div.bar span.display{
 div.timer span.avatar{
 	display: block;
 	position: absolute;
+	--cell-half-size: 3vmin;
 	height: var(--cell-height);
 	width: var(--cell-width);
-	background-color: red;
+	background-color: green;
 	rotate: -10deg;
-	translate: calc(0px - var(--cell-height) * 1) calc(0px - var(--cell-height) * 0.4);
-	transform: matrix(0.87, 0, 0.49, 1, 0, 0);
+	translate: calc(0px - var(--cell-height) * 1.1) calc(0px - var(--cell-height) * 0.8);
+	transform: matrix(0.85, 0, 0.49, 1, 0, 0);
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
 div.timer div.info{
 	margin-top: 5px;
 	height: 1em;
+	font-size: 18px;
 }
 div.timer div.nickname{
 	float: left;
-	margin-left: 2vw;
 }
 div.timer div.coin{
 	float: right;
 	color: gold;
+}
+div#chatRoom{
+	height: 30vh;
+}
+div#chatRoom>*{
+	width: 100%;
+}
+div#chatRoom div#chatMsgs{
+	overflow: hidden scroll;
+	height: calc(30vh - 40px);
+}
+div#chatRoom div#chatMsgs div.message{
+	font-size: 16px;
+	word-wrap: break-word;
+
+}
+div.message>*{
+	display: inline-block;
+}
+div.message>* {
+	max-width: 100%;
+}
+div.message span.time{
+	color: #888;
+}
+div#chatRoom div#inputWrap{
+	background-color: white;
+}
+div#chatRoom input#chatInput{
+	overflow-x: scroll;
+	border: unset;
+	height: 100%;
+	width: 90%;
+	outline: none;
+	font-family: inherit;
+	font-size: 20px;
 }
 
 

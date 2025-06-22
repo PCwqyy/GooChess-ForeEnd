@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<meta name="darkreader-lock">
 		<meta name="PageName" content="Gaming">
-		<meta name="Background" content="Slashes()">
+		<meta name="Background" content="Slashes(0,1,0)">
 		<title>Goord</title>
 		<link rel="stylesheet" href="../Global.css">
 		<link rel="stylesheet" href="Game.css">
@@ -13,8 +13,9 @@
 	<body>
 		<div id="Wrapper">
 			<div class="gamebox" id="left">
-				<div class="timer" id="t1">
-					<div class="time">11:23</div>
+				<!-- Timer & Chat Room -->
+				<div class="timer" id="p1">
+					<div class="time">88:88</div>
 					<div class="bar">
 						<span class="display"></span>
 					</div>
@@ -24,37 +25,47 @@
 						<div class="coin">114</div>
 					</div>
 				</div>
-				<div class="timer" id="t2">
-					<div class="time">11:23</div>
+				<div class="timer" id="p2">
+					<div class="time">88:88</div>
 					<div class="bar">
 						<span class="display"></span>
 					</div>
 					<span class="avatar"></span>
 					<div class="info">
-						<div class="nickname">PCwqyy</div>
-						<div class="coin">114</div>
+						<div class="nickname">hezerxv</div>
+						<div class="coin">7</div>
 					</div>
 				</div>
-				<div class="timer" id="t3">
-					<div class="time">11:23</div>
+				<div class="timer" id="p3">
+					<div class="time">88:88</div>
 					<div class="bar">
 						<span class="display"></span>
 					</div>
 					<span class="avatar"></span>
 					<div class="info">
-						<div class="nickname">PCwqyy</div>
-						<div class="coin">114</div>
+						<div class="nickname">yzy</div>
+						<div class="coin">88</div>
+					</div>
+				</div>
+				<div id="chatRoom">
+					<div id="chatMsgs"></div>
+					<div id="inputWrap">
+						<input type="text" id="chatInput" placeholder="Say Something" name="chatInput">
 					</div>
 				</div>
 			</div>
 			<div class="GroodWrap" id="GroodMain"></div>
-			<div class="gamebox" id="right"></div>
+			<div class="gamebox" id="right">
+				<!-- [TODO] -->
+			</div>
 			<div id="list">
 				<a class="butt TRANS" id="ScaleButt">Scale</a>
 				<a class="butt TRANS" href="../Menu/Main.html">Menu</a>
 				<a class="butt TRANS" href="../Wiki/Main.html">Wiki</a>
 				<select id="DebugId">
 					<option>Init</option>
+					<option>SwitchTimers</option>
+					<option>NewMsg</option>
 					<option>Move</option>
 					<option>Shoot</option>
 					<option>Teleport</option>

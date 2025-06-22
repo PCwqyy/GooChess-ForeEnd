@@ -1,4 +1,6 @@
 import {Grood,XY,NAR,Sleep} from "../Game.js";
+import {InitTimers,SwitchTimers,NewMsg} from "./GUI.js";
+
 const ROWS=12;
 const InitGrood=`
 [${ROWS}]
@@ -52,7 +54,12 @@ async function DebugFunc(){
 	DebugButt.classList.add('disable');
 	try{
 		if(Id=='Init')
-			GroodMain.ParseFromText(Wrap,InitGrood);
+			GroodMain.ParseFromText(Wrap,InitGrood),
+			InitTimers(30);
+		if(Id=='SwitchTimers')
+			SwitchTimers();
+		if(Id=='NewMsg')
+			NewMsg('Test Message','PC');
 		if(Id=='Move')
 			await GroodMain.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
 		if(Id=='Shoot')

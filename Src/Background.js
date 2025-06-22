@@ -171,7 +171,7 @@ class Background
 		}
 		Draw();
 	}
-	Slashes(hue=210,speed=1,stroke=10,slope=0.2,opacity=0.2)
+	Slashes(hue=0,speed=1,saturation=100,stroke=10,slope=0.2,opacity=0.2)
 	{
 		speed/=1000;
 		const draw=()=>
@@ -179,14 +179,14 @@ class Background
 			this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 			var cnt=Math.ceil(this.canvas.width*(1+2*slope)/stroke/2);
 			var x=stroke*2*(speed*(performance.now()%(1/speed))-1);
-			this.ctx.globalAlpha=opacity;;
-			this.ctx.fillStyle=`hsl(${hue},100%,50%)`;
+			this.ctx.globalAlpha=opacity;
+			this.ctx.fillStyle=`hsl(${hue},${saturation}%,50%)`;
 			this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
 			for(var i=0;i<cnt;i++)
 			{
 				this.ctx.save();
 				this.ctx.lineWidth=stroke;
-				this.ctx.strokeStyle=`hsl(${hue},100%,50%)`;
+				this.ctx.strokeStyle=`hsl(${hue},${saturation}%,50%)`;
 				this.ctx.beginPath();
 				this.ctx.moveTo(x,-20);
 				this.ctx.lineTo(x-slope*this.canvas.height,this.canvas.height+20);
@@ -206,7 +206,7 @@ var metaEle=document.querySelector('meta[name="Background"]');
 function LoadBackground()
 {
 	var content=metaEle.content;
-	if(content.match(/\w+\([\d,]*\)/)!=null)
+	if(content.match(/\w+\([\d,\s]*\)/)!=null)
 	{
 		eval('bkg.'+content);
 		console.log('Background loaded:',content);
@@ -217,6 +217,6 @@ var observer=new MutationObserver((mutations)=>{
 	for(var mutation of mutations)
 		if(mutation.type=='attributes'&&mutation.attributeName=='content')
 			LoadBackground();
-	console.log('Background changed:',mutation);
+	console.log('Background changed:',mutation.target.getAttribute('content'));
 });
 observer.observe(metaEle,{attributes:true});

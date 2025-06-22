@@ -6,10 +6,14 @@ html{
 	height: 100vh;
 	width: 100vw;
 	overflow: hidden;
-
-	--color-p1: light-dark(#10a3ff,#2c56bf);
-	--color-p2: light-dark(#f64632,#ad0000);
-	--color-p3: light-dark(#f4fc0a,#eada00);
+}
+:root{
+	--hue-p1: 200;
+	--hue-p2: 0;
+	--hue-p3: 60;
+	--color-p1: light-dark(hsl(var(--hue-p1) 100% 50%),hsl(var(--hue-p1) 60% 50%));
+	--color-p2: light-dark(hsl(var(--hue-p2) 100% 50%),hsl(var(--hue-p2) 60% 50%));
+	--color-p3: light-dark(hsl(var(--hue-p3) 100% 50%),hsl(var(--hue-p3) 60% 50%));
 	--color-hover: light-dark(#ffd34f,#daa300);
 	--color-shooter: light-dark(#d8ff74,#0da100);
 	--cell-size-half: 4vmin;
@@ -79,7 +83,7 @@ Grood{
 	transition: 2s;
 	background-image:
 		linear-gradient(60deg,var(--color-p1),transparent 26%),
-		linear-gradient(180deg,var(--color-p2),transparent 40%),
+		linear-gradient(180deg,var(--color-p2),transparent 36%),
 		linear-gradient(300deg,var(--color-p3),transparent 26%);
 }
 div.cells{
