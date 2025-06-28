@@ -56,7 +56,31 @@
 			</div>
 			<div class="GroodWrap" id="GroodMain"></div>
 			<div class="gamebox" id="right">
-				<!-- [TODO] -->
+				<div id="recordWrap">
+					<table id="record">
+						<colgroup>
+							<col id="roundCol">
+							<col id="p1Col">
+							<col id="p2Col">
+							<col id="p3Col">
+						</colgroup>
+						<thead><tr>
+							<th class="recordHead" id="round"></th>
+							<th class="recordHead" id="p1"></th>
+							<th class="recordHead" id="p2"></th>
+							<th class="recordHead" id="p3"></th>
+						</tr></thead>
+						<tbody>
+
+						</tbody>
+					</table>
+				</div>
+				<div id="buttons">
+					<span onclick="alert('resign')" id="resign"></span>
+					<span onclick="alert('tie')" id="tie"></span>
+					<span onclick="alert('callback')" id="callback"></span>
+					<span onclick="alert('prompt')" id="prompt"></span>
+				</div>
 			</div>
 			<div id="list">
 				<a class="butt TRANS" id="ScaleButt">Scale</a>
@@ -66,6 +90,7 @@
 					<option>Init</option>
 					<option>SwitchTimers</option>
 					<option>NewMsg</option>
+					<option>NewRecord</option>
 					<option>Move</option>
 					<option>Shoot</option>
 					<option>Teleport</option>

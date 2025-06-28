@@ -44,11 +44,16 @@ div.gamebox#right{
 	transform: skewX(30deg);
 }
 div.timer>*:not(.bar),
-div#chatRoom input,
-div#chatMsgs div.message>*{
+div#chatRoom input{
 	transform: skewX(30deg);
 	transform-origin: 50% 65%;
 	margin: 0 1vw;
+}
+div#buttons>span::after,
+table#record span.text{
+	display: inline-block;
+	transform: skewX(-30deg);
+	transform-origin: 50% 65%;
 }
 
 div.timer{
@@ -112,7 +117,19 @@ div.timer div.coin{
 	color: gold;
 }
 div#chatRoom{
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
 	height: 30vh;
+}
+div#chatRoom::after{
+	content: '';
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 40px;
+	background-image: linear-gradient(#ffffff6f, transparent);
+	pointer-events: none;
 }
 div#chatRoom>*{
 	width: 100%;
@@ -120,23 +137,26 @@ div#chatRoom>*{
 div#chatRoom div#chatMsgs{
 	overflow: hidden scroll;
 	height: calc(30vh - 40px);
+	scroll-behavior: smooth;
 }
 div#chatRoom div#chatMsgs div.message{
+	border-bottom: #ffffff7f 1px solid;
+	padding: 1vmin 2vmin;
 	font-size: 16px;
 	word-wrap: break-word;
-
 }
-div.message>*{
+div.message{
+	animation: Appear 0.5s;
+}
+div.message span{
 	display: inline-block;
-}
-div.message>* {
-	max-width: 100%;
+	transform: skewX(30deg);
 }
 div.message span.time{
 	color: #888;
 }
 div#chatRoom div#inputWrap{
-	background-color: white;
+	background-color: light-dark(white,black);
 }
 div#chatRoom input#chatInput{
 	overflow-x: scroll;
@@ -144,10 +164,125 @@ div#chatRoom input#chatInput{
 	height: 100%;
 	width: 90%;
 	outline: none;
+	background-color: light-dark(white,black);
 	font-family: inherit;
 	font-size: 20px;
 }
 
+div#recordWrap{
+	height: 60vh;
+	overflow: scroll;
+	scroll-behavior: smooth;
+}
+table#record{
+	width: 100%;
+	border-collapse: collapse;
+}
+table#record col#p1Col{
+	background-color: hsla(var(--hue-p1), 100%, 50%, 0.3);
+}
+table#record col#p2Col{
+	background-color: hsla(var(--hue-p2), 100%, 50%, 0.3);
+}
+table#record col#p3Col{
+	background-color: hsla(var(--hue-p3), 100%, 50%, 0.3);
+}
+table#record thead{
+	height: 5px;
+	position: sticky;
+	top: 0;
+	z-index: 2;
+}
+table#record thead th#round{
+	background-color: light-dark(white,black);
+}
+table#record thead th#p1{
+	background-color: var(--color-p1);
+}
+table#record thead th#p2{
+	background-color: var(--color-p2);
+}
+table#record thead th#p3{
+	background-color: var(--color-p3);
+}
+table#record td{
+	padding: 0 0.5vw;
+	font-size: 14px;
+}
+table#record td.recordCell,
+table#record td.round{
+	animation: Appear 0.5s;
+}
+table#record thead th#round,
+table#record td.round{
+	position: sticky;
+	left: 0;
+	background-color: light-dark(white,black);
+	z-index: 1;
+}
+table#record td.round{
+	color: gray;
+	padding: 0 0vw;
+}
+table#record span.text{
+	text-align: center;
+	width: 100%;
+}
+div#buttons{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-content: space-between;
+	height: 8vmin;
+}
+div#buttons>span{
+	display: flex;
+	height: 8vmin;
+	width: 40%;
+	transition: 0.3s;
+}
+div#buttons>span::after{
+	content: '';
+	display: block;
+	margin: auto;
+	width: 5vmin;
+	height: 5vmin;
+	filter: grayscale(114) brightness(114);
+}
+div#buttons>span#resign{
+	background-color: #ff0000;
+}
+div#buttons>span#tie{
+	background-color: #f9ed32;
+}
+div#buttons>span#callback{
+	background-color: #39b54a;
+}
+div#buttons>span#prompt{
+	background-color: #00aeef;
+}
+div#buttons>span#resign::after{
+	background-image: url(/Assets/Functions/Resign.svg);
+}
+div#buttons>span#tie::after{
+	background-image: url(/Assets/Functions/Tie.svg);
+}
+div#buttons>span#callback::after{
+	background-image: url(/Assets/Functions/CallBack.svg);
+}
+div#buttons>span#prompt::after{
+	background-image: url(/Assets/Functions/Prompt.svg);
+}
+div#buttons>span:hover{
+	background-color: white !important;
+}
+div#buttons>span:hover::after{
+	filter: unset;
+}
+@keyframes Appear{
+	0%{opacity: 0;}
+	100%{opacity: 1;}
+}
 
 /* test */
 a.butt{
@@ -172,18 +307,16 @@ div#list{
 	align-items: center;
 	position: absolute;
 	flex-direction: column;
-	background-color: #ffffff3f;
-	left: -21vw;
-	top: 3vh;
+	border: white dotted 1px;
+	border-radius: 5px;
+	left: 0vw;
+	top: 0vh;
 	padding: 0 1vw;
 	z-index: 10;
 	transition: 0.5s;
 }
-div#list:hover{
-	left: 0vw;
-}
 #DebugId{
-	width: 20vw;
+	width: 15vw;
 	font-size: 20px;
 	font-family: Consolas;
 }

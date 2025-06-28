@@ -2,6 +2,17 @@
 	margin: 0;
 	padding: 0;
 }
+*::-webkit-scrollbar{
+	width: 4px;
+	height: 4px;
+}
+*::-webkit-scrollbar-thumb{
+	border-radius: 2px;
+	background-color: white;
+}
+*::-webkit-scrollbar-corner{
+	background-color: transparent;
+}
 html{
 	height: 100vh;
 	width: 100vw;

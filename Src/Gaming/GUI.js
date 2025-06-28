@@ -20,7 +20,7 @@ class Timer
 	{
 		var minutes=Math.floor(time/60);
 		var seconds=time%60;
-		return `${minutes<10?'0':''}${minutes}:${seconds<10?'0':''}${seconds}`;
+		return `${minutes}`.padStart(2,'0')+':'+`${seconds}`.padStart(2,'0');
 	}
 	Set(time)
 	{
@@ -88,14 +88,22 @@ class Messages
 	 * @param {String} author
 	 * @param {String} time
 	 */
-	constructor(text,author,time)
+	constructor(text,author)
 	{
 		this.text=text;
 		this.text=text.replaceAll('\n','<br>');
 		this.text=text.replaceAll('<','&lt;');
 		this.text=text.replaceAll('>','&gt;');
+		this.text=text.replaceAll(' ','&nbsp;</span><span class="word">');
 		this.author=author;
-		this.time=time;
+		this.time=this.GetTimeNow();
+	}
+	GetTimeNow()
+	{
+		var date=new Date();
+		return `${date.getHours()}`.padStart(2,'0')
+		+':'+`${date.getMinutes()}`.padStart(2,'0')
+		+':'+`${date.getSeconds()}`.padStart(2,'0');
 	}
 	GenHTML()
 	{
@@ -103,7 +111,7 @@ class Messages
 		message.classList.add('message');
 		message.innerHTML=`<span class="author">${this.author}</span>
 			<span class="time">${this.time}</span><br>
-			<span class="text"><span class="word">${this.text}</span></span>`;
+			<div class="text"><span class="word">${this.text}</span></div>`;
 		return message;
 	}
 }
@@ -113,6 +121,15 @@ class ChatRoom
 	{
 		this.messages=[];
 		this.element=element;
+		this.observer=new MutationObserver((m)=>{
+			m.forEach((mutation)=>
+			{
+				if(mutation.type==='childList')
+					mutation.addedNodes.forEach((node)=>
+					{node.scrollIntoView({block:'end',inline: 'nearest'});});
+			});
+		});
+		this.observer.observe(this.element,{childList:true,subtree:true});
 	}
 	AddMessage(msg)
 	{
@@ -121,14 +138,10 @@ class ChatRoom
 	}
 }
 var ChatRoomMain=new ChatRoom(document.querySelector('div#chatMsgs'));
-function GetTimeNow()
+
+export function NewMsg(text,author)
 {
-	var date=new Date();
-	return `${date.getHours()}:${date.getMinutes()}`;
-}
-export function NewMsg(text,author,time)
-{
-	var msg=new Messages(text,author,GetTimeNow());
+	var msg=new Messages(text,author);
 	ChatRoomMain.AddMessage(msg);
 }
 var InputEle=document.querySelector('#chatInput');
@@ -146,4 +159,52 @@ export function SendMessage()
 		} */
 		InputEle.value = '';
 	}
+}
+
+/* Records of each step */
+class Record
+{
+	constructor(element)
+	{
+		/** @type {HTMLTableElement} */
+		this.element=element;
+		this.currentPlayer=1;
+		this.records=[];
+		this.round=0;
+		this.observer=new MutationObserver((m)=>{
+			m.forEach((mutation)=>
+				{
+					if(mutation.type==='childList')
+						mutation.addedNodes.forEach((node)=>
+					{
+						node.scrollIntoView({block:'end',inline: 'nearest'});
+						console.log('Mutation:',node);
+					});
+			});
+		});
+		this.observer.observe(this.element.parentElement,{childList:true,subtree:true});
+	}
+	AppendRecord(record)
+	{
+		if(this.currentPlayer===1)
+			this.currentRow=document.createElement('tr'),
+			this.currentRow.classList.add('recordRow'),
+			this.element.tBodies[0].appendChild(this.currentRow),
+			this.currentRow.innerHTML=
+			`<td class="round">
+				<span class="text">${++this.round}</span>
+			</td>`;
+		var cell=document.createElement('td');
+		cell.classList.add('recordCell');
+		cell.innerHTML=`<span class="text">${record}</span>`;
+		this.currentRow.appendChild(cell);
+		this.currentPlayer++;
+		if(this.currentPlayer>3)
+			this.currentPlayer=1;
+	}
+}
+var RecordMain=new Record(document.querySelector('table#record'));
+export function AddRecord(record)
+{
+	RecordMain.AppendRecord(record);
 }

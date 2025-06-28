@@ -1,5 +1,5 @@
 import {Grood,XY,NAR,Sleep} from "../Game.js";
-import {InitTimers,SwitchTimers,NewMsg} from "./GUI.js";
+import * as GUI from "./GUI.js";
 
 const ROWS=12;
 const InitGrood=`
@@ -55,11 +55,13 @@ async function DebugFunc(){
 	try{
 		if(Id=='Init')
 			GroodMain.ParseFromText(Wrap,InitGrood),
-			InitTimers(30);
+			GUI.InitTimers(300);
 		if(Id=='SwitchTimers')
-			SwitchTimers();
+			GUI.SwitchTimers();
 		if(Id=='NewMsg')
-			NewMsg('Test Message','PC');
+			GUI.NewMsg('Test Message','PC');
+		if(Id=='NewRecord')
+			GUI.AddRecord('Pe1i');
 		if(Id=='Move')
 			await GroodMain.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
 		if(Id=='Shoot')
@@ -86,7 +88,6 @@ async function DebugFunc(){
 			await GroodMain.AnimToggleRevolt(new NAR(10,9,6),210);
 		if(Id=='Error')
 			throw new Error('Test Error');
-		
 	}catch(e){
 		console.error(e);
 		DebugButt.classList.add('error');
