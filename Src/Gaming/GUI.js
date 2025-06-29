@@ -91,10 +91,7 @@ class Messages
 	constructor(text,author)
 	{
 		this.text=text;
-		this.text=text.replaceAll('\n','<br>');
-		this.text=text.replaceAll('<','&lt;');
-		this.text=text.replaceAll('>','&gt;');
-		this.text=text.replaceAll(' ','&nbsp;</span><span class="word">');
+		this.ProcessText();
 		this.author=author;
 		this.time=this.GetTimeNow();
 	}
@@ -113,6 +110,30 @@ class Messages
 			<span class="time">${this.time}</span><br>
 			<div class="text"><span class="word">${this.text}</span></div>`;
 		return message;
+	}
+	ProcessText()
+	{
+		if(this.text.match(/f(\*\*|uc)k/gui)!==null||
+			this.text.match(/(U|you|your)[\s\S]*(mom|m)/gui)!==null)
+			this.text=this.text.replaceAll(/\byour\b/gui,'my'),
+			this.text=this.text.replaceAll(/\byou\b/gui,'myself'),
+			this.text=this.text.replaceAll(/U\b/gui,'I');
+		if(this.text.match(/[超操草没][\s\S]*[妈马玛Mm]/gui)!==null)
+			this.text=this.text.replaceAll(/[你泥尼]/gui,'我');
+		if(this.text.match(/[你泥尼][\s\S]*[妈马玛Mm]/gui)!==null)
+			this.text=this.text.replaceAll(/[你泥尼]/gui,'我');
+		var res=this.text.match(/(傻逼|煞笔|笨蛋|蠢货|死鬼|傻叉|脑残|弱智|垃圾|废物|sb|fw)/ui);
+		if(res!=null)
+		{
+			this.text=this.text.replaceAll(/你/g,'我');
+			if(res.index==0)
+				this.text='我是'+this.text;
+		}
+		this.text=this.text.replaceAll('\n','<br>');
+		this.text=this.text.replaceAll('<','&lt;');
+		this.text=this.text.replaceAll('>','&gt;');
+		this.text=this.text.replaceAll(' ','&nbsp;</span><span class="word">');
+	
 	}
 }
 class ChatRoom
