@@ -8,7 +8,7 @@
 		<meta name="Background" content="Slashes(0,1,0)">
 		<title>Goord</title>
 		<link rel="stylesheet" href="../Global.css">
-		<link rel="stylesheet" href="Game.css">
+		<link rel="stylesheet" href="GUI.css">
 	</head>
 	<body>
 		<div id="Wrapper">
@@ -71,7 +71,6 @@
 							<th class="recordHead" id="p3"></th>
 						</tr></thead>
 						<tbody>
-
 						</tbody>
 					</table>
 				</div>
@@ -79,13 +78,13 @@
 					<span onclick="alert('resign')" id="resign"></span>
 					<span onclick="alert('tie')" id="tie"></span>
 					<span onclick="alert('callback')" id="callback"></span>
-					<span onclick="alert('prompt')" id="prompt"></span>
+					<span onclick="alert('hurryup')" id="hurryup"></span>
 				</div>
 			</div>
 			<div id="list">
-				<a class="butt TRANS" id="ScaleButt">Scale</a>
-				<a class="butt TRANS" href="../Menu/Main.html">Menu</a>
-				<a class="butt TRANS" href="../Wiki/Main.html">Wiki</a>
+				<trans class="butt" id="ScaleButt">$.Scale</trans>
+				<trans class="butt" href="../Menu/Main.html">$.Menu</trans>
+				<trans class="butt" href="../Wiki/Main.html">$.Wiki</trans>
 				<select id="DebugId">
 					<option>Init</option>
 					<option>SwitchTimers</option>
@@ -105,14 +104,14 @@
 					<option>Revolt</option>
 					<option>Error</option>
 				</select>
-				<a class="butt TRANS" id="DebugButt" onclick="Debug.Func()">Debug</a>
+				<trans class="butt" id="DebugButt" onclick="Debug.Func()">$.Debug</trans>
 			</div>
 		</div>
 		<script id="debugger">
 			let Debug=new DOMRect;
 		</script>
 		<script type="module" src="Main.js"></script>
-		<script src="../Background.js"></script>
-		<script src="../Global.js"></script>
+		<script type="module" src="../Background.js"></script>
+		<script type="module" src="../Global.js"></script>
 	</body>
 </html>

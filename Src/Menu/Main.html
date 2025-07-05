@@ -14,21 +14,24 @@
 	<body>
 		<div id="BigTCon">
 			<span id="MainTriangle"></span>
-			<span id="ColorCont"></span>
 		</div>
 		<div id="Home">
 		</div>
-		<p id="title" class="welcome TRANS">Title</p>
-		<p id="sign" class="welcome TRANS">SubTitle</p>
-		<script src="Welcome.js"></script>
+		<tranb id="title" class="welcome">$.Title</tranb>
+		<tranb id="sign" class="welcome">$.SubTitle</tranb>
 		<menu id="Menu">
-			<a class="MenuItem TRANS" href="../Gaming/Main.html">Game</a>
-			<a class="MenuItem TRANS">Account</a>
-			<a class="MenuItem TRANS" href="../Wiki/Main.html">Wiki</a>
-			<a class="MenuItem TRANS" href="../About/Main.html">About</a>
-			<a class="MenuItem TRANS">Settings</a>
+			<trans class="MenuItem" href="../Gaming/Main.html">$.Game</trans>
+			<trans class="MenuItem">$.Account</trans>
+			<trans class="MenuItem" href="../Wiki/Main.html">$.Wiki</trans>
+			<trans class="MenuItem" href="../About/Main.html">$.About</trans>
+			<trans class="MenuItem">$.Settings</trans>
 		</menu>
-		<script src="../Background.js"></script>
-		<script src="../Global.js"></script>
+		<script>
+			document.addEventListener('keydown',(event)=>{
+				document.body.classList.add('menu-open');
+			},{once:true});
+		</script>
+		<script type="module" src="../Background.js"></script>
+		<script type="module" src="../Global.js"></script>
 	</body>
 </html>

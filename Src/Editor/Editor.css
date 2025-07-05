@@ -30,7 +30,7 @@
 	width: 25vw;
 	height: 12vh;
 }
-#Operate>span{
+#Operate>trans{
 	margin: 0 1vh;
 	border-radius: 3px;
 	padding: 0 1vh;
@@ -40,7 +40,7 @@
 	text-decoration: none;
 	cursor: pointer;
 }
-#Operate>span:hover{
+#Operate>trans:hover{
 	color: #3689ce;
 	background-color: white;
 }

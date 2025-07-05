@@ -118,11 +118,11 @@ class Messages
 			this.text=this.text.replaceAll(/\byour\b/gui,'my'),
 			this.text=this.text.replaceAll(/\byou\b/gui,'myself'),
 			this.text=this.text.replaceAll(/U\b/gui,'I');
-		if(this.text.match(/[超操草没][\s\S]*[妈马玛Mm]/gui)!==null)
+		if(this.text.match(/[超操草没死][\s\S]*[妈马玛Mm]/gui)!==null)
 			this.text=this.text.replaceAll(/[你泥尼]/gui,'我');
 		if(this.text.match(/[你泥尼][\s\S]*[妈马玛Mm]/gui)!==null)
 			this.text=this.text.replaceAll(/[你泥尼]/gui,'我');
-		var res=this.text.match(/(傻逼|煞笔|笨蛋|蠢货|死鬼|傻叉|脑残|弱智|垃圾|废物|sb|fw)/ui);
+		var res=this.text.match(/(傻逼|煞笔|笨蛋|蠢货|傻叉|脑残|弱智|垃圾|废物|sb|fw)/ui);
 		if(res!=null)
 		{
 			this.text=this.text.replaceAll(/你/g,'我');

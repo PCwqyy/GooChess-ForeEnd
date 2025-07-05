@@ -13,7 +13,7 @@ div#BigTCon{
 	align-items: center;
 	flex-direction: row;
 }
-span#MainTriangle,span#ColorCont{
+span#MainTriangle{
 	display: inline-block;
 	position: absolute;
 	width: 150vmin;
@@ -29,12 +29,7 @@ span#MainTriangle,span#ColorCont{
 		FlashF 3s infinite;
 } 
 span#MainTriangle{
-	mix-blend-mode: difference;
-	background-color: light-dark(white,#c0c0c0);
-}
-span#ColorCont{
-	z-index: 1;
-	background-color: white;
+	background-color: light-dark(black,darkgray);
 }
 @keyframes RotateF{
 	0%		{rotate: 20deg;}
@@ -60,11 +55,12 @@ span#ColorCont{
 	87.5%{scale: 0.7;}
 	100%{scale: 1;}
 }
-div#Home{
-	isolation: isolate;
-}
 
-p#title{
+tranb#title,
+tranb#sign{
+	transition: opacity 1s;
+}
+tranb#title{
 	width: 100vw;
 	color: white;
 	text-align: center;
@@ -80,39 +76,30 @@ p#title{
 	50%{rotate: 5deg;}
 	100%{rotate: -5deg;}
 }
-p#sign{
+tranb#sign{
 	position: absolute;
 	color: white;
-	opacity: 0;
+	opacity: 1;
+	filter: opacity(0);
 	font-size: 4vh;
 	z-index: 3;
 	translate: 0 25vh;
 	animation:
-		FlashS 2s linear 5s infinite,
-		SlowIn 1s linear 4s;
+		FlashS 2s linear 5s infinite;
 }
 @keyframes SlowIn{
 	0%{opacity: 0;}
 	100%{opacity: 1;}
 }
 @keyframes FlashS{
-	0%{opacity: 1;}
-	50%{opacity: 0.3;}
-	100%{opacity: 1;}
-}
-
-span.SmallT{
-	position: absolute;
-	transform-origin: 50% 66%;
-	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-	left: -20vh;
-	isolation: isolate;
-	transition-timing-function: linear !important;
+	0%{filter: opacity(0);}
+	50%{filter: opacity(1);}
+	100%{filter: opacity(0);}
 }
 
 menu#Menu{
+	display: flex;
 	position: fixed;
-	display: none;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
@@ -121,5 +108,50 @@ menu#Menu{
 	width: 90vw;
 	height: 100vh;
 	list-style: none;
-	isolation: isolate;
+	opacity: 0;
+	transition: 4s;
+}
+body.menu-open span#MainTriangle{
+	animation-iteration-count: unset;
+	rotate: 20deg;
+	translate: -35% 0;
+	height: calc(200vmin * sqrt(3));
+	width: 400vmin;
+}
+body.menu-open tranb.welcome#title,
+body.menu-open tranb.welcome#sign{
+	opacity: 0;
+	filter: opacity(1);
+	pointer-events: none;
+	animation-iteration-count: 1;
+}
+body.menu-open menu#Menu{
+	opacity: 1;
+}
+trans.MenuItem{
+	text-align: center;
+	text-decoration: none;
+	line-height: 15vh;
+	margin-bottom: 2vh;
+	width: 100%;
+	background-color: light-dark(white,black);
+	mix-blend-mode: difference;
+}
+trans.MenuItem,trans.MenuItem:active,
+trans.MenuItem:visited,trans.MenuItem:focus{
+	color: light-dark(black,white);
+}
+trans.MenuItem::before{
+	content: '';
+	position: fixed;
+	left: 0;
+	width: 0;
+	height: 15vh;
+	background-color: white;
+	mix-blend-mode: difference;
+	transition: 0.5s;
+	z-index: 1;
+}
+trans.MenuItem:hover::before{
+	width: 100%;
 }

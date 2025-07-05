@@ -258,7 +258,7 @@ div#buttons>span#tie{
 div#buttons>span#callback{
 	background-color: #39b54a;
 }
-div#buttons>span#prompt{
+div#buttons>span#hurryup{
 	background-color: #00aeef;
 }
 div#buttons>span#resign::after{
@@ -270,8 +270,8 @@ div#buttons>span#tie::after{
 div#buttons>span#callback::after{
 	background-image: url(/Assets/Functions/CallBack.svg);
 }
-div#buttons>span#prompt::after{
-	background-image: url(/Assets/Functions/Prompt.svg);
+div#buttons>span#hurryup::after{
+	background-image: url(/Assets/Functions/hurryup.svg);
 }
 div#buttons>span:hover{
 	background-color: white !important;
@@ -285,7 +285,7 @@ div#buttons>span:hover::after{
 }
 
 /* test */
-a.butt{
+trans.butt{
 	border-radius: 3px;
 	margin: 2vh 0;
 	width: 15vw;
@@ -297,7 +297,7 @@ a.butt{
 	cursor: pointer;
 	transition: 0.5s;
 }
-a.butt:hover{
+trans.butt:hover{
 	color: #3689ce;
 	background-color: white;
 }

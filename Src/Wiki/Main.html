@@ -17,16 +17,16 @@
 		<div id="Body">
 			<div id="ContentWrap">
 				<div id="Content">
-					<a class="TRANS" href="../Menu/Main.html">Menu</a>
-					<a class="TRANS" href="../Gaming/Main.html">Game</a>
-					<a class="TRANS" href="../Editor/Main.html">Editor</a>
+					<trans href="../Menu/Main.html">$.Menu</trans>
+					<trans href="../Gaming/Main.html">$.Game</trans>
+					<trans href="../Editor/Main.html">$.Editor</trans>
 					<a onclick="LoadMd('/Docs/Test.md')">Test.md</a>
 					<a onclick="LoadMd('/Docs/Wiki.md')">Wiki.md</a>
 					<a onclick="LoadMd('/Docs/Choos.md')">Choos.md</a>
 				</div>
 			</div>
 			<div id="Main">
-				<p class="TRANS">DebugTip</p>
+				<tranb>$.DebugTip</p>
 			</div>
 		</div>
 		<script src="../marked.js"></script>
@@ -50,6 +50,6 @@
 			LoadMd=LoadMdF;
 		</script>
 		<script src="../Background.js" type="module"></script>
-		<script src="../Global.js"></script>
+		<script type="module" src="../Global.js"></script>
 	</body>
 </html>

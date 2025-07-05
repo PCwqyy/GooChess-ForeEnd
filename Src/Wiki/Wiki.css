@@ -44,25 +44,20 @@ div#Content{
 	width: 100%;
 	padding: 2vh 0;
 }
+div#Content trans,
 div#Content a{
 	display: block;
 	width: 90%;
 	cursor: pointer;
 	margin: auto;
 	margin-bottom: 1vh;
+	outline: solid transparent 1px;
 	text-align: center;
+	transition: background-color,outline 0.5s;
 }
+div#Content trans:hover,
 div#Content a:hover{
-	box-shadow: gainsboro 0px -20px 20px -10px,
-				gainsboro 0px 20px 20px -10px;
-	background-color: white;
-}
-
-span.SmallT{
-	position: absolute;
-	transform-origin: 50% 66%;
-	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-	left: -20vh;
-	isolation: isolate;
-	transition-timing-function: linear !important;
+	color: inherit;
+	outline: solid white 1px;
+	background-color: #7f7f7f40;
 }
