@@ -1,4 +1,9 @@
 var BkgMeta=document.querySelector('meta[name="Background"]');
+var IsThinPage=window.innerWidth<=600;
+window.addEventListener('resize',function(){
+	IsThinPage=window.innerWidth<=600;
+	console.log('IsThinPage:',IsThinPage);
+});
 class Timer
 {
 	/**
@@ -13,7 +18,6 @@ class Timer
 		this.element=element;
 		this.fatherEle=fatherEle;
 		this.running=false;
-		console.log('Ele:',element);
 		element.textContent=this.ConvertFormat(time);
 	}
 	ConvertFormat(time)
@@ -192,18 +196,6 @@ class Record
 		this.currentPlayer=1;
 		this.records=[];
 		this.round=0;
-		this.observer=new MutationObserver((m)=>{
-			m.forEach((mutation)=>
-				{
-					if(mutation.type==='childList')
-						mutation.addedNodes.forEach((node)=>
-					{
-						node.scrollIntoView({block:'end',inline: 'nearest'});
-						console.log('Mutation:',node);
-					});
-			});
-		});
-		this.observer.observe(this.element.parentElement,{childList:true,subtree:true});
 	}
 	AppendRecord(record)
 	{
@@ -219,6 +211,11 @@ class Record
 		cell.classList.add('recordCell');
 		cell.innerHTML=`<span class="text">${record}</span>`;
 		this.currentRow.appendChild(cell);
+		if(!IsThinPage)
+			cell.scrollIntoView({block:'end',inline: 'nearest'});
+		else
+			this.element.scrollTo({
+				top: this.element.scrollHeight});
 		this.currentPlayer++;
 		if(this.currentPlayer>3)
 			this.currentPlayer=1;

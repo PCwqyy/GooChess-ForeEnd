@@ -14,7 +14,6 @@ export function Text(key){
 		else
 			work=work[res[i]];
 	}
-	console.log(`Trans: ${key} -> ${work}`);
 	if(work==null)
 	{
 		console.warn(`${key}: Unknown trans key.`);

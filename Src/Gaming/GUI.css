@@ -1,6 +1,7 @@
 div#Wrapper{
-	width: 100vw;
+	position: absolute;
 	height: 100vh;
+	width: 100vw;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -8,8 +9,7 @@ div#Wrapper{
 
 /* Grood */
 div.GroodWrap{
-	display: block;
-	width: unset;
+	position: absolute;
 }
 Grood.Scaled{
 	transform:
@@ -32,28 +32,10 @@ div.gamebox{
 	width: 18vw;
 	margin: 0px 1vw;
 	background-color: #ffffff3f;
-	transform-origin: bottom;
+	transform-origin: top;
 }
 div.gamebox>*{
 	width: 100%;
-}
-div.gamebox#left{
-	transform: skewX(-30deg);
-}
-div.gamebox#right{
-	transform: skewX(30deg);
-}
-div.timer>*:not(.bar),
-div#chatRoom input{
-	transform: skewX(30deg);
-	transform-origin: 50% 65%;
-	margin: 0 1vw;
-}
-div#buttons>span::after,
-table#record span.text{
-	display: inline-block;
-	transform: skewX(-30deg);
-	transform-origin: 50% 65%;
 }
 
 div.timer{
@@ -79,7 +61,7 @@ div.timer#p3{
 	--hue: var(--hue-p3);
 }
 div.timer div.time{
-	font-size: 5vw;
+	font-size: 2em;
 }
 div.timer div.bar{
 	height: 8px;
@@ -101,7 +83,6 @@ div.timer span.avatar{
 	background-color: green;
 	rotate: -10deg;
 	translate: calc(0px - var(--cell-height) * 1.1) calc(0px - var(--cell-height) * 0.8);
-	transform: matrix(0.85, 0, 0.49, 1, 0, 0);
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
 div.timer div.info{
@@ -116,27 +97,32 @@ div.timer div.coin{
 	float: right;
 	color: gold;
 }
+div.timer>*:not(.bar),
+div#chatRoom input{
+	margin: 0 1vw;
+}
 div#chatRoom{
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
 	height: 30vh;
 }
-div#chatRoom::after{
+div#chatRoom>*{
+	width: 100%;
+}
+div#chatRoom div#chatMsgs::before{
 	content: '';
 	display: block;
 	position: absolute;
 	width: 100%;
 	height: 40px;
-	background-image: linear-gradient(#ffffff6f, transparent);
+	background-image: linear-gradient(
+		light-dark(white,black), transparent);
 	pointer-events: none;
-}
-div#chatRoom>*{
-	width: 100%;
 }
 div#chatRoom div#chatMsgs{
 	overflow: hidden scroll;
-	height: calc(30vh - 40px);
+	height: calc(30vh - 30px);
 	scroll-behavior: smooth;
 }
 div#chatRoom div#chatMsgs div.message{
@@ -150,13 +136,13 @@ div.message{
 }
 div.message span{
 	display: inline-block;
-	transform: skewX(30deg);
 }
 div.message span.time{
 	color: #888;
 }
 div#chatRoom div#inputWrap{
 	background-color: light-dark(white,black);
+	overflow: hidden;
 }
 div#chatRoom input#chatInput{
 	overflow-x: scroll;
@@ -282,6 +268,126 @@ div#buttons>span:hover::after{
 @keyframes Appear{
 	0%{opacity: 0;}
 	100%{opacity: 1;}
+}
+
+
+@media ((height>=500px) and (width>=800px)){
+	div.gamebox#left{
+		transform: skewX(-30deg);
+	}
+	div.message span,div.gamebox#right{
+		transform: skewX(30deg);
+	}
+	div.timer>*:not(.bar),
+	div#chatRoom input{
+		transform: skewX(30deg);
+		transform-origin: 50% 65%;
+		margin: 0 1vw;
+	}
+	div#buttons>span::after,
+	table#record span.text{
+		display: inline-block;
+		transform: skewX(-30deg);
+		transform-origin: 50% 65%;
+	}
+	div.timer span.avatar{
+		transform: matrix(0.85, 0, 0.49, 1, 0, 0);
+	}
+}
+@media ((height<500px) or (width<800px)){
+	div.GroodWrap{
+	/* display: none; */
+		margin: 10vh 0px 0px 0px;
+	}
+	div.gamebox>*{
+		width: unset;
+	}
+	div.gamebox#left{
+		position: absolute;
+		flex-direction: row;
+		align-self: flex-start;
+		width: unset;
+		height: unset;
+		border-radius: 0px 0px 5px 5px;
+		background-color: transparent;
+	}
+	div.timer{
+		min-width: 4em;
+		width: 12vw;
+		height: min-content;
+		background-image: linear-gradient(#ffffff3f,#ffffff3f);
+		transition: 0.3s;
+	}
+	div.timer#p1{
+		border-radius: 0px 0px 0px 5px;
+	}
+	div.timer#p3{
+		border-radius: 0px 0px 5px 0px;
+	}
+	div.timer.running{
+		min-width: 7em;
+		width: 15vw;
+		border-radius: 0px 0px 5px 5px !important;
+	}
+	div.timer div.time{
+		font-size: 1em;
+		transition: font-size 0.5s;
+	}
+	div.timer.running div.time{
+		font-size: 2em;
+	}
+	div.timer div.bar{
+		height: 3px;
+	}
+	div.timer div.info{
+		font-size: 12px;
+		margin-top: unset;
+	}
+	div.timer span.avatar{
+		display: none;
+	}
+	div#chatRoom{
+		position: fixed;
+		left: 10px;
+		top: 10px;
+		width: 20vw;
+		min-width: 150px;
+		border-radius: 5px;
+		overflow: hidden;
+	}
+	div#chatRoom,div.gamebox#right{
+		background-color: light-dark(white,black);
+		box-shadow: light-dark(#3f3f3f9f,#6e6e6e9f) -1px 1px 2px;
+	}
+	div.gamebox#right{
+		position: absolute;
+		width: 150px;
+		right: 10px;
+		border-radius: 5px;
+	}
+	div#list{
+		bottom: 0px;
+		top: unset !important;
+	}
+}
+@media (width<=600px){
+	div#chatRoom{
+		top: calc(5px - 30vh);
+		border-radius: 0px 0px 5px 5px;
+		transition: top 0.5s;
+	}
+	div#chatRoom:hover{
+		top: 0px;
+	}
+	div.gamebox#right{
+		right: -145px;
+		border-radius: 5px 0px 0px 5px;
+		transition: right 0.5s;
+		margin: 0px;
+	}
+	div.gamebox#right:hover{
+		right: 0px;
+	}
 }
 
 /* test */

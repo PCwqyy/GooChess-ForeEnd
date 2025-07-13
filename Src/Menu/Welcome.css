@@ -135,7 +135,7 @@ trans.MenuItem{
 	margin-bottom: 2vh;
 	width: 100%;
 	background-color: light-dark(white,black);
-	mix-blend-mode: difference;
+	cursor: pointer;
 }
 trans.MenuItem,trans.MenuItem:active,
 trans.MenuItem:visited,trans.MenuItem:focus{

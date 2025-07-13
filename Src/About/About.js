@@ -11,7 +11,6 @@ fetch('../../Docs/About.md')
 		Main.style.transition=`${h/Speed}s linear`;
 		setTimeout(()=>{
 			Main.style.top=`-${h}px`;
-			console.log(h);
 		},500);
 	})
 	.catch((reason)=>{console.error(reason);});

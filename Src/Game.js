@@ -14,7 +14,7 @@ const ChoosList=
 	"pawn","bishop","knight","rook","queen","king","gooshop","gooking",
 	"fircar","seccar","hoorse","bomb","goobomb","stone","trap","rotator",
 	"jumper","jumplar","portal","diplomat","deaf","diploqueen","diportal",
-	"employee","factory","product",'pecookie','__hzx','yzy'
+	"employee","factory","product","pecookie","__hzx","yzy"
 ];
 var ChoosMatch='^(';
 for(var ele of ChoosList)
@@ -310,7 +310,6 @@ export class Grood{
 	 * @param {String} text
 	 */
 	ParseFromText(parentElement,text){
-		console.log(text);
 		if(text.length===0)
 			throw new Error('Empty text!');
 		var res;
@@ -802,7 +801,6 @@ export class Grood{
 		if(this.CheckCellEmpty(pos)) return;
 		var ch=this.GetChoosByPos(pos);
 		if(ch.type!=='king'&&ch.type!=='gooking') return;
-		console.log(ch);
 		if(ch.element.classList.contains('Checked'))
 			ch.element.classList.remove('Checked'),
 			ch.element.style.filter=`hue-rotate(${ch.hue}deg)`;

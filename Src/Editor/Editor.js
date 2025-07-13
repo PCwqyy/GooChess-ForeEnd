@@ -16,7 +16,6 @@ export function LaunchEditor(t){
 	var res=t.match(/^\(\d+,\d+,\d+\)->\(\d+,\d+,\d+\)[^\(\)\s]+/mg);
 	if(res!=null) for(var i=0;i<res.length;i++)
 		Tags.set(res[i],'Arrow');
-console.log(Tags);
 	for(var ele of Cells)
 	{
 		ele.addEventListener('click',(e)=>{
