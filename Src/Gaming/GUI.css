@@ -11,16 +11,6 @@ div#Wrapper{
 div.GroodWrap{
 	position: absolute;
 }
-Grood.Scaled{
-	transform:
-		scale(2)
-		rotate(160deg)
-		matrix3d(1, 0, 0, -0.0015,
-				0, 1, 0, 0.0015,
-				0, 0, 1, 0,
-				1, 1, 1, 1)
-		translate(0, 35%)
-}
 
 /* GameBox */
 div.gamebox{
@@ -116,8 +106,7 @@ div#chatRoom div#chatMsgs::before{
 	position: absolute;
 	width: 100%;
 	height: 40px;
-	background-image: linear-gradient(
-		light-dark(white,black), transparent);
+	background-image: linear-gradient(#ffffff7f, transparent);
 	pointer-events: none;
 }
 div#chatRoom div#chatMsgs{
@@ -139,6 +128,20 @@ div.message span{
 }
 div.message span.time{
 	color: #888;
+}
+div.message span.pos{
+	border-radius: 2px;
+	padding: 1px 5px;
+	outline: solid transparent 1px;
+	background-color: #00aeef7f;
+	color: white;
+	cursor: pointer;
+	transition: 0.5s;
+}
+div.message span.pos:hover{
+	outline: solid #00aeef 1px;
+	background-color: white;
+	color: #00aeef;
 }
 div#chatRoom div#inputWrap{
 	background-color: light-dark(white,black);
@@ -243,6 +246,7 @@ div#buttons>span#tie{
 }
 div#buttons>span#callback{
 	background-color: #39b54a;
+	fill: #39b54a;
 }
 div#buttons>span#hurryup{
 	background-color: #00aeef;
@@ -275,7 +279,8 @@ div#buttons>span:hover::after{
 	div.gamebox#left{
 		transform: skewX(-30deg);
 	}
-	div.message span,div.gamebox#right{
+	div.message span:not(.pos),
+	div.gamebox#right{
 		transform: skewX(30deg);
 	}
 	div.timer>*:not(.bar),
@@ -358,6 +363,10 @@ div#buttons>span:hover::after{
 	div#chatRoom,div.gamebox#right{
 		background-color: light-dark(white,black);
 		box-shadow: light-dark(#3f3f3f9f,#6e6e6e9f) -1px 1px 2px;
+	}
+	div#chatRoom div#chatMsgs::before{
+		background-image: linear-gradient(
+			light-dark(white,black), transparent);
 	}
 	div.gamebox#right{
 		position: absolute;

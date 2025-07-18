@@ -16,7 +16,7 @@ const ChoosList=
 	"jumper","jumplar","portal","diplomat","deaf","diploqueen","diportal",
 	"employee","factory","product","pecookie","__hzx","yzy"
 ];
-var ChoosMatch='^(';
+export var ChoosMatch='^(';
 for(var ele of ChoosList)
 	ChoosMatch+='|'+ele;
 ChoosMatch+=')\\(\\d+,\\d+,\\d+\\)\\d*$';

@@ -1,3 +1,4 @@
+import {ChoosMatch} from "../Game.js";
 var BkgMeta=document.querySelector('meta[name="Background"]');
 var IsThinPage=window.innerWidth<=600;
 window.addEventListener('resize',function(){
@@ -137,7 +138,8 @@ class Messages
 		this.text=this.text.replaceAll('<','&lt;');
 		this.text=this.text.replaceAll('>','&gt;');
 		this.text=this.text.replaceAll(' ','&nbsp;</span><span class="word">');
-	
+		this.text=this.text.replaceAll(/\((\d+,[a-z],[xvi]+)\)/gui,'<span class="pos">$1</span>');
+		this.text=this.text.replaceAll(ChoosMatch,'<span class="choos">$1</span>');
 	}
 }
 class ChatRoom

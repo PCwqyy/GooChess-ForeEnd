@@ -35,10 +35,7 @@ factory(7,7,11)210
 `
 var Wrap=document.getElementById('GroodMain');
 var GroodMain=new Grood(InitGrood,Wrap,()=>{},true);
-var ScaleButt=document.getElementById('ScaleButt');
-ScaleButt.addEventListener('click',()=>{
-	GroodMain.element.classList.toggle('Scaled');
-})
+
 //Debug
 Debug.Grood=GroodMain;
 Debug.XY=XY;
