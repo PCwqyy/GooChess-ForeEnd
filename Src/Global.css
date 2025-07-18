@@ -42,7 +42,7 @@ html{
 	--cell-size-half: 4vmin;
 	--cell-height: calc(var(--cell-size-half) * sqrt(3));
 	--cell-width: calc(var(--cell-size-half) * 2);
-	--choos-size: 7vmin;
+	--piece-size: 7vmin;
 }
 
 @media(prefers-color-scheme: dark){

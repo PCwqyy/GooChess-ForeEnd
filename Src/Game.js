@@ -9,17 +9,17 @@ const RomeApl={
 	26:'xxvi',27:'xxvii',28:'xxviii',29:'xxix',30:'xxx'
 };
 
-const ChoosList=
+const PieceList=
 [
 	"pawn","bishop","knight","rook","queen","king","gooshop","gooking",
 	"fircar","seccar","hoorse","bomb","goobomb","stone","trap","rotator",
-	"jumper","jumplar","portal","diplomat","deaf","diploqueen","diportal",
+	"jumper","cannon","portal","diplomat","deaf","diploqueen","diportal",
 	"employee","factory","product","pecookie","__hzx","yzy"
 ];
-export var ChoosMatch='^(';
-for(var ele of ChoosList)
-	ChoosMatch+='|'+ele;
-ChoosMatch+=')\\(\\d+,\\d+,\\d+\\)\\d*$';
+export var PieceMatch='^(';
+for(var ele of PieceList)
+	PieceMatch+='|'+ele;
+PieceMatch+=')\\(\\d+,\\d+,\\d+\\)\\d*$';
 const ClassNamesForSign={
 	O:"oto",
 	M:"moove",
@@ -45,8 +45,8 @@ function SetElementUpSideDown(ele){
 function SetElementRotate(ele,angle){
 	ele.style.rotate=`${angle}deg`;
 }
-function SetElementChoosType(ele,type){
-	ele.style.backgroundImage=`url(${GetChoosIconPath(type)})`;
+function SetElementPieceType(ele,type){
+	ele.style.backgroundImage=`url(${GetPieceIconPath(type)})`;
 }
 /** @returns {HTMLElement} */
 function NewPerformer(Tag,Pos,...Class){
@@ -160,11 +160,11 @@ const DiplomatRange={
 };
 
 /** @param {String} type */
-export function GetChoosIconPath(type){
-	return `/Assets/Chooses/${type}.svg`;
+export function GetPieceIconPath(type){
+	return `/Assets/Pieces/${type}.svg`;
 }
 
-export class Choos{
+export class Piece{
 	type;hue;element;
 	/** 
 	 * @param {String} t type
@@ -172,13 +172,13 @@ export class Choos{
 	 */
 	constructor(t,h)
 	{
-		this.element=document.createElement('choos');
+		this.element=document.createElement('piece');
 		this.SetType(t);
 		this.SetHue(h);
 	}
 	SetType(t){
 		this.type=t;
-		this.element.style.backgroundImage=`url(${GetChoosIconPath(t)})`;
+		this.element.style.backgroundImage=`url(${GetPieceIconPath(t)})`;
 	}
 	/** @param {Number} h hue */
 	SetHue(h){
@@ -212,8 +212,8 @@ export class Grood{
 	cells;
 	/** @type {HTMLElement} */
 	visEle;
-	/** @type {Map<String,Choos>} */
-	chooses=new Map();
+	/** @type {Map<String,Piece>} */
+	pieces=new Map();
 	element;Tip;Game;
 	TipPlainPaint=false;PosInTip=new NAR(-1,-1,-1);
 	/**
@@ -313,20 +313,20 @@ export class Grood{
 		if(text.length===0)
 			throw new Error('Empty text!');
 		var res;
-		this.ClearChooses();
+		this.ClearPieces();
 		this.element.innerHTML='';
 		// [size]
 		this.rows=text.match(/^\[([1-9][0-9]*)\]$/m)[1];
 		this.cells=new Array(this.rows*2);
 		this.DrawGrood();
 		parentElement.appendChild(this.element);
-		// choos(N,A,R)hue
-		res=text.match(new RegExp(ChoosMatch,'gim'));
+		// piece(N,A,R)hue
+		res=text.match(new RegExp(PieceMatch,'gim'));
 		if(res!=null)for(var i of res)
 		{
 			var type=i.match(/([a-z|A-Z])+/)[0];
 			var tar=i.match(/\((\d+),(\d+),(\d+)\)(\d*)/);
-			this.PlaceChoos(new NAR(tar[1],tar[2],tar[3]),type,tar[4]==''?-1:tar[4]);
+			this.PlacePiece(new NAR(tar[1],tar[2],tar[3]),type,tar[4]==''?-1:tar[4]);
 		}
 		// tag(N,A,R)
 		res=text.match(/^[OJME]!{0,1}\(\d+,\d+,\d+\)$/gm);
@@ -375,15 +375,15 @@ export class Grood{
 	/**
 	 * @param {NAR|XY} pos
 	 */
-	GetChoosByPos(pos){
+	GetPieceByPos(pos){
 		pos=this.XYtoNAR(pos);
 		if(!this.CheckPosValid(pos))
 			return undefined;
-		return this.chooses.get(pos.print(true));
+		return this.pieces.get(pos.print(true));
 	}
 	/** @param {NAR|XY} pos */
 	CheckCellEmpty(pos){
-		return this.GetChoosByPos(pos)===undefined;
+		return this.GetPieceByPos(pos)===undefined;
 	}
 	/** @param {NAR|XY} pos */
 	CheckCellBlack(pos){
@@ -392,13 +392,13 @@ export class Grood{
 	}
 	/**
 	 * @param {NAR|XY} pos
-	 * @param {Choos} ch
+	 * @param {Piece} ch
 	 */
-	AppendChoos(pos,ch){
+	AppendPiece(pos,ch){
 		pos=this.XYtoNAR(pos);
 		if(!this.CheckPosValid(pos))	return;
 		if(!this.CheckCellEmpty(pos))	return;
-		this.chooses.set(pos.print(true),ch);
+		this.pieces.set(pos.print(true),ch);
 		if(pos.alp===-1)	return;
 		var posN=this.NARtoXY(pos);
 		this.cells[posN.x][posN.y].appendChild(ch.element);
@@ -408,43 +408,43 @@ export class Grood{
 	 * @param {String} type
 	 * @param {Number} hue
 	 */
-	PlaceChoos(pos,type,hue){
+	PlacePiece(pos,type,hue){
 		pos=this.XYtoNAR(pos);
 		if(!this.CheckCellEmpty(pos))	return;
-		var ch=new Choos(type,hue);
-		this.AppendChoos(pos,ch);
+		var ch=new Piece(type,hue);
+		this.AppendPiece(pos,ch);
 		return ch;
 	}
 	/** @param {NAR|XY} pos */
-	RemoveChoos(pos){
+	RemovePiece(pos){
 		pos=this.XYtoNAR(pos);
 		if(!this.CheckPosValid(pos))	return;
 		if(this.CheckCellEmpty(pos))	return;
 		if(pos.x!==-1)
-			this.GetChoosByPos(pos).element.remove();
-		this.chooses.delete(pos.print(true));
+			this.GetPieceByPos(pos).element.remove();
+		this.pieces.delete(pos.print(true));
 	}
 	/**
 	 * @param {NAR|XY} pos
-	 * @param {Choos} ch
+	 * @param {Piece} ch
 	 */
-	ReplaceChoos(pos,ch){
+	ReplacePiece(pos,ch){
 		pos=this.XYtoNAR(pos);
 		if(!this.CheckPosValid(pos)) return;
 		if(this.CheckCellEmpty(pos)) return;
-		this.RemoveChoos(pos);
-		this.AppendChoos(pos,ch);
+		this.RemovePiece(pos);
+		this.AppendPiece(pos,ch);
 	}
-	ClearChooses(){
-		for(var i of this.chooses)
+	ClearPieces(){
+		for(var i of this.pieces)
 			i[1].element.remove();
-		this.chooses.clear();
+		this.pieces.clear();
 	}
 	/**
 	 * @param {NAR|XY} from
 	 * @param {NAR|XY} to
 	 */
-	MoveChoos(from,to){
+	MovePiece(from,to){
 		from=this.XYtoNAR(from);
 		to=this.XYtoNAR(to);
 		if(from===to)	return;
@@ -452,15 +452,15 @@ export class Grood{
 		if(!this.CheckPosValid(to))	return;
 		if(this.CheckCellEmpty(from))	return;
 		if(!this.CheckCellEmpty(to))	return;
-		var c=this.GetChoosByPos(from);
-		this.RemoveChoos(from);
-		this.AppendChoos(to,c);
+		var c=this.GetPieceByPos(from);
+		this.RemovePiece(from);
+		this.AppendPiece(to,c);
 	}
 	/** @param {NAR|XY} pos */
-	QueryChoosClientPos(pos){
+	QueryPieceClientPos(pos){
 		pos=this.NARtoXY(pos);
 		var tar=this.cells[pos.x][pos.y];
-		var measurer=document.createElement('choos');
+		var measurer=document.createElement('piece');
 		measurer.style.opacity='0';
 		tar.appendChild(measurer);
 		var posc=measurer.getBoundingClientRect();
@@ -484,17 +484,17 @@ export class Grood{
 			pos=this.NARtoXY(pos);
 		this.cells[pos.x][pos.y].classList.add(...signs);
 	}
-	async KillChoos(pos){
+	async KillPiece(pos){
 		pos=this.XYtoNAR(pos);
 		if(!this.CheckPosValid(pos))	return;
 		if(this.CheckCellEmpty(pos))	return;
-		var ch=this.GetChoosByPos(pos);
+		var ch=this.GetPieceByPos(pos);
 		if(ch.type==='goobomb'||ch.type==='bomb')
 			await this.AnimExplode(pos);
 		else if(ch.type==='king')
 			;// [TODO]:king die
 		else
-			await this.RemoveChoos(pos);
+			await this.RemovePiece(pos);
 	}
 
 // ----------------------------带动画---------------------------
@@ -502,12 +502,12 @@ export class Grood{
 	 * @param {NAR|XY} pos
 	 * @returns {HTMLElement}
 	 */
-	NewPerformerChoos(pos,...Class){
+	NewPerformerPiece(pos,...Class){
 		pos=this.XYtoNAR(pos);
-		var ch=this.GetChoosByPos(pos);
-		var ele=NewPerformer('choos',
-			this.QueryChoosClientPos(pos),...Class);
-		SetElementChoosType(ele,ch.type);
+		var ch=this.GetPieceByPos(pos);
+		var ele=NewPerformer('piece',
+			this.QueryPieceClientPos(pos),...Class);
+		SetElementPieceType(ele,ch.type);
 		SetElementHue(ele,ch.hue);
 		return ele;
 	}
@@ -530,27 +530,27 @@ export class Grood{
 		to=this.XYtoNAR(to);
 		if(this.CheckCellEmpty(from))	return;
 		var eat=!this.CheckCellEmpty(to);
-		var ch=this.GetChoosByPos(from);
-		if(eat&&this.GetChoosByPos(to).hue===ch.hue)	return;
-		var pChoos=this.NewPerformerChoos(from);
+		var ch=this.GetPieceByPos(from);
+		if(eat&&this.GetPieceByPos(to).hue===ch.hue)	return;
+		var pPiece=this.NewPerformerPiece(from);
 		var pCell=this.NewPerformerCell(from,'ShootLight');
 		if(shoot)	this.visEle.appendChild(pCell);
 		if(eat)
 		{
-			var pChoos2=this.NewPerformerChoos(to,'Eaten');
-			this.KillChoos(to);
-			this.visEle.appendChild(pChoos2);
+			var pPiece2=this.NewPerformerPiece(to,'Eaten');
+			this.KillPiece(to);
+			this.visEle.appendChild(pPiece2);
 		}
-		this.visEle.appendChild(pChoos);
+		this.visEle.appendChild(pPiece);
 		await Sleep(shoot?1000:10);
 		ch.Hide();
-		this.MoveChoos(from,to);
-		SetElementPos(pChoos,this.QueryChoosClientPos(to));
+		this.MovePiece(from,to);
+		SetElementPos(pPiece,this.QueryPieceClientPos(to));
 		await Sleep(200);
 		ch.Show();
 		await Sleep(200);
-		pChoos.remove();
-		if(eat)	pChoos2.remove();
+		pPiece.remove();
+		if(eat)	pPiece2.remove();
 		if(!shoot)	return;
 		await Sleep(1000);
 		pCell.remove();
@@ -567,31 +567,31 @@ export class Grood{
 		edge=this.NARtoXY(edge);
 		if(this.CheckCellEmpty(from))	return;
 		var eat=!this.CheckCellEmpty(to);
-		var ch=this.GetChoosByPos(from);
-		if(eat&&this.GetChoosByPos(to).hue===ch.hue)	return;
-		var midPos=this.QueryChoosClientPos(edge);
-		var toPos=this.QueryChoosClientPos(to);
-		var pChoos=this.NewPerformerChoos(from);
+		var ch=this.GetPieceByPos(from);
+		if(eat&&this.GetPieceByPos(to).hue===ch.hue)	return;
+		var midPos=this.QueryPieceClientPos(edge);
+		var toPos=this.QueryPieceClientPos(to);
+		var pPiece=this.NewPerformerPiece(from);
 		var pCell=this.NewPerformerCell(edge,'BounceLight');
 		if(eat)
 		{
-			var pChoos2=this.NewPerformerChoos(to,'Eaten');
-			this.KillChoos(to);
-			this.visEle.appendChild(pChoos2);
+			var pPiece2=this.NewPerformerPiece(to,'Eaten');
+			this.KillPiece(to);
+			this.visEle.appendChild(pPiece2);
 		}
 		this.visEle.appendChild(pCell);
-		this.visEle.appendChild(pChoos);
+		this.visEle.appendChild(pPiece);
 		await Sleep(10);
 		ch.Hide();
-		this.MoveChoos(from,to);
-		SetElementPos(pChoos,midPos);
+		this.MovePiece(from,to);
+		SetElementPos(pPiece,midPos);
 		await Sleep(200);
-		SetElementPos(pChoos,toPos);
+		SetElementPos(pPiece,toPos);
 		await Sleep(200);
 		ch.Show();
 		await Sleep(200);
-		if(eat)	pChoos2.remove();
-		pChoos.remove();
+		if(eat)	pPiece2.remove();
+		pPiece.remove();
 		await Sleep(1000);
 		pCell.remove();
 	}
@@ -608,39 +608,39 @@ export class Grood{
 		port2=this.NARtoXY(port2);
 		if(this.CheckCellEmpty(from))	return;
 		var eat=!this.CheckCellEmpty(to);
-		var ch=this.GetChoosByPos(from);
-		if(eat&&this.GetChoosByPos(to).hue===ch.hue)	return;
-		var fromPos=this.QueryChoosClientPos(from);
-		var toPos=this.QueryChoosClientPos(port1);
-		var pChoos=this.NewPerformerChoos(from);
+		var ch=this.GetPieceByPos(from);
+		if(eat&&this.GetPieceByPos(to).hue===ch.hue)	return;
+		var fromPos=this.QueryPieceClientPos(from);
+		var toPos=this.QueryPieceClientPos(port1);
+		var pPiece=this.NewPerformerPiece(from);
 		var pCell1=this.NewPerformerCell(port1,'TeleLight');
 		var pCell2=this.NewPerformerCell(port2,'TeleLight');
 		if(eat)
 		{
-			var pChoos2=this.NewPerformerChoos(to,'Eaten');
-			this.KillChoos(to);
-			this.visEle.appendChild(pChoos2);
+			var pPiece2=this.NewPerformerPiece(to,'Eaten');
+			this.KillPiece(to);
+			this.visEle.appendChild(pPiece2);
 		}
-		this.visEle.appendChild(pChoos);
+		this.visEle.appendChild(pPiece);
 		await Sleep(10);
 		ch.Hide();
-		this.MoveChoos(from,to);
-		SetElementPos(pChoos,toPos);
+		this.MovePiece(from,to);
+		SetElementPos(pPiece,toPos);
 		this.visEle.appendChild(pCell1);
 		this.visEle.appendChild(pCell2);
 		await Sleep(200);
-		pChoos.style.display='none';
-		fromPos=this.QueryChoosClientPos(port2);
-		toPos=this.QueryChoosClientPos(to);
-		SetElementPos(pChoos,fromPos);
-		pChoos.style.display='block';
+		pPiece.style.display='none';
+		fromPos=this.QueryPieceClientPos(port2);
+		toPos=this.QueryPieceClientPos(to);
+		SetElementPos(pPiece,fromPos);
+		pPiece.style.display='block';
 		await Sleep(200);
-		SetElementPos(pChoos,toPos);
+		SetElementPos(pPiece,toPos);
 		await Sleep(200);
 		ch.Show();
 		await Sleep(200);
-		if(eat)	pChoos2.remove();
-		pChoos.remove();
+		if(eat)	pPiece2.remove();
+		pPiece.remove();
 		await Sleep(1000);
 		pCell1.remove();
 		pCell2.remove();
@@ -649,7 +649,7 @@ export class Grood{
 	async AnimExplode(pos){
 		pos=this.NARtoXY(pos);
 		if(this.CheckCellEmpty(pos))	return;
-		var c=this.GetChoosByPos(pos);
+		var c=this.GetPieceByPos(pos);
 		var goo=false;
 		if(c.type==='goobomb')	goo=true;
 		else if(c.type!=='bomb')	return;
@@ -668,7 +668,7 @@ export class Grood{
 		if(goo)
 			document.body.appendChild(pMask),
 			this.element.style.animation='Shake 0.5s infinite';
-		this.RemoveChoos(pos);
+		this.RemovePiece(pos);
 		await Sleep(goo?4000:1500);
 		var range=goo?
 			GoobombRange[black?'black':'white']
@@ -676,7 +676,7 @@ export class Grood{
 		for(var i of range)
 		{
 			var post=new XY(pos.x+i.x,pos.y+i.y);
-			this.KillChoos(post);
+			this.KillPiece(post);
 		}
 		await Sleep(1100);
 		pWrap.remove();
@@ -692,14 +692,14 @@ export class Grood{
 		pos=this.XYtoNAR(pos);
 		var posN=this.QueryCellCenterClientPos(pos);
 		if(this.CheckCellEmpty(pos)) return;
-		var ch=this.GetChoosByPos(pos);
+		var ch=this.GetPieceByPos(pos);
 		if(ch.type!='rotator') return;
 		var bw=this.CheckCellBlack(pos)?'black':'white';
-		var pWraps=Array(3),pChooses=Array(3),newChs=Array(3),newPoses=Array(3);
+		var pWraps=Array(3),pPieces=Array(3),newChs=Array(3),newPoses=Array(3);
 		var pCell=this.NewPerformerCell(pos,'RotateCircle');
 		pCell.style.setProperty('--perform-size',`${radius*9}vmin`);
 		SetElementHue(pCell,ch.hue);
-		ch.element.style.animation='RotateChoos 2s';
+		ch.element.style.animation='RotatePiece 2s';
 		this.visEle.appendChild(pCell);
 		await Sleep(500);
 		for(var i=0;i<3;i++)
@@ -707,14 +707,14 @@ export class Grood{
 			newPoses[i]=pos.delta(RotatorRange[bw][radius][i]);
 			if(!this.CheckPosValid(newPoses[i])) continue;
 			if(this.CheckCellEmpty(newPoses[i])) continue;
-			var posC=this.QueryChoosClientPos(newPoses[i]);
+			var posC=this.QueryPieceClientPos(newPoses[i]);
 			pWraps[i]=NewPerformer('span',posC,'RotateWrap');
-			newChs[i]=this.GetChoosByPos(newPoses[i]);
-			pChooses[i]=this.NewPerformerChoos(newPoses[i],'RotateChoos');
-			SetElementPos(pChooses[i],{x:0,y:0});
+			newChs[i]=this.GetPieceByPos(newPoses[i]);
+			pPieces[i]=this.NewPerformerPiece(newPoses[i],'RotatePiece');
+			SetElementPos(pPieces[i],{x:0,y:0});
 			pWraps[i].style.transformOrigin=`${posN.x-posC.x}px ${posN.y-posC.y}px`;
 			this.visEle.appendChild(pWraps[i]);
-			pWraps[i].appendChild(pChooses[i]);
+			pWraps[i].appendChild(pPieces[i]);
 			newChs[i].Hide();
 		}
 		await Sleep(10);
@@ -722,19 +722,19 @@ export class Grood{
 		{
 			if(pWraps[i]===undefined) continue;
 			SetElementRotate(pWraps[i],120);
-			SetElementRotate(pChooses[i],-120);
+			SetElementRotate(pPieces[i],-120);
 		}
 		await Sleep(500);
-		this.MoveChoos(newPoses[0],new XY(-1,-1));
-		this.MoveChoos(newPoses[1],newPoses[0]);
-		this.MoveChoos(newPoses[2],newPoses[1]);
-		this.MoveChoos(new XY(-1,-1),newPoses[2]);
+		this.MovePiece(newPoses[0],new XY(-1,-1));
+		this.MovePiece(newPoses[1],newPoses[0]);
+		this.MovePiece(newPoses[2],newPoses[1]);
+		this.MovePiece(new XY(-1,-1),newPoses[2]);
 		for(var i=0;i<3;i++)
 		{
 			if(pWraps[i]===undefined) continue;
 			newChs[i].Show();
 			pWraps[i].remove();
-			pChooses[i].remove();
+			pPieces[i].remove();
 		}
 		await Sleep(1000);
 		pCell.remove();
@@ -747,29 +747,29 @@ export class Grood{
 	async AnimPromote(pos,newType){
 		pos=this.NARtoXY(pos);
 		if(this.CheckCellEmpty(pos)) return;
-		var ch=this.GetChoosByPos(pos);
+		var ch=this.GetPieceByPos(pos);
 		if(ch.type!=='pawn') return;
-		var pChoos=this.NewPerformerChoos(pos,'PromoteChoos');
-		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(1) drop-shadow(0px 0px 0px gold)`;
-		this.visEle.appendChild(pChoos);
+		var pPiece=this.NewPerformerPiece(pos,'PromotePiece');
+		pPiece.style.filter=`hue-rotate(${ch.hue}deg) brightness(1) drop-shadow(0px 0px 0px gold)`;
+		this.visEle.appendChild(pPiece);
 		await Sleep(10);
-		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(10) drop-shadow(0px 0px 10px gold)`;
+		pPiece.style.filter=`hue-rotate(${ch.hue}deg) brightness(10) drop-shadow(0px 0px 10px gold)`;
 		ch.Hide();
 		await Sleep(2000);
 		ch.SetType(newType);
-		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(1) drop-shadow(0px 0px 0px gold)`;
-		SetElementChoosType(pChoos,newType);
+		pPiece.style.filter=`hue-rotate(${ch.hue}deg) brightness(1) drop-shadow(0px 0px 0px gold)`;
+		SetElementPieceType(pPiece,newType);
 		await Sleep(2000);
-		this.ReplaceChoos(pos,ch);
+		this.ReplacePiece(pos,ch);
 		ch.Show();
-		pChoos.remove();
+		pPiece.remove();
 	}
 	/** @param {NAR|XY} pos */
 	async AnimToggleControl(pos){
 		pos=this.XYtoNAR(pos);
 		if(!this.CheckPosValid(pos)) return;
 		if(this.CheckCellEmpty(pos)) return;
-		var ch=this.GetChoosByPos(pos);
+		var ch=this.GetPieceByPos(pos);
 		if(ch.type!=='diplomat') return;
 		var bw=this.CheckCellBlack(pos)?'black':'white';
 		for(var i=0;i<3;i++)
@@ -777,7 +777,7 @@ export class Grood{
 			var newPoses=pos.delta(DiplomatRange[bw][i]);
 			if(!this.CheckPosValid(newPoses)) continue;
 			if(this.CheckCellEmpty(newPoses)) continue;
-			var c=this.GetChoosByPos(newPoses);
+			var c=this.GetPieceByPos(newPoses);
 			if(c.hue===ch.hue)	continue;
 			var posN=this.NARtoXY(newPoses);
 			if(this.cells[posN.x][posN.y].classList.contains('DiplomatControlled'))
@@ -799,7 +799,7 @@ export class Grood{
 		pos=this.XYtoNAR(pos);
 		if(!this.CheckPosValid(pos)) return;
 		if(this.CheckCellEmpty(pos)) return;
-		var ch=this.GetChoosByPos(pos);
+		var ch=this.GetPieceByPos(pos);
 		if(ch.type!=='king'&&ch.type!=='gooking') return;
 		if(ch.element.classList.contains('Checked'))
 			ch.element.classList.remove('Checked'),
@@ -820,39 +820,39 @@ export class Grood{
 		if(!this.CheckPosValid(prod)) return;
 		if(this.CheckCellEmpty(fact)) return;
 		var eat=!this.CheckCellEmpty(prod);
-		var ch=this.GetChoosByPos(fact);
+		var ch=this.GetPieceByPos(fact);
 		if(ch.type!=='factory') return;
-		if(eat&&this.GetChoosByPos(prod).hue===ch.hue) return;
-		var pChoos=this.NewPerformerChoos(fact,'Factory');
-		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(1)`;
+		if(eat&&this.GetPieceByPos(prod).hue===ch.hue) return;
+		var pPiece=this.NewPerformerPiece(fact,'Factory');
+		pPiece.style.filter=`hue-rotate(${ch.hue}deg) brightness(1)`;
 		ch.Hide();
-		this.visEle.appendChild(pChoos);
+		this.visEle.appendChild(pPiece);
 		await Sleep(10);
-		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(2)`;
+		pPiece.style.filter=`hue-rotate(${ch.hue}deg) brightness(2)`;
 		await Sleep(2000);
-		pChoos.style.filter=`hue-rotate(${ch.hue}deg) brightness(1)`;
+		pPiece.style.filter=`hue-rotate(${ch.hue}deg) brightness(1)`;
 		ch.Show();
-		if(eat) this.KillChoos(prod);
-		var produced=!this.CheckCellEmpty(fact)&&this.GetChoosByPos(fact).type==='factory';
+		if(eat) this.KillPiece(prod);
+		var produced=!this.CheckCellEmpty(fact)&&this.GetPieceByPos(fact).type==='factory';
 		if(produced)
 		{
-			var c=this.PlaceChoos(prod,'product',ch.hue);
+			var c=this.PlacePiece(prod,'product',ch.hue);
 			c.Hide();
-			var pChoos2=this.NewPerformerChoos(prod,'Product');
-			this.visEle.appendChild(pChoos2);
+			var pPiece2=this.NewPerformerPiece(prod,'Product');
+			this.visEle.appendChild(pPiece2);
 		}
 		await Sleep(1000);
 		if(produced)
 			c.Show(),
 			await Sleep(200),
-			pChoos2.remove();
+			pPiece2.remove();
 	}
 	/** @param {NAR|XY} pos */
 	async AnimToggleRevolt(pos,by){
 		pos=this.XYtoNAR(pos);
 		if(!this.CheckPosValid(pos)) return;
 		if(this.CheckCellEmpty(pos)) return;
-		var ch=this.GetChoosByPos(pos);
+		var ch=this.GetPieceByPos(pos);
 		if(ch.type!=='employee') return;
 		var posN=this.NARtoXY(pos);
 		var c=this.cells[posN.x][posN.y];
@@ -864,12 +864,12 @@ export class Grood{
 		else
 		{
 			c.classList.add('Revolting');
-			var pChoos=this.NewPerformerChoos(pos,'Revolt');
+			var pPiece=this.NewPerformerPiece(pos,'Revolt');
 			SetElementHue(c.firstChild,by);
-			SetElementHue(pChoos,by);
-			this.visEle.appendChild(pChoos);
+			SetElementHue(pPiece,by);
+			this.visEle.appendChild(pPiece);
 			await Sleep(1000);
-			pChoos.remove();
+			pPiece.remove();
 		}
 	}
 };

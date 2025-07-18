@@ -60,7 +60,7 @@ th,td{
 	border-bottom: gainsboro solid 1px;
 }
 th{
-	background-color: gainsboro;
+	background-color: light-dark(gainsboro,gray);
 	font-weight: normal;
 }
 blockquote{
