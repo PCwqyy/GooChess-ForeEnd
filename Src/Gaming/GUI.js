@@ -1,4 +1,8 @@
-import {PieceMatch} from "../Game.js";
+import {PieceList} from "../Game.js";
+var PieceMatch='\\[(';
+for(var ele of PieceList)
+	PieceMatch+='|'+ele;
+PieceMatch+=')\\]';
 var BkgMeta=document.querySelector('meta[name="Background"]');
 var IsThinPage=window.innerWidth<=600;
 window.addEventListener('resize',function(){

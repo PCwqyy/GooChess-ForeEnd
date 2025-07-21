@@ -9,14 +9,14 @@ const RomeApl={
 	26:'xxvi',27:'xxvii',28:'xxviii',29:'xxix',30:'xxx'
 };
 
-const PieceList=
+export const PieceList=
 [
 	"pawn","bishop","knight","rook","queen","king","gooshop","gooking",
 	"fircar","seccar","hoorse","bomb","goobomb","stone","trap","rotator",
 	"jumper","cannon","portal","diplomat","deaf","diploqueen","diportal",
 	"employee","factory","product","pecookie","__hzx","yzy"
 ];
-export var PieceMatch='^(';
+var PieceMatch='^(';
 for(var ele of PieceList)
 	PieceMatch+='|'+ele;
 PieceMatch+=')\\(\\d+,\\d+,\\d+\\)\\d*$';

@@ -129,7 +129,8 @@ div.message span{
 div.message span.time{
 	color: #888;
 }
-div.message span.pos{
+div.message span.pos,
+div.message span.piece{
 	border-radius: 2px;
 	padding: 1px 5px;
 	outline: solid transparent 1px;
@@ -138,7 +139,8 @@ div.message span.pos{
 	cursor: pointer;
 	transition: 0.5s;
 }
-div.message span.pos:hover{
+div.message span.pos:hover,
+div.message span.piece:hover{
 	outline: solid #00aeef 1px;
 	background-color: white;
 	color: #00aeef;
@@ -279,7 +281,7 @@ div#buttons>span:hover::after{
 	div.gamebox#left{
 		transform: skewX(-30deg);
 	}
-	div.message span:not(.pos),
+	div.message span:not(.pos,.piece),
 	div.gamebox#right{
 		transform: skewX(30deg);
 	}
