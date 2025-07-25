@@ -118,7 +118,10 @@ div.notify{
 	vertical-align: middle;
 	gap: 0px;
 	margin: 1vh 0px;
-	background-color: hsla(from var(--ntf-color) h s calc(l * 1.5));
+	background-color: light-dark(
+		hsla(from var(--ntf-color) h s calc(l * 1.5)),
+		hsla(from var(--ntf-color) h s calc(l * 0.5))
+	);
 	height: fit-content;
 	width: 90%;
 	box-sizing: border-box;

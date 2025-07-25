@@ -5,24 +5,26 @@ var DefaultLang='zh-cn';
 var Transes=document.getElementsByTagName('trans');
 var Tranbs=document.getElementsByTagName('tranb');
 export function Text(key){
-	var res=key.split('.');
-	var work=WordMap;
-	for(var i=0;i<res.length;i++)
-	{
-		if(res[i]=='$')
-			work=work[ThisPageName];
-		else
-			work=work[res[i]];
-	}
+	key=key.trim();
+	var work;
+	if(key.match(/^\$/))
+		key=key.replace(/^\$/,`${ThisPageName}`),
+		work=WordMap["Page"][key];
+	else
+		work=WordMap[key];
 	if(work==null)
 	{
 		console.warn(`${key}: Unknown trans key.`);
-		if(res.length>1)
-			return key;
-		else
-			return `unknown.${key}`;
+		return `unknown.${key}`;
 	}
 	return work;
+}
+/** Replace all `^{key}` in text with the corresponding translation */
+export function Replace(text)
+{
+	return text.replaceAll(/\^\{(.+?)\}/g,(match,key)=>{
+		return Text(key);
+	});
 }
 async function FetchLang(lang)
 {

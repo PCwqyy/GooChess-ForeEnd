@@ -11,5 +11,6 @@
 		"Hoorse",
 		"Jumplar",
 		"Seccar"
-	]
+	],
+	"python.analysis.autoImportCompletions": true
 }

@@ -97,12 +97,12 @@ class Messages
 	 * @param {String} author
 	 * @param {String} time
 	 */
-	constructor(text,author)
+	constructor(text,author,time)
 	{
 		this.text=text;
 		this.ProcessText();
 		this.author=author;
-		this.time=this.GetTimeNow();
+		this.time=time;
 	}
 	GetTimeNow()
 	{
@@ -170,27 +170,13 @@ class ChatRoom
 }
 var ChatRoomMain=new ChatRoom(document.querySelector('div#chatMsgs'));
 
-export function NewMsg(text,author)
+export function NewMsg(text,author,time=this.GetTimeNow())
 {
-	var msg=new Messages(text,author);
+	var msg=new Messages(text,author,time);
 	ChatRoomMain.AddMessage(msg);
 }
-var InputEle=document.querySelector('#chatInput');
-InputEle.addEventListener('keydown',function(e){
-	if(e.key==='Enter')
-		SendMessage();
-});
-export function SendMessage()
-{
-	const text=InputEle.value.trim();
-	if (text){
-		NewMsg(text,'Me');/* 
-		if (typeof socket!=='undefined'){
-			socket.send(JSON.stringify({ type: 'chat', text }));
-		} */
-		InputEle.value = '';
-	}
-}
+export var InputEle=document.querySelector('#chatInput');
+// 发送部分在WebSocket.js中
 
 /* Records of each step */
 class Record

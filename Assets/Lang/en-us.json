@@ -1,28 +1,27 @@
 {
-	"Editor":{
-		"Apply":"Apply",
-		"Load":"Load",
-		"Arrow":"Add an arrow"
+	"$schema": "./schema.json",
+	"Page":{
+		"Editor.Apply": "Apply",
+		"Editor.Load": "Load",
+		"Editor.Arrow": "Add an arrow",
+		"Menu.Title": "Welcome to<br>Goochess",
+		"Menu.SubTitle": "Press Any Key",
+		"Menu.Account": "Account",
+		"Menu.Game": "Game",
+		"Menu.Wiki": "Wiki",
+		"Menu.About": "About",
+		"Menu.Settings": "Settings",
+		"Gaming.Scale": "Scale",
+		"Gaming.Menu": "Main Menu",
+		"Gaming.Wiki": "Wiki",
+		"Gaming.Debug": "Run Debug",
+		"Wiki.Menu": "Title Screen",
+		"Wiki.Game": "Gaming",
+		"Wiki.Editor": "Grood Editor",
+		"Wiki.DebugTip": "Choose a .md file to view"
 	},
-	"Menu":{
-		"Title":"Welcome to<br>Goochess",
-		"SubTitle":"Press Any Key",
-		"Account":"Account",
-		"Game":"Game",
-		"Wiki":"Wiki",
-		"About":"About",
-		"Settings":"Settings"
-	},
-	"Gaming":{
-		"Scale":"Scale",
-		"Menu":"Main Menu",
-		"Wiki":"Wiki",
-		"Debug":"Run Debug"
-	},
-	"Wiki":{
-		"Menu":"Title Screen",
-		"Game":"Gaming",
-		"Editor":"Grood Editor",
-		"DebugTip":"Choose a .md file to view"
-	}
+	"Notify.Server.Connected": "Server connected successfully",
+	"Notify.Server.FailConnect": "Fail to connect server",
+	"Notify.Server.NotConnected": "Server not connected",
+	"Notify.Server.Disconnected": "Server disconnected"
 }

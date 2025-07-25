@@ -1,0 +1,35 @@
+{
+	"type": "object",
+	"properties": {
+		"Page": {
+			"type": "object",
+			"required": [
+				"Editor.Apply",
+				"Editor.Load",
+				"Editor.Arrow",
+				"Menu.Title",
+				"Menu.SubTitle",
+				"Menu.Account",
+				"Menu.Game",
+				"Menu.Wiki",
+				"Menu.About",
+				"Menu.Settings",
+				"Gaming.Scale",
+				"Gaming.Menu",
+				"Gaming.Wiki",
+				"Gaming.Debug",
+				"Wiki.Menu",
+				"Wiki.Game",
+				"Wiki.Editor",
+				"Wiki.DebugTip"
+			]
+		}
+	},
+	"required": [
+		"Page",
+		"Notify.Server.Connected",
+		"Notify.Server.FailConnect",
+		"Notify.Server.NotConnected",
+		"Notify.Server.Disconnected"
+	]
+}

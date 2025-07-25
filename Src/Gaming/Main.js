@@ -1,5 +1,7 @@
 import {Grood,XY,NAR,Sleep} from "../Game.js";
+import {userId,userName,InitGlobal} from "../Global.js";
 import * as GUI from "./GUI.js";
+import "./WebSocket.js";
 
 const ROWS=12;
 const InitGrood=`
@@ -37,6 +39,8 @@ var Wrap=document.getElementById('GroodMain');
 var GroodMain=new Grood(InitGrood,Wrap,()=>{},true);
 
 //Debug
+InitGlobal(114514,'PCDebug','PCDebugToken');
+
 Debug.Grood=GroodMain;
 Debug.XY=XY;
 Debug.NAR=NAR;

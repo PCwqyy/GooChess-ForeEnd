@@ -1,9 +1,10 @@
+import * as Text from "./Lang.js";
 const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 let NotifyHome=document.createElement('div');
 NotifyHome.id='NotifyHome';
 document.body.appendChild(NotifyHome);
 let NotifyCount=0;
-async function Notify(type='info',message,code=''){
+export async function Notify(type='info',message,code=''){
 	NotifyCount++;
 	const ele=document.createElement('div');
 	ele.className=`notify ntf-${type}`;
@@ -11,7 +12,7 @@ async function Notify(type='info',message,code=''){
 			<div class="icon"></div>
 			<div class="code">${code}</div>
 		</div>
-		<div class="content">${message}</div>`;
+		<div class="content">${Text.Replace(message)}</div>`;
 	NotifyHome.appendChild(ele);
 	ele.scrollIntoView({behavior:'smooth',block:'end'});
 	await Sleep(message.length*50+2000);
