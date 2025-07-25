@@ -246,9 +246,8 @@ div#buttons>span#resign{
 div#buttons>span#tie{
 	background-color: #f9ed32;
 }
-div#buttons>span#callback{
+div#buttons>span#TakeBack{
 	background-color: #39b54a;
-	fill: #39b54a;
 }
 div#buttons>span#hurryup{
 	background-color: #00aeef;
@@ -259,11 +258,11 @@ div#buttons>span#resign::after{
 div#buttons>span#tie::after{
 	background-image: url(/Assets/Functions/Tie.svg);
 }
-div#buttons>span#callback::after{
-	background-image: url(/Assets/Functions/CallBack.svg);
+div#buttons>span#TakeBack::after{
+	background-image: url(/Assets/Functions/TakeBack.svg);
 }
 div#buttons>span#hurryup::after{
-	background-image: url(/Assets/Functions/hurryup.svg);
+	background-image: url(/Assets/Functions/HurryUp.svg);
 }
 div#buttons>span:hover{
 	background-color: white !important;
@@ -303,7 +302,6 @@ div#buttons>span:hover::after{
 }
 @media ((height<500px) or (width<800px)){
 	div.GroodWrap{
-	/* display: none; */
 		margin: 10vh 0px 0px 0px;
 	}
 	div.gamebox>*{

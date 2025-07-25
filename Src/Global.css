@@ -95,3 +95,102 @@ trans:not(.t),
 tranb:not(.t){ /* Translated text */
 	opacity: 0;
 }
+
+div#NotifyHome{
+	display: flex;
+	position: fixed;
+	flex-direction: column;
+	align-items: center;
+	right: 0;
+	width: 30vw;
+	height: 100vh;
+	min-width: 100px;
+	overflow-y: scroll;
+	z-index: 10;
+	pointer-events: none;
+}
+div#NotifyHome::-webkit-scrollbar-thumb{
+	background-color: transparent;
+	scrollbar-color: transparent;
+}
+div.notify{
+	display: flex;
+	vertical-align: middle;
+	gap: 0px;
+	margin: 1vh 0px;
+	background-color: hsla(from var(--ntf-color) h s calc(l * 1.5));
+	height: fit-content;
+	width: 90%;
+	box-sizing: border-box;
+	pointer-events: all;
+	animation: NotifyFadeIn 0.5s;
+}
+div.notify>div.iconArea{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 1px 0px 3px 0px;
+	width: 2.5em;
+	background-color: var(--ntf-color);
+	font-size: 12px;
+	font-weight: bold;
+	color: white;
+	text-align: center;
+}
+div.notify>div.iconArea>div.icon{
+	height: 2em;
+	width: 2em;
+	background-image: var(--icon);
+}
+div.notify>div.content{
+	flex: 1;
+	padding: 1vmin;
+	word-break: break-all;
+}
+div.notify{
+	--ntf-color: gray;
+	--icon: url(/Assets/Functions/Unknown.svg);
+}
+div.notify.ntf-info{
+	--ntf-color: deepskyblue;
+	--icon: url(/Assets/Functions/Info.svg);
+}
+div.notify.ntf-warning{
+	--ntf-color: gold;
+	--icon: url(/Assets/Functions/Warning.svg);
+}
+div.notify.ntf-error{
+	--ntf-color: red;
+	--icon: url(/Assets/Functions/Error.svg);
+}
+div.notify.ntf-debug{
+	--ntf-color: limegreen;
+	--icon: url(/Assets/Functions/Debug.svg);
+}
+
+div.notify.fade{
+	opacity: 0;
+	pointer-events: none;
+	animation: NotifyFadeOut 0.5s;
+}
+@keyframes NotifyFadeIn{
+	0%{
+		translate: 10px 0px;
+		opacity: 0;
+	}
+	100%{
+		translate: 0px 0px;
+		opacity: 1;
+	}
+}
+@keyframes NotifyFadeOut{
+	0%{
+		translate: 0px 0px;
+		opacity: 1;
+	}
+	100%{
+		translate: -10px 0px;
+		opacity: 0;
+	}
+}
