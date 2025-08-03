@@ -31,6 +31,8 @@ html{
 	overflow: hidden;
 }
 :root{
+	--bkg-color: light-dark(white,black);
+	--txt-color: light-dark(black,white);
 	--hue-p1: 200;
 	--hue-p2: 0;
 	--hue-p3: 60;
@@ -67,8 +69,8 @@ html{
 body{
 	height: 100vh;
 	width: 100vw;
-	color: light-dark(black,white);
-	background: light-dark(white,black);
+	color: var(--txt-color);
+	background: var(--bkg-color);
 	font-size: 22px;
 	font-family: Caviar Dreams, DengXian;
 }
@@ -119,8 +121,8 @@ div.notify{
 	gap: 0px;
 	margin: 1vh 0px;
 	background-color: light-dark(
-		hsla(from var(--ntf-color) h s calc(l * 1.5)),
-		hsla(from var(--ntf-color) h s calc(l * 0.5))
+		hsl(from var(--ntf-color) h s calc(l * 1.5)),
+		hsl(from var(--ntf-color) h s calc(l * 0.5))
 	);
 	height: fit-content;
 	width: 90%;
@@ -133,12 +135,11 @@ div.notify>div.iconArea{
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: 1px 0px 3px 0px;
+	padding: 1px 0px;
 	width: 2.5em;
 	background-color: var(--ntf-color);
-	font-size: 12px;
-	font-weight: bold;
 	color: white;
+	font-size: 12px;
 	text-align: center;
 }
 div.notify>div.iconArea>div.icon{
@@ -146,10 +147,15 @@ div.notify>div.iconArea>div.icon{
 	width: 2em;
 	background-image: var(--icon);
 }
+div.notify>div.iconArea>div.code{
+	margin: 2px;
+	font-weight: bold;
+}
 div.notify>div.content{
 	flex: 1;
 	padding: 1vmin;
-	word-break: break-all;
+	font-size: 16px;
+	word-break: break-word;
 }
 div.notify{
 	--ntf-color: gray;
@@ -171,7 +177,6 @@ div.notify.ntf-debug{
 	--ntf-color: limegreen;
 	--icon: url(/Assets/Functions/Debug.svg);
 }
-
 div.notify.fade{
 	opacity: 0;
 	pointer-events: none;
@@ -194,6 +199,102 @@ div.notify.fade{
 	}
 	100%{
 		translate: -10px 0px;
+		opacity: 0;
+	}
+}
+
+div#PopUpHome,div.popupWrap{
+	display: flex;
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	inset: 0 0 0 0;
+	z-index: 9;
+	pointer-events: none;
+}
+div.popupWrap{
+	background-color: #0000007f;
+	backdrop-filter: blur(1px);
+	pointer-events: all;
+	animation: PopUpFadeIn 0.5s;
+}
+div.popup{
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 20vh;
+	min-width: 30vw;
+	background-color: var(--bkg-color);
+	box-shadow: var(--txt-color) 1px 1px 5px;
+	pointer-events: all;
+}
+div.popup>*{
+	width: 100%;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 5px;
+}
+div.popup>div.title{
+	background-color: light-dark(#999,#333);
+	text-align: center;
+	user-select: none;
+}
+div.popup>div.buttons{
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+}
+div.popup>div.buttons>*{
+	border-radius: 5px;
+	padding: 2px 10px;
+	background-color: light-dark(cornflowerblue,Royalblue);
+	color: white;
+	cursor: pointer;
+	user-select: none;
+	transition: 0.5s;
+}
+div.popup>div.buttons>.default{
+	background-color: light-dark(limegreen,forestgreen);
+}
+div.popup>div.buttons>*:hover{
+	background-color: white;
+	color: light-dark(cornflowerblue,Royalblue);
+}
+div.popup>div.close{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	width: 1em;
+	height: 1em;
+	background-image: url(/Assets/Functions/Cross.svg);
+	filter: brightness(10);
+	transition: filter 0.3s;
+}
+div.popup>div.close:hover{
+	filter: brightness(2);
+}
+div.popupWrap.fade{
+	animation: PopUpFadeOut 0.5s;
+}
+@keyframes PopUpFadeIn{
+	0%{
+		scale: 1.2;
+		opacity: 0;
+	}
+	100%{
+		scale: 1;
+		opacity: 1;
+	}
+}
+@keyframes PopUpFadeOut{
+	0%{
+		scale: 1;
+		opacity: 1;
+	}
+	100%{
+		scale: 1.2;
 		opacity: 0;
 	}
 }

@@ -23,5 +23,5 @@
 	"Notify.Server.Connected": "服务器连接成功",
 	"Notify.Server.FailConnect": "服务器连接失败",
 	"Notify.Server.NotConnected": "服务器尚未连接",
-	"Notify.Server.Disconnect": "服务器断开连接"
+	"Notify.Server.Disconnected": "服务器断开连接"
 }

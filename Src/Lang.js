@@ -1,3 +1,4 @@
+import * as UIlib from './UI.js'
 var WordMap;
 var ThisPageName=document.querySelector('meta[name="PageName"]').content;
 var DefaultLang='zh-cn';
@@ -5,19 +6,24 @@ var DefaultLang='zh-cn';
 var Transes=document.getElementsByTagName('trans');
 var Tranbs=document.getElementsByTagName('tranb');
 export function Text(key){
-	key=key.trim();
-	var work;
-	if(key.match(/^\$/))
-		key=key.replace(/^\$/,`${ThisPageName}`),
-		work=WordMap["Page"][key];
-	else
-		work=WordMap[key];
-	if(work==null)
-	{
-		console.warn(`${key}: Unknown trans key.`);
-		return `unknown.${key}`;
+	try{
+		key=key.trim();
+		var work;
+		if(key.match(/^\$/))
+			key=key.replace(/^\$/,`${ThisPageName}`),
+			work=WordMap["Page"][key];
+		else
+			work=WordMap[key];
+		if(work==null)
+		{
+			console.warn(`${key}: Unknown trans key.`);
+			return `${key}`;
+		}
+		return work;
+	}catch(e){
+		console.error(`Text(${key}) failed:`,e);
+		return key;
 	}
-	return work;
 }
 /** Replace all `^{key}` in text with the corresponding translation */
 export function Replace(text)
@@ -33,12 +39,19 @@ async function FetchLang(lang)
 			return response.json();
 		}).then((data)=>{
 			WordMap=data;
+		}).catch((error)=>{
+			console.error(`FetchLang(${lang}) failed:`,{error});
+			UIlib.Notify('warning',
+			   `「${lang}」语言包加载失败，正在尝试更换语言……<br>
+				"${lang}" language pack loading failed, trying another language...`);
 		});
 }
 function ModifyDoc(eles){
 	for(var ele of eles)
 	{
-		ele.innerHTML=Text(ele.textContent);
+		if(!ele.classList.contains('t'))
+			ele.setAttribute('localekey',ele.innerHTML);
+		ele.innerHTML=Text(ele.getAttribute('localekey'));
 		ele.classList.add('t');
 		if(ele.getAttribute('href')!==null)
 			ele.addEventListener('click',(e)=>{
@@ -63,9 +76,10 @@ async function TrySetLang(lang){
 		return await SetLang(lang);
 	}
 	catch(e){
-		console.warn(`SetLang(${lang}) failed:`,{e});
+		console.warn(`SetLang(${lang}) failed:`,e);
 		return false;
 	}
+	return true;
 }
 function SetLangByCookie(){
 	var lang=getCookie('lang');
@@ -73,14 +87,18 @@ function SetLangByCookie(){
 		lang='zh-cn';
 	TrySetLang(lang);
 }
-function SetLangByBrowser(){
+async function SetLangByBrowser(){
 	var lang=navigator.languages;
 	for(var i of lang)
-		if(TrySetLang(i.toLowerCase()))
+		if(await TrySetLang(i.toLowerCase()))
 		{
 			console.log(`SetLangByBrowser: ${i}`);
 			return;
 		}
+	UIlib.Notify('error',
+		`语言包加载失败，请尝试刷新页面或检查网络连接<br>
+		Language packes loading failed, 
+		try refreshing the page or checking your network connection`);
 }
 
 SetLangByBrowser();

@@ -744,12 +744,13 @@ export class Grood{
 	 * @param {NAR|XY} pos
 	 * @param {String} newType
 	 */
-	async AnimPromote(pos,newType){
+	async AnimAscend(pos,newType){
+		console.log('abcd');
 		pos=this.NARtoXY(pos);
 		if(this.CheckCellEmpty(pos)) return;
 		var ch=this.GetPieceByPos(pos);
 		if(ch.type!=='pawn') return;
-		var pPiece=this.NewPerformerPiece(pos,'PromotePiece');
+		var pPiece=this.NewPerformerPiece(pos,'AscendPiece');
 		pPiece.style.filter=`hue-rotate(${ch.hue}deg) brightness(1) drop-shadow(0px 0px 0px gold)`;
 		this.visEle.appendChild(pPiece);
 		await Sleep(10);

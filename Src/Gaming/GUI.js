@@ -1,4 +1,5 @@
 import {PieceList} from "../Game.js";
+import * as UIlib from '../UI.js';
 var PieceMatch='\\[(';
 for(var ele of PieceList)
 	PieceMatch+='|'+ele;
@@ -218,3 +219,12 @@ export function AddRecord(record)
 {
 	RecordMain.AppendRecord(record);
 }
+const ActionSet={
+	'resign':()=>{UIlib.Notify('debug','resign')},
+	'tie':()=>{UIlib.Notify('debug','tie')},
+	'TakeBack':()=>{UIlib.Notify('debug','TakeBack')},
+	'hurryup':()=>{UIlib.Notify('debug','hurryup')}
+}
+var ActionEles=document.querySelectorAll('div#buttons span');
+for(var ele of ActionEles)
+	{ele.addEventListener('click',ActionSet[ele.id]);}

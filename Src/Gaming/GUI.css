@@ -239,6 +239,7 @@ div#buttons>span::after{
 	width: 5vmin;
 	height: 5vmin;
 	filter: grayscale(114) brightness(114);
+	transition: 0.3s;
 }
 div#buttons>span#resign{
 	background-color: #ff0000;
@@ -268,7 +269,7 @@ div#buttons>span:hover{
 	background-color: white !important;
 }
 div#buttons>span:hover::after{
-	filter: unset;
+	filter: grayscale(0) brightness(1);
 }
 @keyframes Appear{
 	0%{opacity: 0;}

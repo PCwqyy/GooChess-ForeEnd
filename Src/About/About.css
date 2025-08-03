@@ -1,7 +1,7 @@
 div#ContentWrap{
 	position: absolute;
 	inset: 5vh 5vw;
-	border: 2px solid light-dark(black,white);
+	border: 2px solid var(--txt-color);
 	box-shadow: light-dark(gray,white) 0px 0px 10px;
 	background-color: light-dark(#00000010,#ffffff10);
 	backdrop-filter: blur(2px);

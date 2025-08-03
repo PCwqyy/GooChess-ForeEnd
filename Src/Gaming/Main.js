@@ -57,11 +57,10 @@ async function DebugFunc(){
 		if(Id=='Init')
 			GroodMain.ParseFromText(Wrap,InitGrood),
 			GUI.InitTimers(300);
-		if(Id=='SwitchTimers')
-			GUI.SwitchTimers();
 		if(Id=='NewMsg')
 			GUI.NewMsg('Test Message','PC');
-		if(Id=='NewRecord')
+		if(Id=='NewStep')
+			GUI.SwitchTimers(),
 			GUI.AddRecord('Pe1i');
 		if(Id=='Move')
 			await GroodMain.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
@@ -77,8 +76,8 @@ async function DebugFunc(){
 			await GroodMain.AnimExplode(new NAR(10,10,5));
 		if(Id=='Rotate')
 			await GroodMain.AnimRotate(new NAR(7,10,9),2);
-		if(Id=='Promote')
-			await GroodMain.AnimPromote(new NAR(11,10,4),'Queen');
+		if(Id=='Ascend')
+			await GroodMain.AnimAscend(new NAR(11,10,4),'Queen');
 		if(Id=='Control')
 			await GroodMain.AnimToggleControl(new NAR(8,6,11));
 		if(Id=='Check')

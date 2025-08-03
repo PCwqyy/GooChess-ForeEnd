@@ -160,8 +160,8 @@ span.Tip{
 	border-radius: 5px;
 	padding: 1vh;
 	opacity: 0;
-	background-color: light-dark(black,white);
-	color: light-dark(white,black);
+	background-color: var(--txt-color);
+	color: var(--bkg-color);
 	z-index: 2;
 	pointer-events: none;
 	user-select: none;
@@ -387,7 +387,7 @@ span.Tip{
 	100%{rotate: 360deg;}
 }
 
-.perform.PromotePiece{
+.perform.AscendPiece{
 	transition-duration: 2s;
 }
 .row cell.DiplomatControlled>span,

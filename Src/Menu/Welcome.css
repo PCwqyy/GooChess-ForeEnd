@@ -5,7 +5,7 @@ body{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: light-dark(white,black);
+	background-color: var(--bkg-color);
 }
 div#BigTCon{
 	display: flex;
@@ -134,12 +134,12 @@ trans.MenuItem{
 	line-height: 15vh;
 	margin-bottom: 2vh;
 	width: 100%;
-	background-color: light-dark(white,black);
+	background-color: var(--bkg-color);
 	cursor: pointer;
 }
 trans.MenuItem,trans.MenuItem:active,
 trans.MenuItem:visited,trans.MenuItem:focus{
-	color: light-dark(black,white);
+	color: var(--txt-color);
 }
 trans.MenuItem::before{
 	content: '';
