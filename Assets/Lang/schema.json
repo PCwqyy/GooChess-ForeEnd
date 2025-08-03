@@ -30,6 +30,9 @@
 		"Notify.Server.Connected",
 		"Notify.Server.FailConnect",
 		"Notify.Server.NotConnected",
-		"Notify.Server.Disconnected"
+		"Notify.Server.Disconnected",
+		"Button.Yes",
+		"Button.No",
+		"Button.Cancel"
 	]
 }

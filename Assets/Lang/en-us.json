@@ -23,5 +23,8 @@
 	"Notify.Server.Connected": "Server connected successfully",
 	"Notify.Server.FailConnect": "Fail to connect server",
 	"Notify.Server.NotConnected": "Server not connected",
-	"Notify.Server.Disconnected": "Server disconnected"
+	"Notify.Server.Disconnected": "Server disconnected",
+	"Button.Yes": "Yes",
+	"Button.No": "No",
+	"Button.Cancel": "Cancel"
 }

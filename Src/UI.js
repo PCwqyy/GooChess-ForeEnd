@@ -34,10 +34,11 @@ export async function Notify(type='info',message,code='')
 	}
 }
 
-class Button{
-	constructor(text,action)
+export class PopUpOp{
+	constructor(tag,text,action)
 	{
-		this.text=Text.Replace(text);
+		this.tag=tag;
+		this.text=Text.Text(text);
 		this.action=action;
 	}
 	genEle()
@@ -65,14 +66,14 @@ export async function PopUp(title,content,options=[],defaultAction='default',hid
 			<div class="buttons"></div>
 		</div>`;
 	PopUpHome.appendChild(popup);
-	if(options.find(f=>f.text==='close')===undefined)
+	if(options.find(f=>f.tag==='close')===undefined)
 		hideOnClick=true;
 	const buttonArea=popup.querySelector('.buttons');
 	for(var t of options)
 	{
 		if(!(t.action instanceof Function))
-			t.action=options.find(f=>f.text===t.action).action||(()=>{});
-		if(t.text==='close')
+			t.action=options.find(f=>f.tag===t.action).action||(()=>{});
+		if(t.tag==='close')
 		{
 			const closeButton=document.createElement('div');
 			closeButton.className='close';
@@ -90,18 +91,8 @@ export async function PopUp(title,content,options=[],defaultAction='default',hid
 			if(hideOnClick)
 				await ClosePopUp(popup);
 		}));
-		if(t.text===defaultAction)
+		if(t.tag===defaultAction)
 			btn.classList.add('default');
 		buttonArea.appendChild(btn);
 	}
-	console.log(options);
-}
-
-Debug.Notify=Notify;
-Debug.PopUp=()=>{
-	PopUp('Hello','Are you suck?',[
-		new Button('Yes',()=>{Notify('debug','yes!')}),
-		new Button('No',()=>{Notify('debug','no!')}),
-		new Button('close','Yes')
-	],'Yes',false);
 }

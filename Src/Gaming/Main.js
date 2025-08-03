@@ -1,6 +1,7 @@
 import {Grood,XY,NAR,Sleep} from "../Game.js";
 import {userId,userName,InitGlobal} from "../Global.js";
 import * as GUI from "./GUI.js";
+import * as UIlib from "../UI.js";
 import "./WebSocket.js";
 
 const ROWS=12;
@@ -62,6 +63,12 @@ async function DebugFunc(){
 		if(Id=='NewStep')
 			GUI.SwitchTimers(),
 			GUI.AddRecord('Pe1i');
+		if(Id=='PopUp')
+			UIlib.PopUp('Hello','Are you suck?',[
+				new UIlib.PopUpOp('Yes','Button.Yes',()=>{UIlib.Notify('debug','yes!')}),
+				new UIlib.PopUpOp('No','Button.No',()=>{UIlib.Notify('debug','no!')}),
+				new UIlib.PopUpOp('close','',()=>{UIlib.Notify('debug','cancel!')})
+			],'Yes',false);
 		if(Id=='Move')
 			await GroodMain.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
 		if(Id=='Shoot')

@@ -227,7 +227,7 @@ div.popup{
 	min-height: 20vh;
 	min-width: 30vw;
 	background-color: var(--bkg-color);
-	box-shadow: var(--txt-color) 1px 1px 5px;
+	box-shadow: var(--txt-color) 1px 1px 3px;
 	pointer-events: all;
 }
 div.popup>*{
@@ -248,6 +248,7 @@ div.popup>div.buttons{
 }
 div.popup>div.buttons>*{
 	border-radius: 5px;
+	margin: 0px 3px;
 	padding: 2px 10px;
 	background-color: light-dark(cornflowerblue,Royalblue);
 	color: white;
@@ -262,6 +263,9 @@ div.popup>div.buttons>*:hover{
 	background-color: white;
 	color: light-dark(cornflowerblue,Royalblue);
 }
+div.popup>div.buttons>.default:hover{
+	color: light-dark(limegreen,forestgreen);
+}
 div.popup>div.close{
 	position: absolute;
 	top: 5px;
@@ -270,13 +274,17 @@ div.popup>div.close{
 	height: 1em;
 	background-image: url(/Assets/Functions/Cross.svg);
 	filter: brightness(10);
-	transition: filter 0.3s;
+	cursor: pointer;
+	transition: filter 0.1s;
 }
 div.popup>div.close:hover{
 	filter: brightness(2);
 }
 div.popupWrap.fade{
 	animation: PopUpFadeOut 0.5s;
+}
+div.popupWrap.fade>div.popup{
+	pointer-events: none;
 }
 @keyframes PopUpFadeIn{
 	0%{
