@@ -247,7 +247,7 @@ div.popup>*{
 	padding: 5px;
 }
 div.popup>div.title{
-	background-color: light-dark(#999,#333);
+	background-color: light-dark(#ccc,#333);
 	text-align: center;
 	user-select: none;
 }

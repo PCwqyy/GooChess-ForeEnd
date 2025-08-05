@@ -1,3 +1,4 @@
+import "./Debug.js";
 import {Text} from "./Lang.js";
 import "./Background.js";
 export var userId,userName,sessionToken;
