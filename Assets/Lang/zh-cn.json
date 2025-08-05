@@ -24,7 +24,11 @@
 	"Notify.Server.FailConnect": "服务器连接失败",
 	"Notify.Server.NotConnected": "服务器尚未连接",
 	"Notify.Server.Disconnected": "服务器断开连接",
+	"Notify.Game.Resign.You": "你认输了",
+	"Notify.Game.Resign.Opponent": "$1 认输了",
+	"Notify.Game.Tie.You": "你发起了和棋请求",
+	"Notify.Game.Tie.Opponent": "$1 发起了和棋请求",
 	"Button.Yes": "是",
 	"Button.No": "否",
-	"Button.Cancel": "取消"
+	"Button.Cancel": "取消"	
 }

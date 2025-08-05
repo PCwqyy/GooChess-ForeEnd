@@ -31,6 +31,10 @@
 		"Notify.Server.FailConnect",
 		"Notify.Server.NotConnected",
 		"Notify.Server.Disconnected",
+		"Notify.Game.Resign.You",
+		"Notify.Game.Resign.Opponent",
+		"Notify.Game.Tie.You",
+		"Notify.Game.Tie.Opponent",
 		"Button.Yes",
 		"Button.No",
 		"Button.Cancel"

@@ -38,11 +38,17 @@ class Message
 const HandlingMap={
 	'LoginToken': HandleLoginToken,
 	'Notify': HandleNotify,
-	'RecvChatMessage': HandleRecvChatMessage
+	'RecvChatMessage': HandleRecvChatMessage,
+	'Resign': HandleResign,
+	'Tie': HandleTie
 }
 function HandleMessage(data)
 {
-	console.log(`Received ${data.type} message`,data.param);
+	console.log(`[WebSocket]\n%c <<< [%c${data.type}%c] %o`,
+		'color: limegreen;',
+		'color: deepskyblue;',
+		'color: limegreen;',
+		data.param);
 	if(HandlingMap[data.type])
 		HandlingMap[data.type](data.param);
 }
@@ -52,13 +58,29 @@ function HandleNotify(data){
 function HandleRecvChatMessage(data){
 	GUI.NewMsg(data.msg,data.sender,data.time);
 }
+// [TODO] 之后 who 得是用户名
+function HandleResign(data){
+	if(data.who===0)
+		UIlib.Notify('info','^{Notify.Game.Resign.You}');
+	else
+		UIlib.Notify('info',`{LONG}^{Notify.Game.Resign.Opponent,${data.who}}`);
+}
+function HandleTie(data){
+	if(data.who===0)
+		UIlib.Notify('info','^{Notify.Game.Tie.You}');
+	else
+		UIlib.Notify('info',`{LONG}^{Notify.Game.Tie.Opponent,${data.who}}`);
+}
 
 function HandleLoginToken(param){roomToken=param.roomToken;}
 
 export function SendMessage(type,param)
 {
-	console.log(`Sending [${type}] message:`,param);
-	console.info(new Message(type,param));
+	console.log(`[WebSocket]\n%c >>> [%c${type}%c] %o`,
+		'color: limegreen;',
+		'color: deepskyblue;',
+		'color: limegreen;',
+		param);
 	if(ws && ws.readyState===WebSocket.OPEN)
 		ws.send(JSON.stringify(new Message(type,param)));
 	else

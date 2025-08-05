@@ -84,11 +84,7 @@ export function SwitchTimers()
 	Timers[NowRunningTimer].Toggle();
 	NowRunningTimer++;
 	NowRunningTimer%=3;
-	Timers[NowRunningTimer].Toggle();/* 
-	BkgMeta.setAttribute('content',
-		`Slashes(
-			${Timers[NowRunningTimer].fatherEle.computedStyleMap().get('--hue')},
-			${Timers[NowRunningTimer].GetSpeed()})`); */
+	Timers[NowRunningTimer].Toggle();
 }
 
 class Messages
@@ -103,11 +99,11 @@ class Messages
 		this.text=text;
 		this.ProcessText();
 		this.author=author;
-		this.time=time;
+		this.time=this.GetTime(time);
 	}
-	GetTimeNow()
+	GetTime(time=Date.now())
 	{
-		var date=new Date();
+		var date=new Date(time);
 		return `${date.getHours()}`.padStart(2,'0')
 		+':'+`${date.getMinutes()}`.padStart(2,'0')
 		+':'+`${date.getSeconds()}`.padStart(2,'0');
@@ -171,13 +167,13 @@ class ChatRoom
 }
 var ChatRoomMain=new ChatRoom(document.querySelector('div#chatMsgs'));
 
-export function NewMsg(text,author,time=this.GetTimeNow())
+export function NewMsg(text,author,time=this.GetTime())
 {
 	var msg=new Messages(text,author,time);
 	ChatRoomMain.AddMessage(msg);
 }
 export var InputEle=document.querySelector('#chatInput');
-// 发送部分在WebSocket.js中
+// 发送部分在 [./WebSocket.js] 中
 
 /* Records of each step */
 class Record

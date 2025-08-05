@@ -53,7 +53,7 @@ async def broadcast_console():
             to_remove = set()
             for ws in connected:
                 try:
-                    await send(ws,"Notify",{"notifyType":"error","message": msg,"code":114})
+                    await send(ws,"Tie",{"who":msg})
                 except Exception:
                     # 如果发送失败，移除该连接
                     to_remove.add(ws)

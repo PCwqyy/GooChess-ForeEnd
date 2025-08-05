@@ -16,6 +16,10 @@ export async function Notify(type='info',message,code='')
 	NotifyCount++;
 	const ele=document.createElement('div');
 	ele.className=`notify ntf-${type}`;
+	var LongStay=message.match(/^\{LONG\}/g);
+	if(LongStay)
+		message=message.replace(/^\{LONG\}/g,''),
+		ele.classList.add('longStay');
 	ele.innerHTML=`<div class="iconArea">
 			<div class="icon"></div>
 			${code?`<div class="code">${code}</div>`:''}
@@ -23,7 +27,7 @@ export async function Notify(type='info',message,code='')
 		<div class="content">${Text.Replace(message)}</div>`;
 	NotifyHome.appendChild(ele);
 	ele.scrollIntoView({behavior:'smooth',block:'end'});
-	await Sleep(message.length*50+2000);
+	await Sleep(message.length*50+LongStay?20000:2000);
 	ele.classList.add('fade');
 	NotifyCount--;
 	if(NotifyCount===0)

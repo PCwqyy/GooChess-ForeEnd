@@ -2,12 +2,17 @@
 
 对于一个房间，你要连接到 `wss://host-ip/api/ws/<room-id>` 的位置。
 
-|消息|谁发出|`type`|`param`|
-|:-:|:-:|:-|:-|
+|消息|谁发出|`type`|`param`|备注|
+|:-:|:-:|:-|:-|:-|
 |登入房间|S|`LoginToken`|`{token}`|
 |通知|S|`Notify`|`{notifyType,msg,code}`|
-|收到消息|S|`RecvChatMessage`|`{msg,sender,time}`|
+|收到消息|S|`RecvChatMessage`|`{msg,sender,time}`|`time`: `timestamp`|
 |发消息|C|`PostChatMessage`|`{msg,time}`|
+|投降|C / S|`Resign`|`{who}`|`who`: `0\|1\|2`|
+|发起/同意求和|C|`Tie`|`{who}`|
+|求和成功|S|`Tie`|
+|求和询问|S|`AskTie`|
+
 
 ### Login
 
@@ -305,7 +310,7 @@
 
 - error
   
-  可能是以下值之一 "can_not_move" "not_your_turn" "skill_unavailable" "invalid_call" ”success“
+  可能是以下值之一 "can_not_move" "not_your_turn" "skill_unavailable" "invalid_call" "success"
   
   invaild_call 代表你传入的参数有问题，或者你不是玩家，或者你已经输掉了。
 

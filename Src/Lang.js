@@ -5,7 +5,7 @@ var DefaultLang='zh-cn';
 
 var Transes=document.getElementsByTagName('trans');
 var Tranbs=document.getElementsByTagName('tranb');
-export function Text(key){
+export function Text(key,param=[]){
 	try{
 		key=key.trim();
 		var work;
@@ -19,19 +19,27 @@ export function Text(key){
 			console.warn(`${key}: Unknown trans key.`);
 			return `${key}`;
 		}
+		if(param.length>0)
+			work=work.replaceAll(/\$(\d+)/g,(match,index)=>{
+				return param[index]||match;
+			});
 		return work;
 	}catch(e){
-		console.error(`Text(${key}) failed:`,e);
+		console.error(`Text(${key}) failed:\n`,e);
 		return key;
 	}
 }
 /** Replace all `^{key}` in text with the corresponding translation */
 export function Replace(text)
 {
-	return text.replaceAll(/\^\{(.+?)\}/g,(match,key)=>{
-		return Text(key);
+	return text.replaceAll(/\^\{([\.\w]+)(,.+)*\}/g,(match,key,value)=>{
+		if(value==null||value=='')
+			return Text(key);
+		return Text(key,value.split(','));
 	});
 }
+Debug.Replace=Replace;
+Debug.Text=Text;
 async function FetchLang(lang)
 {
 	await fetch(`/Assets/Lang/${lang}.json`)

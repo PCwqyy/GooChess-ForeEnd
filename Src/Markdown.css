@@ -49,6 +49,7 @@ a:active{
 }
 table{
 	border-spacing: 0;
+	width: max-content;
 }
 thead{
 	position: sticky;
@@ -95,10 +96,12 @@ summary{
 	z-index: 4;
 }
 :not(pre)>code{
-	color: #23791b;
-	background-color: #ceffca;
+	color: light-dark(#23791b,#79d671);
+	background-color: light-dark(#ceffca,#183b15);
+	margin: 5px 0px;
 	padding: 5px;
 	border-radius: 3px;
+	line-height: 1.6em;
 }
 code{
 	font-family: "Consolas";

@@ -23,7 +23,7 @@
 	scrollbar-gutter: stable;
 }}
 *::selection{
-	background-color: light-dark(#00000020,#ffffff20);
+	background-color: light-dark(#00000020,#ffffff40);
 }
 html{
 	height: 100vh;
@@ -117,7 +117,7 @@ div#NotifyHome::-webkit-scrollbar-thumb{
 }
 div.notify{
 	display: flex;
-	vertical-align: middle;
+	align-items: center;
 	gap: 0px;
 	margin: 1vh 0px;
 	background-color: light-dark(
@@ -136,7 +136,9 @@ div.notify>div.iconArea{
 	justify-content: center;
 	align-items: center;
 	padding: 1px 0px;
+	height: 100%;
 	width: 2.5em;
+	box-sizing: border-box;
 	background-color: var(--ntf-color);
 	color: white;
 	font-size: 12px;
@@ -148,8 +150,9 @@ div.notify>div.iconArea>div.icon{
 	background-image: var(--icon);
 }
 div.notify>div.iconArea>div.code{
-	margin: 2px;
+	margin: 0px 0px 3px 0px;
 	font-weight: bold;
+	font-size: 10px;
 }
 div.notify>div.content{
 	flex: 1;
@@ -182,6 +185,9 @@ div.notify.fade{
 	pointer-events: none;
 	animation: NotifyFadeOut 0.5s;
 }
+div.notify.longStay div.icon{
+	animation: NotifyRotate 4s infinite linear;
+}
 @keyframes NotifyFadeIn{
 	0%{
 		translate: 10px 0px;
@@ -201,6 +207,10 @@ div.notify.fade{
 		translate: -10px 0px;
 		opacity: 0;
 	}
+}
+@keyframes NotifyRotate{
+	0%{rotate: 0deg;}
+	100%{rotate: 360deg;}
 }
 
 div#PopUpHome,div.popupWrap{
