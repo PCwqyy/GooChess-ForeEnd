@@ -26,5 +26,10 @@
 	"Notify.Server.Disconnected": "Server disconnected",
 	"Button.Yes": "Yes",
 	"Button.No": "No",
-	"Button.Cancel": "Cancel"
+	"Button.Cancel": "Cancel",
+	"Notify.Game.Resign.You": "You resigned",
+	"Notify.Game.Resign.Opponent": "$1 resigned",
+	"Notify.Game.Tie.You": "You requested a draw",
+	"Notify.Game.Tie.Opponent": "$1 requested a draw",
+	"Game.Hurry.Text": "Hurry!"
 }

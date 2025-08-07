@@ -69,6 +69,8 @@ async function DebugFunc(){
 				new UIlib.PopUpOp('No','Button.No',()=>{UIlib.Notify('debug','no!')}),
 				new UIlib.PopUpOp('close','',()=>{UIlib.Notify('debug','cancel!')})
 			],'Yes',false);
+		if(Id=='HurryUp')
+			GUI.HurryUp();
 		if(Id=='Move')
 			await GroodMain.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
 		if(Id=='Shoot')

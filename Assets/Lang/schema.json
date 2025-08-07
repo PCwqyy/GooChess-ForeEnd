@@ -37,6 +37,7 @@
 		"Notify.Game.Tie.Opponent",
 		"Button.Yes",
 		"Button.No",
-		"Button.Cancel"
+		"Button.Cancel",
+		"Game.Hurry.Text"
 	]
 }

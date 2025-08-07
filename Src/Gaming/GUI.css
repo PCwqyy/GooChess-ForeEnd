@@ -440,3 +440,26 @@ div#list{
 	background-color: red !important;
 	color: white;
 }
+
+div#HurryUpText{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	inset: 0px 0px 0px 0px;
+	box-shadow: inset #00aeef 0px 0px 10vmin;
+	opacity: 0;
+	scale: 1.2;
+	z-index: 5;
+	pointer-events: none;
+	transition: 0.5s;
+}
+div#HurryUpText.active{
+	opacity: 1;
+	scale: 1;
+}
+div#HurryUpText>trans{
+	font-weight: bold;
+	font-size: 30vmin;
+	color: #ffffff60;
+}

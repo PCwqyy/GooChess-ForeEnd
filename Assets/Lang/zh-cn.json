@@ -30,5 +30,6 @@
 	"Notify.Game.Tie.Opponent": "$1 发起了和棋请求",
 	"Button.Yes": "是",
 	"Button.No": "否",
-	"Button.Cancel": "取消"	
+	"Button.Cancel": "取消"	,
+	"Game.Hurry.Text": "搞紧"
 }

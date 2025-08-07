@@ -1,4 +1,5 @@
-import {PieceList} from "../Game.js";
+import {PieceList, Sleep} from "../Game.js";
+import * as Text from "../Lang.js";
 import * as UIlib from '../UI.js';
 var PieceMatch='\\[(';
 for(var ele of PieceList)
@@ -224,3 +225,14 @@ const ActionSet={
 var ActionEles=document.querySelectorAll('div#buttons span');
 for(var ele of ActionEles)
 	{ele.addEventListener('click',ActionSet[ele.id]);}
+
+var HurryUpEle=document.createElement('div');
+HurryUpEle.id='HurryUpText';
+document.body.appendChild(HurryUpEle);
+HurryUpEle.innerHTML=`<trans>Game.Hurry.Text</trans>`;
+export async function HurryUp()
+{
+	HurryUpEle.classList.add('active');
+	await Sleep(500);
+	HurryUpEle.classList.remove('active');
+}
