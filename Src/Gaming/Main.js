@@ -1,5 +1,6 @@
 import {Grood,XY,NAR,Sleep} from "../Game.js";
 import {userId,userName,InitGlobal} from "../Global.js";
+import {DebugScreen} from "../Debug.js";
 import * as GUI from "./GUI.js";
 import * as UIlib from "../UI.js";
 import "./WebSocket.js";
@@ -45,64 +46,60 @@ InitGlobal(114514,'PCDebug','PCDebugToken');
 Debug.Grood=GroodMain;
 Debug.XY=XY;
 Debug.NAR=NAR;
-var DebugIdInput=document.getElementById('DebugId');
-var isDebugging=false;
-var DebugButt=document.getElementById('DebugButt');
-async function DebugFunc(){
-	var Id=DebugIdInput.value;
-	if(isDebugging)	return;
-	isDebugging=true;
-	DebugButt.classList.remove('error');
-	DebugButt.classList.add('disable');
-	try{
-		if(Id=='Init')
-			GroodMain.ParseFromText(Wrap,InitGrood),
-			GUI.InitTimers(300);
-		if(Id=='NewMsg')
-			GUI.NewMsg('Test Message','PC');
-		if(Id=='NewStep')
-			GUI.SwitchTimers(),
-			GUI.AddRecord('Pe1i');
-		if(Id=='PopUp')
-			UIlib.PopUp('Hello','Are you suck?',[
-				new UIlib.PopUpOp('Yes','Button.Yes',()=>{UIlib.Notify('debug','yes!')}),
-				new UIlib.PopUpOp('No','Button.No',()=>{UIlib.Notify('debug','no!')}),
-				new UIlib.PopUpOp('close','',()=>{UIlib.Notify('debug','cancel!')})
-			],'Yes',false);
-		if(Id=='HurryUp')
-			GUI.HurryUp();
-		if(Id=='Move')
-			await GroodMain.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
-		if(Id=='Shoot')
-			await GroodMain.AnimMove(new NAR(8,9,8),new NAR(8,12,5),true);
-		if(Id=='Teleport')
-			await GroodMain.AnimTeleport(new NAR(12,1,12),new NAR(11,5,9),new NAR(11,8,6),new NAR(11,9,6));
-		if(Id=='Bounce')
-			await GroodMain.AnimBounce(new NAR(9,6,11),new NAR(10,3,12),new NAR(12,2,11));
-		if(Id=='Explode')
-			await GroodMain.AnimExplode(new NAR(8,12,5));
-		if(Id=='GooExplode')
-			await GroodMain.AnimExplode(new NAR(10,10,5));
-		if(Id=='Rotate')
-			await GroodMain.AnimRotate(new NAR(7,10,9),2);
-		if(Id=='Ascend')
-			await GroodMain.AnimAscend(new NAR(11,10,4),'Queen');
-		if(Id=='Control')
-			await GroodMain.AnimToggleControl(new NAR(8,6,11));
-		if(Id=='Check')
-			await GroodMain.AnimToggleCheck(new NAR(1,12,12));
-		if(Id=='Produce')
-			await GroodMain.AnimProduce(new NAR(7,7,11),new NAR(8,7,11));
-		if(Id=='Revolt')
-			await GroodMain.AnimToggleRevolt(new NAR(10,9,6),210);
-		if(Id=='Error')
-			throw new Error('Test Error');
-	}catch(e){
-		console.error(e);
-		DebugButt.classList.add('error');
-	}
-	isDebugging=false;
-	DebugButt.classList.remove('disable');
-}
-Debug.Func=DebugFunc;
+DebugScreen.AddButton('Init',()=>{
+	GroodMain.ParseFromText(Wrap,InitGrood),
+	GUI.InitTimers(300);
+});
+DebugScreen.AddButton('NewMsg',()=>{GUI.NewMsg('Test Message','PC');});
+DebugScreen.AddButton('NewStep',()=>{
+	GUI.SwitchTimers();
+	GUI.AddRecord('Pe1i');
+});
+DebugScreen.AddButton('PopUp',()=>{
+	UIlib.PopUp('Hello','Are you suck?',[
+		new UIlib.PopUpOp('Yes','Button.Yes',()=>{UIlib.Notify('debug','yes!')}),
+		new UIlib.PopUpOp('No','Button.No',()=>{UIlib.Notify('debug','no!')}),
+		new UIlib.PopUpOp('close','',()=>{UIlib.Notify('debug','cancel!')})
+	],'Yes',false);
+});
+DebugScreen.AddButton('HurryUp',GUI.HurryUp);
+DebugScreen.AddButton('Move', async ()=>{
+	await GroodMain.AnimMove(new NAR(10,4,11),new NAR(6,11,8));
+});
+DebugScreen.AddButton('Shoot', async ()=>{
+	await GroodMain.AnimMove(new NAR(8,9,8),new NAR(8,12,5),true);
+});
+DebugScreen.AddButton('Teleport', async ()=>{
+	await GroodMain.AnimTeleport(new NAR(12,1,12),new NAR(11,5,9),new NAR(11,8,6),new NAR(11,9,6));
+});
+DebugScreen.AddButton('Bounce', async ()=>{
+	await GroodMain.AnimBounce(new NAR(9,6,11),new NAR(10,3,12),new NAR(12,2,11));
+});
+DebugScreen.AddButton('Explode', async ()=>{
+	await GroodMain.AnimExplode(new NAR(8,12,5));
+});
+DebugScreen.AddButton('GooExplode', async ()=>{
+	await GroodMain.AnimExplode(new NAR(10,10,5));
+});
+DebugScreen.AddButton('Rotate', async ()=>{
+	await GroodMain.AnimRotate(new NAR(7,10,9),2);
+});
+DebugScreen.AddButton('Ascend', async ()=>{
+	await GroodMain.AnimAscend(new NAR(11,10,4),'Queen');
+});
+DebugScreen.AddButton('Control', async ()=>{
+	await GroodMain.AnimToggleControl(new NAR(8,6,11));
+});
+DebugScreen.AddButton('Check', async ()=>{
+	await GroodMain.AnimToggleCheck(new NAR(1,12,12));
+});
+DebugScreen.AddButton('Produce', async ()=>{
+	await GroodMain.AnimProduce(new NAR(7,7,11),new NAR(8,7,11));
+});
+DebugScreen.AddButton('Revolt', async ()=>{
+	await GroodMain.AnimToggleRevolt(new NAR(10,9,6),210);
+});
+DebugScreen.AddButton('Error', ()=>{
+	throw new Error('Test Error');
+});
 Debug.Sleep=Sleep;

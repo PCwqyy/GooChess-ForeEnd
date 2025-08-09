@@ -168,7 +168,7 @@ class ChatRoom
 }
 var ChatRoomMain=new ChatRoom(document.querySelector('div#chatMsgs'));
 
-export function NewMsg(text,author,time=this.GetTime())
+export function NewMsg(text,author,time=Date.now())
 {
 	var msg=new Messages(text,author,time);
 	ChatRoomMain.AddMessage(msg);

@@ -395,51 +395,6 @@ div#buttons>span:hover::after{
 	}
 }
 
-/* test */
-trans.butt{
-	border-radius: 3px;
-	margin: 2vh 0;
-	width: 15vw;
-	color: white;
-	background-color: #3689ce;
-	text-align: center;
-	text-decoration: none;
-	user-select: none;
-	cursor: pointer;
-	transition: 0.5s;
-}
-trans.butt:hover{
-	color: #3689ce;
-	background-color: white;
-}
-div#list{
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	position: absolute;
-	flex-direction: column;
-	border: white dotted 1px;
-	border-radius: 5px;
-	left: 0vw;
-	top: 0vh;
-	padding: 0 1vw;
-	z-index: 10;
-	transition: 0.5s;
-}
-#DebugId{
-	width: 15vw;
-	font-size: 20px;
-	font-family: Consolas;
-}
-#DebugButt.disable{
-	background-color: gray !important;
-	color: white;
-	cursor: not-allowed;
-}
-#DebugButt.error{
-	background-color: red !important;
-	color: white;
-}
 
 div#HurryUpText{
 	display: flex;
