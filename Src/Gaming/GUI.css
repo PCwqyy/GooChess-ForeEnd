@@ -165,7 +165,7 @@ div#recordWrap{
 	scroll-behavior: smooth;
 }
 table#record{
-	width: 100%;
+	width: 99%;
 	border-collapse: collapse;
 }
 table#record col#p1Col{
@@ -198,6 +198,7 @@ table#record thead th#p3{
 table#record td{
 	padding: 0 0.5vw;
 	font-size: 14px;
+	text-align: center;
 }
 table#record td.recordCell,
 table#record td.round{

@@ -32,14 +32,14 @@ class DebugScr
 {
 	constructor()
 	{
-		document.body.innerHTML+=`
-			<div id="DebugScreen">
-				<h2>Debug</h2>
-				<div id="DebugLines"></div>
-				<div id="DebugLinks"></div>
-				<div id="DebugButtons"></div>
-			</div>`;
-		this.ele=document.getElementById("DebugScreen");
+		this.ele=document.createElement("div");
+		this.ele.id="DebugScreen";
+		document.body.appendChild(this.ele);
+		this.ele.innerHTML=`
+			<h2>Debug</h2>
+			<div id="DebugLines"></div>
+			<div id="DebugLinks"></div>
+			<div id="DebugButtons"></div>`;
 		document.addEventListener("keydown",(e)=>{
 			if(e.key==="F3")
 				this.Switch(),
@@ -87,6 +87,8 @@ export let DebugScreen=new DebugScr();
 
 DebugScreen.AddLink("Menu","/Src/Menu/Main.html");
 DebugScreen.AddLink("Wiki","/Src/Wiki/Main.html");
+DebugScreen.AddLink("Game","/Src/Gaming/Main.html");
+DebugScreen.AddLink("Editor","/Src/Editor/Main.html");
 
 DebugScreen.AddLine("fps","{fps} FPS");
 var tick=0,last=Date.now(),now;
