@@ -241,28 +241,28 @@ div#buttons>span::after{
 	filter: grayscale(114) brightness(114);
 	transition: 0.3s;
 }
-div#buttons>span#resign{
+div#buttons>span#Resign{
 	background-color: #ff0000;
 }
-div#buttons>span#tie{
+div#buttons>span#Tie{
 	background-color: #f9ed32;
 }
 div#buttons>span#TakeBack{
 	background-color: #39b54a;
 }
-div#buttons>span#hurryup{
+div#buttons>span#HurryUp{
 	background-color: #00aeef;
 }
-div#buttons>span#resign::after{
+div#buttons>span#Resign::after{
 	background-image: url(/Assets/Functions/Resign.svg);
 }
-div#buttons>span#tie::after{
+div#buttons>span#Tie::after{
 	background-image: url(/Assets/Functions/Tie.svg);
 }
 div#buttons>span#TakeBack::after{
 	background-image: url(/Assets/Functions/TakeBack.svg);
 }
-div#buttons>span#hurryup::after{
+div#buttons>span#HurryUp::after{
 	background-image: url(/Assets/Functions/HurryUp.svg);
 }
 div#buttons>span:hover{

@@ -1,9 +1,10 @@
-import {Grood,XY,NAR,Sleep} from "../Game.js";
+import {Grood,XY,NAR} from "../Game.js";
 import {userId,userName,InitGlobal} from "../Global.js";
 import {DebugScreen} from "../Debug.js";
 import * as GUI from "./GUI.js";
 import * as UIlib from "../UI.js";
 import "./WebSocket.js";
+const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 
 const ROWS=12;
 const InitGrood=`

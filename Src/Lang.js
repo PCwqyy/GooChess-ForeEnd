@@ -32,7 +32,7 @@ export function Text(key,param=[]){
 /** Replace all `^{key}` in text with the corresponding translation */
 export function Replace(text)
 {
-	return text.replaceAll(/\^\{([\.\w]+)(,.+)*\}/g,(match,key,value)=>{
+	return text.replaceAll(/\^\{([\.\w\$]+)(,.+)*\}/g,(match,key,value)=>{
 		if(value==null||value=='')
 			return Text(key);
 		return Text(key,value.split(','));

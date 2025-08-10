@@ -387,3 +387,16 @@ div#DebugScreen a{
 div#DebugScreen a:hover{
 	color: #3689ce;
 }
+
+span#Tip{
+	position: absolute;
+	border-radius: 5px;
+	padding: 1vh;
+	opacity: 0;
+	background-color: var(--txt-color);
+	color: var(--bkg-color);
+	z-index: 2;
+	pointer-events: none;
+	user-select: none;
+	transition: opacity 0.3s;
+}

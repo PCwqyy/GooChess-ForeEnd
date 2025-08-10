@@ -1,4 +1,5 @@
-export const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
+import * as UIlib from "./UI.js";
+const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 // 常量
 const RomeApl={
 	1:'i',2:'ii',3:'iii',4:'iv',5:'v',
@@ -214,8 +215,7 @@ export class Grood{
 	visEle;
 	/** @type {Map<String,Piece>} */
 	pieces=new Map();
-	element;Tip;Game;
-	TipPlainPaint=false;PosInTip=new NAR(-1,-1,-1);
+	element;Game;
 	/**
 	 * @param {String} text
 	 * @param {HTMLElement} parentElement
@@ -224,8 +224,6 @@ export class Grood{
 	constructor(text='[12]',parentElement,clickFunc,game=false)
 	{
 		this.element=document.createElement('grood');
-		this.Tip=document.createElement('span');
-		this.Tip.classList.add('Tip');
 		this.Game=game;
 		this.ParseFromText(parentElement,text);
 		parentElement.appendChild(this.element);
@@ -245,6 +243,7 @@ export class Grood{
 		this.visEle.classList.add('cells');
 		this.element.appendChild(this.visEle);
 		var row=new Array(this.rows*2);
+		var nowPos;
 		for(let i=1;i<this.rows*2;i++){
 			row[i]=document.createElement('div');
 			row[i].classList.add('row');
@@ -252,10 +251,9 @@ export class Grood{
 			if(i%2===0)	row[i].classList.add('black');
 			for(let j=1;j<=Math.floor((i-1)/2)+1;j++){
 				this.cells[i][j]=document.createElement('cell');
-				this.cells[i][j].setAttribute('x',`${i}`);
-				this.cells[i][j].setAttribute('y',`${j}`);
 				var show=document.createElement('span');
 				this.cells[i][j].appendChild(show);
+				nowPos=this.XYtoNAR(new XY(i,j));
 				if(this.Game)
 				{
 					// 确定shooter
@@ -265,44 +263,15 @@ export class Grood{
 							break;
 						}
 					// 确定三方位置
-					var thisNar=this.XYtoNAR(new XY(i,j));
-					if(thisNar.num<=4)	this.cells[i][j].classList.add(Side.num);
-					if(thisNar.alp<=4)	this.cells[i][j].classList.add(Side.alp);
-					if(thisNar.rom<=4)	this.cells[i][j].classList.add(Side.rom);
+					if(nowPos.num<=4)	this.cells[i][j].classList.add(Side.num);
+					if(nowPos.alp<=4)	this.cells[i][j].classList.add(Side.alp);
+					if(nowPos.rom<=4)	this.cells[i][j].classList.add(Side.rom);
 				}
-				this.cells[i][j].addEventListener('mouseenter',(e)=>{
-					this.Tip.style.opacity=0.8;
-					if(e.target.tagName!='CELL')	return;
-					this.PosInTip=this.XYtoNAR(
-						new XY(e.target.getAttribute('x'),e.target.getAttribute('y')));
-					this.Tip.innerHTML=`${this.PosInTip.print(this.TipPlainPaint)}`;
-				});
+				UIlib.AddTip(this.cells[i][j],nowPos.print(),nowPos.print(true));
 				row[i].appendChild(this.cells[i][j]);
 			}
 			this.visEle.appendChild(row[i]);
 		}
-		document.body.appendChild(this.Tip);
-		this.element.addEventListener('mouseleave',()=>{
-			this.Tip.style.opacity=0;
-		});
-		this.element.addEventListener('mousemove',(e)=>{
-			this.Tip.style.left=`${e.clientX+10}px`;
-			this.Tip.style.top=`${e.clientY+10}px`;
-		});
-		this.element.addEventListener('wheel',(e)=>{
-			this.Tip.style.left=`${e.clientX+10}px`;
-			this.Tip.style.top=`${e.clientY+10}px`;
-		});
-		document.body.addEventListener('keydown',(e)=>{
-			if(e.key!='Shift')	return;
-			this.TipPlainPaint=true;
-			this.Tip.innerHTML=`${this.PosInTip.print(this.TipPlainPaint)}`;
-		})
-		document.body.addEventListener('keyup',(e)=>{
-			if(e.key!='Shift')	return;
-			this.TipPlainPaint=false;
-			this.Tip.innerHTML=`${this.PosInTip.print(this.TipPlainPaint)}`;
-		})
 		return;
 	}
 	/**

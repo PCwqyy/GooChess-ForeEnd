@@ -100,3 +100,57 @@ export async function PopUp(title,content,options=[],defaultAction='default',hid
 		buttonArea.appendChild(btn);
 	}
 }
+
+// [TODO] Tips 纳入 UI 库
+var Tip=document.createElement('span');
+var ShiftEnabled=false,HoverEle=document.body;
+document.body.appendChild(Tip);
+Tip.id='Tip';
+function FillTip()
+{
+	var t=HoverEle.getAttribute(ShiftEnabled?'shiftTip':'tip');
+	if(!t)	t=HoverEle.getAttribute('tip')||'';
+	Tip.innerHTML=Text.Replace(t);
+	console.log(t,Text.Replace(t));
+}
+document.addEventListener('keydown',(e)=>{
+	if(e.key!='Shift')	return;
+	ShiftEnabled=true;
+	FillTip();
+})
+document.addEventListener('keyup',(e)=>{
+	if(e.key!='Shift')	return;
+	ShiftEnabled=false;
+	FillTip();
+})
+export function AddTip(ele,tip,shiftTip='')
+{
+	ele.setAttribute('tip',tip);
+	if(shiftTip.length>0)
+		ele.setAttribute('shiftTip',shiftTip);
+	ele.addEventListener('mouseenter',(e)=>{
+		HoverEle=e.target;
+		FillTip();
+		Tip.style.opacity=0.8;
+	});
+	ele.addEventListener('mouseleave',(e)=>{
+		Tip.style.opacity=0;
+	});
+	ele.addEventListener('mousemove',(e)=>{
+		Tip.style.left=`${e.clientX+10}px`;
+		Tip.style.top=`${e.clientY+10}px`;
+	});
+	ele.addEventListener('wheel',(e)=>{
+		Tip.style.left=`${e.clientX+10}px`;
+		Tip.style.top=`${e.clientY+10}px`;
+	});
+	
+}
+function InitTip(selector)
+{
+	var eles=document.querySelectorAll(selector);
+	for(var ele of eles)
+		if(ele.getAttribute('tip'))
+			AddTip(ele,ele.getAttribute('tip'),ele.getAttribute('shiftTip')||'');
+}
+InitTip('span,div,a,trans,tranb');
