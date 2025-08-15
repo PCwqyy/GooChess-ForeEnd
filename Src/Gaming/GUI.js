@@ -218,10 +218,10 @@ export function AddRecord(record)
 	RecordMain.AppendRecord(record);
 }
 const ActionSet={
-	'resign':()=>{UIlib.Notify('debug','resign')},
-	'tie':()=>{UIlib.Notify('debug','tie')},
-	'TakeBack':()=>{UIlib.Notify('debug','TakeBack')},
-	'hurryup':()=>{UIlib.Notify('debug','hurryup')}
+	'Resign':()=>{UIlib.Notify('debug','resign')},
+	'Tie':()=>{UIlib.Notify('debug','tie')},
+	'TakeBack':()=>{UIlib.Notify('debug','takeback')},
+	'HurryUp':()=>{UIlib.Notify('debug','hurryup')}
 }
 var ActionEles=document.querySelectorAll('div#buttons span');
 for(var ele of ActionEles)

@@ -165,7 +165,7 @@ div#recordWrap{
 	scroll-behavior: smooth;
 }
 table#record{
-	width: 99%;
+	width: calc(100% - 1px);
 	border-collapse: collapse;
 }
 table#record col#p1Col{
