@@ -40,9 +40,9 @@ cell{
 cell>span{
 	display: block;
 	position: relative;
+	margin: 0;
 	height: var(--cell-height);
 	width: var(--cell-width);
-	margin: 0;
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	background-color: light-dark(#ffffff,#000000);
 	transition: background-color 0.5s;

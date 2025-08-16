@@ -38,8 +38,7 @@ export function Replace(text)
 		return Text(key,value.split(','));
 	});
 }
-Debug.Replace=Replace;
-Debug.Text=Text;
+
 async function FetchLang(lang)
 {
 	await fetch(`/Assets/Lang/${lang}.json`)

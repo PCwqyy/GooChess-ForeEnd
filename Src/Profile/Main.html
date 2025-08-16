@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="darkreader-lock">
+		<meta name="PageName" content="Profile">
+		<meta name="Background" content="TextSlashes('{{ID}}')">
+		<title>Profile</title>
+		<link rel="stylesheet" href="Main.css">
+		<link rel="stylesheet" href="../Global.css">
+		<link rel="icon" type="image/png" href="/Assets/Icon/GooChess.png">
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="head">
+				<div id="info">
+					<div id="avatar">{{Avatar}}</div>
+					<div id="dunnoName">
+						<div id="id">{{ID}}</div>
+						<div id="prompt">{{Prompt}}</div>
+					</div>
+					<div id="scoreWrap">
+						<tranb id="scoreTxt">$.ScoreText</tranb>
+						<div id="score">{{Scroe}}</div>
+					</div>
+				</div>
+			</div>
+			<div id="intro">{{Intro}}</div>
+		</div>
+		<script type="module" src="../Global.js"></script>
+	</body>
+</html>

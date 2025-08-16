@@ -11,7 +11,8 @@
 				"8000"
 			],
 			"isBackground": true,
-			"problemMatcher": []
+			"problemMatcher": [],
+			"runOptions": {"runOn": "folderOpen"}
 		},
 		{
 			"label": "cpolar Forwarding",

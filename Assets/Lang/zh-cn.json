@@ -18,7 +18,8 @@
 		"Wiki.Menu": "主菜单",
 		"Wiki.Game": "棋盘界面",
 		"Wiki.Editor": "棋盘编辑器",
-		"Wiki.DebugTip": "选择一个 .md 文件来查看"
+		"Wiki.DebugTip": "选择一个 .md 文件来查看",
+		"Profile.ScoreText": "等级分"
 	},
 	"Notify.Server.Connected": "服务器连接成功",
 	"Notify.Server.FailConnect": "服务器连接失败",

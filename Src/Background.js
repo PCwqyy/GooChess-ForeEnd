@@ -1,3 +1,5 @@
+const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
+
 class Background
 {
 	/** @type {HTMLCanvasElement} */
@@ -198,6 +200,50 @@ class Background
 		};
 		draw();
 	}
+	TextSlashes(text="Goochess",hue=200,saturation=100,size=40,lineHeight=1.5,speed=1,angle=15,opacity=0.2)
+	{
+		const sped=[1,1.4,0.7,1.5,0.8],ofst=[0.1,0.5,1,0.3,0.7],dir=[1,-1,1,1,-1];
+		const font=`bold ${size}px 'Caviar Dreams', DengXian, Arial`;
+		speed=Math.ceil(20000/speed);
+		console.log(speed);
+		angle=angle*Math.PI/180;
+		this.ctx.font=font;
+		var rect=this.ctx.measureText(text);
+		var wid=rect.width*1.2;
+		var hei=(rect.actualBoundingBoxAscent+rect.actualBoundingBoxDescent)*lineHeight;
+		console.log(this.canvas.width,this.canvas.height,rect,hei,wid);
+		const draw=()=>
+		{
+			this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+			this.ctx.font=font;
+			this.ctx.textBaseline='middle'
+			this.ctx.textAlign='center';
+			this.ctx.fillStyle=`hsl(${hue},${saturation}%,10%)`;
+			this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
+			this.ctx.fillStyle=`hsl(${hue},${saturation}%,50%)`;
+			this.ctx.globalAlpha=opacity;
+			var cntY=Math.ceil(this.canvas.height/hei)*2;
+			this.ctx.translate(0,0);
+			var y=-(performance.now()%(speed*5))/speed*hei;
+			for(var i=0;i<cntY;i++)
+			{
+				var cntX=(y/Math.sin(angle)+500)/wid*2;
+				var x=(performance.now()%(speed*sped[i%5]))/(speed*sped[i%5])*wid;
+				x=x*dir[i%5]-wid*(ofst[i%5]+3);
+				for(var j=0;j<cntX;j++)
+				{
+					this.ctx.save();
+					this.ctx.rotate(-angle);
+					this.ctx.fillText(text,x,y);
+					this.ctx.restore();
+					x+=wid;
+				}
+				y+=hei;
+			}
+			requestAnimationFrame(draw);
+		};
+		draw();
+	}
 }
 
 // interface
@@ -206,7 +252,7 @@ var metaEle=document.querySelector('meta[name="Background"]');
 function LoadBackground()
 {
 	var content=metaEle.content;
-	if(content.match(/\w+\([\d,\s]*\)/)!=null)
+	if(content.match(/\w+\([\w\d\s',\{\}\$\.]*\)/)!=null)
 	{
 		eval('bkg.'+content);
 		console.log('Background loaded:',content);

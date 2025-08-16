@@ -21,7 +21,8 @@
 				"Wiki.Menu",
 				"Wiki.Game",
 				"Wiki.Editor",
-				"Wiki.DebugTip"
+				"Wiki.DebugTip",
+				"Profile.ScoreText"
 			]
 		}
 	},

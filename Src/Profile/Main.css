@@ -1,0 +1,55 @@
+body{
+	overflow-y: scroll;
+}
+div#wrapper{
+	margin: 10vmin;
+}
+div#head{
+	display: flex;
+	align-items: end;
+	height: 40vh;
+	min-height: 180px;
+	box-shadow: var(--bkg-color) 0px 0px 10px inset;
+	background-image: url(https://cdn.luogu.com.cn/upload/image_hosting/eodmjgqh.png);
+	background-position: center;
+	background-size: cover;
+}
+div#info{
+	display: flex;
+	width: 100%;
+}
+div#avatar{
+	flex-grow: 0;
+	height: calc(var(--size) / 2 * sqrt(3));
+	width: var(--size);
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+	background-color: green;
+	rotate: -12deg;
+	translate: 0px -10px;
+	--size: 80px;
+}
+div#dunnoName{
+	flex-grow: 6;
+	margin: 0px 20px;
+}
+div#dunnoName>div#id{
+	font-size: 30px;
+	font-weight: bold;
+}
+div#dunnoName>div#prompt{
+	font-size: 18px;
+}
+div#scoreWrap{
+	flex-grow: 1;
+	float: right;
+}
+div#scoreWrap>tranb#scoreTxt{
+	font-size: 16px;
+}
+div#scoreWrap>div#score{
+	font-size: 30px;
+}
+div#intro{
+	padding: 5vmin;
+	background-color: light-dark(#ffffff7f,#0000007f);
+}
