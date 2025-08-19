@@ -1,0 +1,31 @@
+div#wrapper{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 3vmin 0px;
+	width: 100%;
+	height: max-content;
+}
+div#triangle{
+	height: calc(var(--size) / 2 * sqrt(3));
+	width: var(--size);
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+	background-color: light-dark(black,darkgray);
+	rotate: 12deg;
+	transform-origin: 50% 66.6%;
+	cursor: pointer;
+	--size: 80vmin;
+}
+div#code{
+	position: absolute;
+	color: white;
+	mix-blend-mode: difference;
+	font-size: 40vmin;
+	pointer-events: none;
+}
+div#description{
+	margin: 10vmin 0px;
+	font-size: 28px;
+	text-align: center;
+	color: white;
+}

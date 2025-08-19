@@ -106,7 +106,7 @@ var Tip=document.createElement('span');
 var ShiftEnabled=false,HoverEle=document.body;
 document.body.appendChild(Tip);
 Tip.id='Tip';
-function FillTip()
+async function FillTip()
 {
 	var t=HoverEle.getAttribute(ShiftEnabled?'shiftTip':'tip');
 	if(!t)	t=HoverEle.getAttribute('tip')||'';

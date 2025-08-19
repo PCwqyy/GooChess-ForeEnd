@@ -90,6 +90,7 @@ DebugScreen.AddLink("Wiki","/Src/Wiki/Main.html");
 DebugScreen.AddLink("Game","/Src/Gaming/Main.html");
 DebugScreen.AddLink("Editor","/Src/Editor/Main.html");
 DebugScreen.AddLink("Profile","/Src/Profile/Main.html");
+DebugScreen.AddLink("HTTPErr","/Src/HTTPErr/Main.html");
 
 DebugScreen.AddLine("fps","{fps} FPS");
 var tick=0,last=Date.now(),now;

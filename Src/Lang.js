@@ -1,10 +1,20 @@
 import * as UIlib from './UI.js'
+const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
+
 var WordMap;
 var ThisPageName=document.querySelector('meta[name="PageName"]').content;
 var DefaultLang='zh-cn';
 
 var Transes=document.getElementsByTagName('trans');
 var Tranbs=document.getElementsByTagName('tranb');
+
+var Translated=false;
+
+/**
+ * @param {String} key
+ * @param {Array<any>} param
+ * @returns {String}
+ */
 export function Text(key,param=[]){
 	try{
 		key=key.trim();
@@ -29,7 +39,11 @@ export function Text(key,param=[]){
 		return key;
 	}
 }
-/** Replace all `^{key}` in text with the corresponding translation */
+/**
+ * Replace all `^{key}` in text with the corresponding translation
+ * @param {String} text
+ * @returns {String}
+ */
 export function Replace(text)
 {
 	return text.replaceAll(/\^\{([\.\w\$]+)(,.+)*\}/g,(match,key,value)=>{
@@ -53,12 +67,12 @@ async function FetchLang(lang)
 				"${lang}" language pack loading failed, trying another language...`);
 		});
 }
-function ModifyDoc(eles){
+async function ModifyDoc(eles){
 	for(var ele of eles)
 	{
 		if(!ele.classList.contains('t'))
 			ele.setAttribute('localekey',ele.innerHTML);
-		ele.innerHTML=Text(ele.getAttribute('localekey'));
+		ele.innerHTML=await Text(ele.getAttribute('localekey'));
 		ele.classList.add('t');
 		if(ele.getAttribute('href')!==null)
 			ele.addEventListener('click',(e)=>{
@@ -95,11 +109,21 @@ function SetLangByCookie(){
 	TrySetLang(lang);
 }
 async function SetLangByBrowser(){
+	if(Translated)	return;
+	WordMap=window.localStorage.getItem('WordMap');
+	if(WordMap!=null)
+	{
+		WordMap=JSON.parse(WordMap);
+		console.log(WordMap);
+		return;
+	}
 	var lang=navigator.languages;
 	for(var i of lang)
 		if(await TrySetLang(i.toLowerCase()))
 		{
 			console.log(`SetLangByBrowser: ${i}`);
+			Translated=true;
+			window.localStorage.setItem('WordMap',JSON.stringify(WordMap));
 			return;
 		}
 	UIlib.Notify('error',
