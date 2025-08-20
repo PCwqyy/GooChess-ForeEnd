@@ -62,5 +62,17 @@
 	"Game.Piece.pecookie": "朴奎伊",
 	"Game.Piece.__hzx": "涸泽续",
 	"Game.Piece.yzy": "烟烛夜",
-	"HTTPError.Description.404": "阿勒，页面不见了？"
+	"HTTPError.Description.301": "哎呀，页面搬家了！",
+	"HTTPError.Description.308": "哎呀，页面搬家了！",
+	"HTTPError.Description.400": "请求有点问题哦",
+	"HTTPError.Description.401": "我的权限呢？",
+	"HTTPError.Description.403": "你不该来这儿",
+	"HTTPError.Description.404": "阿勒，页面不见了？",
+	"HTTPError.Description.414": "什么玩意儿 URI 这么长",
+	"HTTPError.Description.418": "我是茶壶！",
+	"HTTPError.Description.429": "你太快了！",
+	"HTTPError.Description.500": "等会……我们这边出问题了……",
+	"HTTPError.Description.502": "坏门道！",
+	"HTTPError.Description.503": "稍等……现在暂时不能用……",
+	"HTTPError.Description.504": "门道太慢了，抱歉！"
 }

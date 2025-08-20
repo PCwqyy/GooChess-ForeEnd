@@ -15,6 +15,9 @@ div#triangle{
 	transform-origin: 50% 66.6%;
 	cursor: pointer;
 	--size: 80vmin;
+	scale: 1;
+	transition: scale 0.2s;
+	transition-timing-function: ease;
 }
 div#code{
 	position: absolute;
@@ -27,5 +30,5 @@ div#description{
 	margin: 10vmin 0px;
 	font-size: 28px;
 	text-align: center;
-	color: white;
+	color: var(--txt-color);
 }
