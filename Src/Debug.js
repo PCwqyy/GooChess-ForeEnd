@@ -1,5 +1,5 @@
 console.log("Debugging enabled");
-window.eval('var Debug={};');
+window.Debug={};
 
 class DebugLine
 {

@@ -1,5 +1,5 @@
 import "./Debug.js";
-import {Text} from "./Lang.js";
+import "./Lang.js";
 import "./Background.js";
 export var userId,userName,sessionToken;
 export function InitGlobal(id,name,token)

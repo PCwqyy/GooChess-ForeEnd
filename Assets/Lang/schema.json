@@ -68,6 +68,20 @@
 		"Game.Piece.product",
 		"Game.Piece.pecookie",
 		"Game.Piece.__hzx",
-		"Game.Piece.yzy"
+		"Game.Piece.yzy",
+		"Game.Piece.yzy",
+		"HTTPError.Description.301",
+		"HTTPError.Description.308",
+		"HTTPError.Description.400",
+		"HTTPError.Description.401",
+		"HTTPError.Description.403",
+		"HTTPError.Description.404",
+		"HTTPError.Description.414",
+		"HTTPError.Description.418",
+		"HTTPError.Description.429",
+		"HTTPError.Description.500",
+		"HTTPError.Description.502",
+		"HTTPError.Description.503",
+		"HTTPError.Description.504"
 	]
 }

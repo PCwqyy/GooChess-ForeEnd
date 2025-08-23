@@ -1,3 +1,4 @@
+import './Debug.js'
 import * as UIlib from './UI.js'
 const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 
@@ -11,11 +12,13 @@ var Tranbs=document.getElementsByTagName('tranb');
 var Translated=false;
 
 /**
+ * Parse `key`
  * @param {String} key
  * @param {Array<any>} param
  * @returns {String}
  */
-export function Text(key,param=[]){
+export function Text(key,param=[])
+{
 	try{
 		key=key.trim();
 		var work;
@@ -39,17 +42,49 @@ export function Text(key,param=[]){
 		return key;
 	}
 }
+
+/**
+ * Qurey if `key` exsit
+ * @param {String} key
+ * @returns {Boolean}
+ */
+export function Has(key){
+	try{
+		key=key.trim();
+		var work;
+		if(key.match(/^\$/))
+			key=key.replace(/^\$/,`${ThisPageName}`),
+			work=WordMap["Page"][key];
+		else
+			work=WordMap[key];
+		return work!=null;
+	}catch(e){
+		return false;
+	}
+}
+function GenTransableEle(key,param=[]){
+	var p="";
+	param.forEach((v)=>{p+=v+','});
+	return `<trans class="t" localekey="${key}" param="${p}">
+		${Text(key,param)}
+	</trans>`;
+}
+export function SetEleTransable(ele,key,param){
+	ele.innerHTML=GenTransableEle(key,param);
+}
 /**
  * Replace all `^{key}` in text with the corresponding translation
  * @param {String} text
+ * @param {Boolean} genEle the text will change with lang or not 
  * @returns {String}
  */
-export function Replace(text)
+export function Replace(text,genEle=true)
 {
 	return text.replaceAll(/\^\{([\.\w\$]+)(,.+)*\}/g,(match,key,value)=>{
+		var func=genEle?GenTransableEle:Text;
 		if(value==null||value=='')
-			return Text(key);
-		return Text(key,value.split(','));
+			return func(key);
+		return func(key,value.split(','));
 	});
 }
 
@@ -67,12 +102,12 @@ async function FetchLang(lang)
 				"${lang}" language pack loading failed, trying another language...`);
 		});
 }
-async function ModifyDoc(eles){
+function ModifyDoc(eles){
 	for(var ele of eles)
 	{
 		if(!ele.classList.contains('t'))
 			ele.setAttribute('localekey',ele.innerHTML);
-		ele.innerHTML=await Text(ele.getAttribute('localekey'));
+		ele.innerHTML=Text(ele.getAttribute('localekey'));
 		ele.classList.add('t');
 		if(ele.getAttribute('href')!==null)
 			ele.addEventListener('click',(e)=>{
@@ -100,23 +135,15 @@ async function TrySetLang(lang){
 		console.warn(`SetLang(${lang}) failed:`,e);
 		return false;
 	}
-	return true;
 }
-function SetLangByCookie(){
+async function SetLangByCookie(){
 	var lang=getCookie('lang');
 	if(lang==null||lang=='')
 		lang='zh-cn';
-	TrySetLang(lang);
+	await TrySetLang(lang);
 }
 async function SetLangByBrowser(){
 	if(Translated)	return;
-	WordMap=window.localStorage.getItem('WordMap');
-	if(WordMap!=null)
-	{
-		WordMap=JSON.parse(WordMap);
-		console.log(WordMap);
-		return;
-	}
 	var lang=navigator.languages;
 	for(var i of lang)
 		if(await TrySetLang(i.toLowerCase()))
@@ -132,4 +159,5 @@ async function SetLangByBrowser(){
 		try refreshing the page or checking your network connection`);
 }
 
-SetLangByBrowser();
+await SetLangByBrowser();
+Debug.SetLang=SetLang;

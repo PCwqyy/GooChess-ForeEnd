@@ -60,5 +60,18 @@
 	"Game.Piece.product": "Product",
 	"Game.Piece.pecookie": "Pecookie",
 	"Game.Piece.__hzx": "hezerxv",
-	"Game.Piece.yzy": "yzy4090"
+	"Game.Piece.yzy": "yzy4090",
+	"HTTPError.Description.301": "Oops, the page has moved!",
+	"HTTPError.Description.308": "Oops, the page has moved!",
+	"HTTPError.Description.400": "There is something wrong with request",
+	"HTTPError.Description.401": "Where is my access???",
+	"HTTPError.Description.403": "You are not surpposed to be here",
+	"HTTPError.Description.404": "Ahu, the page disapperaed?",
+	"HTTPError.Description.414": "What the hell so long the URI?",
+	"HTTPError.Description.418": "I'm a teapot",
+	"HTTPError.Description.429": "You are too FAST!",
+	"HTTPError.Description.500": "Wait a minute...We got something wrong here...",
+	"HTTPError.Description.502": "Bad doorway!",
+	"HTTPError.Description.503": "Wait a sec...Service temporarily unavailable...",
+	"HTTPError.Description.504": "The doorway is too slow!"
 }
