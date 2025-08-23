@@ -205,13 +205,11 @@ class Background
 		const sped=[1,1.4,0.7,1.5,0.8],ofst=[0.1,0.5,1,0.3,0.7],dir=[1,-1,1,1,-1];
 		const font=`bold ${size}px 'Caviar Dreams', DengXian, Arial`;
 		speed=Math.ceil(20000/speed);
-		console.log(speed);
 		angle=angle*Math.PI/180;
 		this.ctx.font=font;
 		var rect=this.ctx.measureText(text);
 		var wid=rect.width*1.2;
 		var hei=(rect.actualBoundingBoxAscent+rect.actualBoundingBoxDescent)*lineHeight;
-		console.log(this.canvas.width,this.canvas.height,rect,hei,wid);
 		const draw=()=>
 		{
 			this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
@@ -252,7 +250,7 @@ var metaEle=document.querySelector('meta[name="Background"]');
 function LoadBackground()
 {
 	var content=metaEle.content;
-	if(content.match(/\w+\([\w\d\s',\{\}\$\.]*\)/)!=null)
+	if(content.match(/\w+\([\w\d\s',\{\}\$\.\u4e00-\u9fa5]*\)/)!=null)
 	{
 		eval('bkg.'+content);
 		console.log('Background loaded:',content);

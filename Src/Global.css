@@ -347,6 +347,7 @@ div#DebugScreen.open>*{
 }
 div#DebugScreen div.DebugLine{
 	width: 100%;
+	padding: 3px 0px;
 	user-select: text;
 }
 div#DebugScreen div.DebugLine>span{

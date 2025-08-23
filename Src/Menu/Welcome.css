@@ -1,5 +1,6 @@
 html{
-	font-family: Consolas;
+	user-select: none;
+	cursor: default;
 }
 body{
 	display: flex;
@@ -108,8 +109,12 @@ menu#Menu{
 	width: 90vw;
 	height: 100vh;
 	list-style: none;
+	pointer-events: none;
 	opacity: 0;
 	transition: 4s;
+}
+body.menu-open menu#Menu{
+	pointer-events: all;
 }
 body.menu-open span#MainTriangle{
 	animation-iteration-count: unset;
@@ -117,6 +122,7 @@ body.menu-open span#MainTriangle{
 	translate: -35% 0;
 	height: calc(200vmin * sqrt(3));
 	width: 400vmin;
+	pointer-events: none;
 }
 body.menu-open tranb.welcome#title,
 body.menu-open tranb.welcome#sign{

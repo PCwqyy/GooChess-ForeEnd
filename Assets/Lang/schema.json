@@ -82,6 +82,22 @@
 		"HTTPError.Description.500",
 		"HTTPError.Description.502",
 		"HTTPError.Description.503",
-		"HTTPError.Description.504"
+		"HTTPError.Description.504",
+		"HTTPError.Description.600",
+		"HTTPError.Description.1024",
+		"HTTPError.Description.4090",
+		"HTTPError.Description.8848",
+		"HTTPError.Description.10086",
+		"HTTPError.Description.102273",
+		"HTTPError.Description.555833",
+		"HTTPError.Description.33554432",
+		"HTTPError.Description.2147483647",
+		"HTTPError.Description.2147483648",
+		"HTTPError.Description.n2147483648",
+		"HTTPError.Description.n1",
+		"HTTPError.Description.99",
+		"HTTPError.EasterEgg.IWannaCheat",
+		"HTTPError.EasterEgg.MakeMyClickUltra",
+		"HTTPError.EasterEgg.MakeMyClickMoreUltra"
 	]
 }

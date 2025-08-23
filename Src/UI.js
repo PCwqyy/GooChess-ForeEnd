@@ -111,7 +111,6 @@ async function FillTip()
 	var t=HoverEle.getAttribute(ShiftEnabled?'shiftTip':'tip');
 	if(!t)	t=HoverEle.getAttribute('tip')||'';
 	Tip.innerHTML=Text.Replace(t);
-	console.log(t,Text.Replace(t));
 }
 document.addEventListener('keydown',(e)=>{
 	if(e.key!='Shift')	return;
