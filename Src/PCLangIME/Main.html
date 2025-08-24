@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="darkreader-lock">
+		<meta name="PageName" content="Editor">
+		<meta name="Background" content="TextSlashes('PCLang')">
+		<title>PCLang IME</title>
+		<link rel="stylesheet" href="Main.css">
+		<link rel="stylesheet" href="../Global.css">
+		<link rel="icon" type="image/png" href="/Assets/Icon/GooChess.png">
+	</head>
+	<body>
+		<div id="Wrap">
+			<div id="Input">
+				<textarea id="textarea"></textarea>
+			</div>
+			<div id="Dict">
+				<input type="text" title="search" placeholder="Search..." id="search">
+				<div id="CharList"></div>
+				<div id="CharQuery">
+					<input type="text" title="code" placeholder="e000" value="e000" id="code">
+				</div>
+			</div>
+			<script type="module" src="../Global.js"></script>
+			<script type="module" src="./Main.js"></script>
+	</body>
+</html>

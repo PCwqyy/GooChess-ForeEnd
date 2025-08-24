@@ -230,7 +230,7 @@ for(var ele of ActionEles)
 var HurryUpEle=document.createElement('div');
 HurryUpEle.id='HurryUpText';
 document.body.appendChild(HurryUpEle);
-HurryUpEle.innerHTML=`<trans>Game.Hurry.Text</trans>`;
+Text.SetEleTransable(HurryUpEle,'Game.Hurry.Text');
 export async function HurryUp()
 {
 	HurryUpEle.classList.add('active');
