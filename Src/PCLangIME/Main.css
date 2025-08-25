@@ -11,7 +11,7 @@ div#Wrap>*{
 	background-color: light-dark(#ffffff7f,#0000007f);
 }
 div#Input{
-	width: 60%;
+	width: 40%;
 	padding: 3vmin;
 }
 textarea#textarea{
@@ -29,7 +29,7 @@ div#Dict{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 30%;
+	width: 50%;
 }
 div#Dict>*{
 	width: 100%;

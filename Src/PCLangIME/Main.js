@@ -36,31 +36,34 @@ function CreateCell(pEle,unicode){
 		Text.value+=e.target.textContent.trim();
 	})
 	pEle.appendChild(cell);
+	return cell;
 }
 
 var Dict=document.querySelector('div#CharList');
+var CellEles=[];
 function FillUpCell(ele,start,end)
 {
 	var i=parseInt(start,16);
 	var e=parseInt(end,16);
 	for(;i<=e;i++)
-		CreateCell(ele,i.toString(16));
+		CellEles.push(CreateCell(ele,i.toString(16)));
 }
 FillUpCell(Dict,START,END);
 var Search=document.querySelector('input#search');
 Search.addEventListener('input',()=>{
 	const key=Search.value.trim();
-	Dict.innerHTML='';
-	console.log(key);
 	if(key)
 	{
 		var i=parseInt(START,16);
 		var e=parseInt(END,16);
 		for(;i<=e;i++)
 			if(GetDescription(i.toString(16)).match(key))
-				CreateCell(Dict,i.toString(16));
+				CellEles[i-parseInt(START,16)].style.display='block';
+			else
+				CellEles[i-parseInt(START,16)].style.display='none';
 	}
-	else	FillUpCell(Dict,START,END);
+	else
+		CellEles.forEach((cell)=>{cell.style.display='block'});
 });
 
 var Query=document.querySelector('input#code');
