@@ -2,6 +2,7 @@
 *.vfc
 *.flp
 *.backup
+*.ttf
 
 test.*
 Test.*
@@ -9,3 +10,5 @@ ignore.*
 Ignore.*
 
 Test/
+
+!PClang.ttf
