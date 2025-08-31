@@ -1,6 +1,6 @@
-import {PieceList} from "../Game.js";
-import * as Text from "../Lang.js";
-import * as UIlib from '../UI.js';
+import {PieceList} from "../Global/Game.js";
+import * as Text from "../Global/Lang.js";
+import * as UIlib from '../Global/UI.js';
 const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 var PieceMatch='\\[(';
 for(var ele of PieceList)

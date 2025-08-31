@@ -1,14 +1,42 @@
 import * as UIlib from "./UI.js";
 const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 // 常量
-const RomeApl={
-	1:'i',2:'ii',3:'iii',4:'iv',5:'v',
-	6:'vi',7:'vii',8:'viii',9:'ix',10:'x',
-	11:'xi',12:'xii',13:'xiii',14:'xiv',15:'xv',
-	16:'xvi',17:'xvii',18:'xviii',19:'xix',20:'xx',
-	21:'xxi',22:'xxii',23:'xxiii',24:'xxiv',25:'xxv',
-	26:'xxvi',27:'xxvii',28:'xxviii',29:'xxix',30:'xxx'
-};
+const RomanBase=[
+	['M',1000],['CM',900],['D',500],['CD',400],['C',100],
+	['XC',90],['L',50],['XL',40],['X',10],['IX',9],
+	['V',5],['IV',4],['I',1]
+];
+/**
+ * @param {number} num
+ * @returns {string}
+ */
+export function RomeNum(num)
+{
+	num=Number(num);
+	if (num<1||num>3999) return '';
+	let res='';
+	for(const[roman,value] of RomanBase)
+		while (num>=value)
+			res+=roman,
+			num-=value;
+	return res.toLowerCase();
+}
+const AlphaBase='abcdefghijklmnopqrstuvwxyz';
+/**
+ * @param {number} num
+ * @returns {string}
+ */
+export function AlphaNum(num)
+{
+	num=Number(num);
+	if(num<1)	return '';
+	let res='';
+	while(num>0)
+		num--,
+		res=AlphaBase[num % 26] + res,
+		num=Math.floor(num / 26);
+	return res;
+}
 
 export const PieceList=
 [
@@ -91,7 +119,7 @@ export class NAR{
 	{
 		if(plain)
 			return `${this.num},${this.alp},${this.rom}`;
-		return `${this.num}, ${String.fromCharCode(96+this.alp)}, ${RomeApl[this.rom]}`;
+		return `${this.num}, ${AlphaNum(this.alp)}, ${RomeNum(this.rom)}`;
 	}
 	/**
 	 * @param {NAR} pos
@@ -268,6 +296,8 @@ export class Grood{
 					if(nowPos.rom<=4)	this.cells[i][j].classList.add(Side.rom);
 				}
 				UIlib.AddTip(this.cells[i][j],nowPos.print(),nowPos.print(true));
+				this.cells[i][j].setAttribute('x',`${i}`);
+				this.cells[i][j].setAttribute('y',`${j}`);
 				row[i].appendChild(this.cells[i][j]);
 			}
 			this.visEle.appendChild(row[i]);

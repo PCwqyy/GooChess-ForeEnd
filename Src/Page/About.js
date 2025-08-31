@@ -1,6 +1,6 @@
+import '../Global/marked.js';
 var Main=document.getElementById('Main');
-var Body=document.getElementById('Home');
-var Top=0,Speed=30;
+var Speed=30;
 
 fetch('../../Docs/About.md')
 	.then((response)=>{return response.text();})

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="darkreader-lock">
+		<meta name="PageName" content="Wiki">
+		<meta name="Background" content="Triangles()">
+		<title>Wiki</title>
+		<link rel="stylesheet" href="../Page/Wiki.css">
+		<link rel="stylesheet" href="../Global/Global.css">
+		<link rel="stylesheet" href="../Global/Markdown.css">
+		<link rel="icon" type="image/png" href="../../Assets/Icon/GooChess.png">
+	</head>
+	<body>
+		<span id="Tip"></span>
+		<div id="Home"></div>
+		<div id="Body">
+			<div id="ContentWrap">
+				<div id="Content">
+					<a onclick="LoadMd('/Docs/Test.md')">Test.md</a>
+					<a onclick="LoadMd('/Docs/Wiki.md')">Wiki.md</a>
+					<a onclick="LoadMd('/Docs/Piece.md')">Piece.md</a>
+					<a onclick="LoadMd('/Docs/API.md')">API.md</a>
+				</div>
+			</div>
+			<div id="Main">
+				<tranb>$.DebugTip</tranb>
+			</div>
+		</div>
+		<script type="module" src="../Page/Wiki.js"></script>
+		<script type="module" src="../Global/Global.js"></script>
+	</body>
+</html>

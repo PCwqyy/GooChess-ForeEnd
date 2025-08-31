@@ -1,10 +1,11 @@
-import * as G from '../Game.js'
+import * as G from '../Global/Game.js'
+import {DecodeGrood} from "../Global/Syntax.js"
 /** @type {Map<String,String>} */
 var Tags=new Map;
 /** @type {HTMLElement} */
 var lastEle=null;
 /** @param {String} t */
-export function LaunchEditor(t){
+function LaunchEditor(t){
 	Tags.clear();
 	var Cells=document.getElementsByTagName('cell');
 	var res=t.match(/^[^\(\)\s]+\(\d+,\d+,\d+\)/mg);
@@ -41,7 +42,7 @@ function GenCode(ele)
 	return res;
 }
 /** @param {String} t */
-export function ApplyTag(g,t){
+function ApplyTag(g,t){
 	var C=document.getElementsByClassName('selected');
 	var row=g.getAttribute('rows');
 	for(var ele of C)
@@ -73,3 +74,38 @@ export function AddArrow(g,c){
 	Tags.set(`(${posP.print(true)})->(${posL.print(true)})${c}`,'Arrow');
 	return GenCode(g);
 }
+
+var Input=document.getElementById('Input');
+var Tag=document.getElementById('Tag');
+var ViewBox=document.getElementById('View');
+function Load()
+{
+	ViewBox.innerHTML=
+		`<div class="GroodWrap">
+			<p>${Input.value}</p>
+		</div>`;
+	DecodeGrood();
+	LaunchEditor(Input.value);
+}
+function Apply()
+{
+	LaunchEditor(Input.value);
+	if(Tag.value.length==0)
+		return;
+	var Grood=document.getElementsByTagName('grood')[0];
+	Input.value=ApplyTag(Grood,Tag.value);
+	Tag.value='';
+	Load();
+}
+function Arrow(){
+	if(Tag.value.length==0)
+		return;
+	var Grood=document.getElementsByTagName('grood')[0];
+	Input.value=AddArrow(Grood,Tag.value);
+	Tag.value='';
+	Load();
+}
+window.ButtonFuncs={};
+window.ButtonFuncs.Load=Load;
+window.ButtonFuncs.Apply=Apply;
+window.ButtonFuncs.Arrow=Arrow;

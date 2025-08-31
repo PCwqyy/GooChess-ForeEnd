@@ -1,8 +1,8 @@
-import {Grood,XY,NAR} from "../Game.js";
-import {userId,userName,InitGlobal} from "../Global.js";
-import {DebugScreen} from "../Debug.js";
-import * as GUI from "./GUI.js";
-import * as UIlib from "../UI.js";
+import {Grood,XY,NAR} from "../Global/Game.js";
+import {userId,userName,InitGlobal} from "../Global/Global.js";
+import {DebugScreen} from "../Global/Debug.js";
+import * as GUI from "./GamingGUI.js";
+import * as UIlib from "../Global/UI.js";
 import "./WebSocket.js";
 const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 

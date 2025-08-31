@@ -1,6 +1,6 @@
-import {sessionToken,userId,userName} from '../Global.js';
-import * as GUI from './GUI.js';
-import * as UIlib from '../UI.js';
+import {sessionToken,userId,userName} from '../Global/Global.js';
+import * as GUI from './GamingGUI.js';
+import * as UIlib from '../Global/UI.js';
 const hostIp='localhost:8080';
 var ws,roomToken=null;
 async function sha256(str) 

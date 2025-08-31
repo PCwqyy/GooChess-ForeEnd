@@ -85,13 +85,13 @@ class DebugScr
 }
 export let DebugScreen=new DebugScr();
 
-DebugScreen.AddLink("Menu","/Src/Menu/Main.html");
-DebugScreen.AddLink("Wiki","/Src/Wiki/Main.html");
-DebugScreen.AddLink("Game","/Src/Gaming/Main.html");
-DebugScreen.AddLink("Editor","/Src/Editor/Main.html");
-DebugScreen.AddLink("Profile","/Src/Profile/Main.html");
-DebugScreen.AddLink("HTTPErr","/Src/HTTPErr/Main.html");
-DebugScreen.AddLink("PCLang","/Src/PCLangIME/Main.html");
+DebugScreen.AddLink("Menu","/Src/Templates/Menu.html");
+DebugScreen.AddLink("Wiki","/Src/Templates/Wiki.html");
+DebugScreen.AddLink("Game","/Src/Templates/Gaming.html");
+DebugScreen.AddLink("Editor","/Src/Templates/Editor.html");
+DebugScreen.AddLink("Profile","/Src/Templates/Profile.html");
+DebugScreen.AddLink("HTTPErr","/Src/Templates/HTTPErr.html");
+DebugScreen.AddLink("PCLang","/Src/Templates/PCLangIME.html");
 
 DebugScreen.AddLine("fps","{fps} FPS");
 var tick=0,last=Date.now(),now;

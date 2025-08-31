@@ -11,10 +11,6 @@ Grood{
 	background-color: light-dark(#f4f4f4,#2f2f2f);
 	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 	padding: 2vh 2vh calc(2vh / sqrt(3)) 2vh;
-	background-image:
-		linear-gradient(60deg,var(--color-p1),transparent 26%),
-		linear-gradient(180deg,var(--color-p2),transparent 36%),
-		linear-gradient(300deg,var(--color-p3),transparent 26%);
 }
 div.cells{
 	position: relative;

@@ -1,5 +1,5 @@
-import { DebugScreen } from '../Debug.js';
-import * as Text from '../Lang.js';
+import { DebugScreen } from '../Global/Debug.js';
+import * as Text from '../Global/Lang.js';
 const Sleep=(ms)=>new Promise(resolve=>setTimeout(resolve,ms));
 var codeEle=document.querySelector('div#code');
 var desEle=document.querySelector('div#description');

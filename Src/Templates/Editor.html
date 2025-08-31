@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="darkreader-lock">
+		<meta name="PageName" content="Editor">
+		<meta name="Background" content="TextSlashes()">
+		<title>Wiki Editor</title>
+		<link rel="stylesheet" href="../Page/Editor.css">
+		<link rel="stylesheet" href="../Global/Global.css">
+		<link rel="stylesheet" href="../Global/Markdown.css">
+		<link rel="icon" type="image/png" href="/Assets/Icon/GooChess.png">
+	</head>
+	<body>
+		<div id="Wrap">
+			<div id="View"></div>
+			<textarea id="Input" placeholder="Code"></textarea>
+			<div id="Operate">
+				<input id="Tag" type="text" placeholder="Tag">
+				<trans onclick="ButtonFuncs.Load()">$.Load</trans>
+				<trans onclick="ButtonFuncs.Apply()">$.Apply</trans>
+				<trans onclick="ButtonFuncs.Arrow()">$.Arrow</trans>
+			</div>
+		</div>
+		<script type="module" src="../Page/Editor.js"></script>
+		<script type="module" src="../Global/Global.js"></script>
+	</body>
+</html>
